@@ -14,7 +14,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 		config.vm.provision "file", source: aliasesPath, destination: "~/.bash_aliases"
 	end
 
-	Magestead.configure(config, YAML::load(File.read(magesteadYamlPath))
+	Magestead.configure(config, YAML::load(File.read(magesteadYamlPath)))
 
 	if File.exists? afterScriptPath then
 		config.vm.provision "shell", path: afterScriptPath

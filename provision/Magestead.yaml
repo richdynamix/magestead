@@ -1,5 +1,5 @@
 ---
-ip: "192.168.10.10"
+ip: "192.168.47.10"
 memory: 2048
 cpus: 1
 provider: virtualbox
@@ -12,10 +12,6 @@ keys:
 folders:
     - map: ~/Sites
       to: /home/vagrant/
-
-sites:
-    - map: magestead.dev
-      to: /home/vagrant/magestead/public
 
 databases:
     - magestead
