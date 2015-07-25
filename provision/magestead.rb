@@ -90,16 +90,6 @@ class Magestead
         end
     end
 
-    # Configure All Of The Server Environment Variables
-    config.vm.provision "shell" do |s|
-        s.path = scriptDir + "/clear-variables.sh"
-    end
-
-    # Update Composer On Every Provision
-    config.vm.provision "shell" do |s|
-      s.inline = "/usr/local/bin/composer self-update"
-    end
-
     # Configure Blackfire.io
     if settings.has_key?("blackfire")
       config.vm.provision "shell" do |s|

@@ -22,5 +22,5 @@ timeout=15s
 echo "$agent" > "/etc/blackfire/agent"
 echo "$client" > "/home/vagrant/.blackfire.ini"
 
-service php5-fpm restart
-service blackfire-agent restart
+sudo service php5-fpm restart
+sudo service blackfire-agent restart
