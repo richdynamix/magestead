@@ -10,7 +10,7 @@ class Magestead
     config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
 
     # Configure The Box
-    config.vm.box = "magestead"
+    config.vm.box = "magestead-0.2"
     config.vm.hostname = settings["hostname"] ||= "magestead"
 
     # Configure A Private Network IP
