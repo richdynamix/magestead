@@ -10,11 +10,13 @@ class Magestead
     config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
 
     # Configure The Box
-    config.vm.box = "magestead-0.2"
+    config.vm.box = "magestead"
     config.vm.hostname = settings["hostname"] ||= "magestead"
 
     # Configure A Private Network IP
     config.vm.network :private_network, ip: settings["ip"] ||= "192.168.47.10"
+
+    config.vm.synced_folder ".", "/vagrant", :nfs => { :mount_options => ["dmode=777","fmode=666"] }
 
     # Configure A Few VirtualBox Settings
     config.vm.provider "virtualbox" do |vb|
@@ -75,19 +77,6 @@ class Magestead
           s.inline = "echo \"$1\" > /home/vagrant/.ssh/$2 && chmod 600 /home/vagrant/.ssh/$2"
           s.args = [File.read(File.expand_path(key)), key.split('/').last]
         end
-      end
-    end
-
-    # Register All Of The Configured Shared Folders
-    if settings.include? 'folders'
-      settings["folders"].each do |folder|
-        mount_opts = []
-
-        if (folder["type"] == "nfs")
-            mount_opts = folder["mount_opts"] ? folder["mount_opts"] : ['actimeo=1']
-        end
-
-        config.vm.synced_folder folder["map"], folder["to"], type: folder["type"] ||= nil, mount_options: mount_opts
       end
     end
 
