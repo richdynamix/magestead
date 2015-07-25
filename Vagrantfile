@@ -3,7 +3,7 @@ require 'yaml'
 
 VAGRANTFILE_API_VERSION = "2"
 
-magesteadYamlPath = File.dirname(__FILE__) + '/provision/Magestead.yaml')
+magesteadYamlPath = File.dirname(__FILE__) + '/provision/Magestead.yaml'
 afterScriptPath = File.dirname(__FILE__) + '/provision/after.sh'
 aliasesPath = File.dirname(__FILE__) + '/provision/aliases'
 
