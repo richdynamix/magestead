@@ -12,11 +12,7 @@ keys:
 databases:
     - magestead
 
-variables:
-    - key: APP_ENV
-      value: local
-
-bootstrap: true
+# bootstrap: true
 
 # blackfire:
 #     - id: foo
