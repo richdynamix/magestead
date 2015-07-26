@@ -102,5 +102,32 @@ class Magestead
         ]
       end
     end
+
+    # Update Composer On Every Provision
+    # config.vm.provision "shell" do |s|
+    #   s.inline = "echo -e \"\n--- Installing Composer for PHP package management ---\n\""
+    #   s.inline = "curl --silent https://getcomposer.org/installer | php > /dev/null 2>&1"
+    #   s.inline = "mv composer.phar /usr/local/bin/composer"
+    #   s.inline = "cd /vagrant; composer self-update"
+    # end
+
+    # config.vm.provision "shell", inline: <<-SHELL
+    #   echo "--- Updating Composer ---"
+    #   curl --silent https://getcomposer.org/installer | php > /dev/null 2>&1
+    #   mv composer.phar /usr/local/bin/composer
+    #   cd /vagrant; 
+    #   composer self-update;
+    # SHELL
+
+    # Bootstrap Magento Intallation
+    if settings.include? 'bootstrap'
+      config.vm.provision "shell" do |s|
+        s.inline = "echo  \"Bootstrapping Magento Installation with Composer\" "
+        s.inline = "cd /vagrant; composer install;"
+      end
+    end
+
+    
+
   end
 end
