@@ -103,6 +103,12 @@ class Magestead
       end
     end
 
+    # Update composer on each provision
+    config.vm.provision "shell" do |s|
+      s.inline = "echo -- Updating Composer ---"
+      s.inline = "/usr/local/bin/composer self-update;"
+    end
+
     # Bootstrap Magento Intallation
     if settings.include? 'bootstrap'
       config.vm.provision "shell" do |s|

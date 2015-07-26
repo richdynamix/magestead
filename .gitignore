@@ -1,1 +1,3 @@
 .vagrant
+vendor/
+composer.lock

@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
 
+
+echo "--- Bootstrapping Magento ---"
 cd /vagrant; 
-composer install;
+/usr/local/bin/composer install;
