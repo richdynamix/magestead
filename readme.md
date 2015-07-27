@@ -76,7 +76,7 @@ The `bootstrap:` setting is a new setting to magestead, when activated it will i
 | SSH into your server                      	| `vagrant ssh`     	|
 
 #### Blackfire Profiler
-[Blackfire Profiler](https://blackfire.io/ "Blackfire Profiler") by SensioLabs automatically gathers data about your code's execution, such as RAM, CPU time, and disk I/O. Homestead makes it a breeze to use this profiler for your own applications.
+[Blackfire Profiler](https://blackfire.io/ "Blackfire Profiler") by SensioLabs automatically gathers data about your code's execution, such as RAM, CPU time, and disk I/O. Magestead makes it a breeze to use this profiler for your own applications.
 
 All of the proper packages have already been installed on your Magestead box, you simply need to set a Blackfire Server ID and token in your Magestead.yaml file:
 
