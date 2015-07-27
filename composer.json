@@ -2,7 +2,8 @@
     "name": "richdynamix/magestead",
     "description": "Magento build for ...",
     "require-dev": {
-        "phpunit/phpunit": "~4.4"
+        "phpunit/phpunit": "~4.4",
+        "phpspec/phpspec": "~2.2"
     },
     "require": {
         "aydin-hassan/magento-core-composer-installer" : "~1.0",
@@ -27,5 +28,9 @@
     ],
     "extra": {
         "magento-root-dir": "public"
-    }
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "autoload": { "psr-0": { "": "src"} }
 }
