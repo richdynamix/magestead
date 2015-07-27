@@ -1,4 +1,4 @@
-# Magestead
+# [Magestead](http://magestead.richdynamix.com "Magestead")
 
 #### Introduction
 While there is no perfect vagrant box setup that will fit the needs of everyone, there are many out there that do the job brilliantly. Inspired by the amazing [Laravel Homestead](http://laravel.com/docs/5.1/homestead "Laravel Homestead") & [ScotchBox](https://box.scotch.io/ "ScotchBox"), Magestead will fit the needs of most Magento developers who may also work in multiple different frameworks and don’t want the hassle of switching boxes.
