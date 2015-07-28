@@ -11,7 +11,9 @@ keys:
 databases:
     - magestead
 
-# bootstrap: true
+# bootstrap: magento
+bootstrap: laravel
+# bootstrap: symfony
 
 # blackfire:
 #     - id: foo

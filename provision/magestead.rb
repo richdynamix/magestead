@@ -6,11 +6,14 @@ class Magestead
     # Configure Local Variable To Access Scripts From Remote Location
     scriptDir = File.dirname(__FILE__)
 
+    # Bootstrap type
+    bootstrap = settings["bootstrap"] ||= nil
+
     # Prevent TTY Errors
     config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
 
     # Configure The Box
-    config.vm.box = "magestead"
+    config.vm.box = "richdynamix/magestead"
     config.vm.hostname = settings["hostname"] ||= "magestead"
 
     # Configure A Private Network IP
@@ -109,10 +112,25 @@ class Magestead
     end
 
     # Bootstrap Magento Intallation
-    if settings.include? 'bootstrap'
+    if (bootstrap == "magento")
       config.vm.provision "shell" do |s|
         s.path = scriptDir + "/magento-bootstrap.sh"
-      end
+        s.args = [settings["databases"][0]]
+      end      
+    end
+
+    # Bootstrap Laravel Intallation
+    if (bootstrap == "laravel")
+      config.vm.provision "shell" do |s|
+        s.path = scriptDir + "/laravel-bootstrap.sh"
+      end      
+    end
+
+    # Bootstrap Symfony Intallation
+    if (bootstrap == "symfony")
+      config.vm.provision "shell" do |s|
+        s.path = scriptDir + "/symfony-bootstrap.sh"
+      end      
     end
 
   end
