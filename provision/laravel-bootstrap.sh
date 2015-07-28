@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 echo "--- Bootstrapping Laravel ---"
-# cp -R /vagrant/provision/stubs/laravel-composer.json /vagrant/composer.json
+
 cd /vagrant;
 /usr/local/bin/composer create-project laravel/laravel --prefer-dist laravel
 
