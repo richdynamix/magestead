@@ -7,7 +7,7 @@ class Magestead
     scriptDir = File.dirname(__FILE__)
 
     # Bootstrap type
-    bootstrap = settings["bootstrap"] ||= "magento"
+    bootstrap = settings["bootstrap"] ||= nil
 
     # Prevent TTY Errors
     config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
