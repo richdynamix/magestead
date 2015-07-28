@@ -67,9 +67,7 @@ The `bootstrap:` setting is a new setting to magestead and has three different o
 
 `See https://github.com/colinmollenhour/Cm_Cache_Backend_Redis for documentation.`
 
-The second `bootstrap:` option is `laravel`. When you choose this option laravel will be downloaded and installed into your public directory. The key is already set using composer and the directories of storage and bootstrap/cache are made writable by the server.
-
-The third option is `symfony`, like Laravel it will use composer to install the latest version of Symfony into your project.
+The second `bootstrap:` option is `laravel`. When you choose this option laravel will be downloaded and installed into a laravel directory and a symbolic link is created to the web `public` directory from your laravel `public` directory. The key is already set using composer and the directories of storage and bootstrap/cache are made writable by the server.
 
 #### Launching The Vagrant Box
 
