@@ -3,4 +3,7 @@
 
 echo "--- Bootstrapping Symfony 2.0 ---"
 cd /vagrant; 
-/usr/local/bin/composer create-project symfony/framework-standard-edition public;
+/usr/local/bin/composer create-project symfony/framework-standard-edition symfony;
+
+rm -fr public;
+ln -sfn /vagrant/symfony/web public

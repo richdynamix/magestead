@@ -63,7 +63,11 @@ The `authorize:` setting will require you to provide your SSH public key, this i
 
 The database magestead has been defined for you in `databases:` setting, you are free to add as many of these as you like. Perhaps you need a separate database for a blog.
 
-The `bootstrap:` setting is a new setting to magestead, when activated it will install Magento 1.9.1.0 CE into your public directory using composer. The additional composer libraries like PHPUnit, PhpSpec & Magento Hackathon Composer Installer will also be installed along with the autoloader patch.
+The `bootstrap:` setting is a new setting to magestead and has three different options. The first option is the `magento` setting, when activated it will install Magento 1.9.1.0 CE into your public directory using composer. The additional composer libraries like PHPUnit, PhpSpec & Magento Hackathon Composer Installer will also be installed along with the autoloader patch. It will also install the `Cm_Cache_Backend_Redis` extension should you wish to configure the redis backend.
+
+`See https://github.com/colinmollenhour/Cm_Cache_Backend_Redis for documentation.`
+
+The second `bootstrap:` option is `laravel`. When you choose this option laravel will be downloaded and installed into a laravel directory and a symbolic link is created to the web `public` directory from your laravel `public` directory. The key is already set using composer and the directories of storage and bootstrap/cache are made writable by the server.
 
 #### Launching The Vagrant Box
 
