@@ -12,7 +12,7 @@ databases:
     - magestead
 
 # bootstrap: magento
-bootstrap: laravel
+# bootstrap: laravel
 # bootstrap: symfony
 
 # blackfire:
