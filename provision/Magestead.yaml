@@ -8,10 +8,12 @@ authorize: ~/.ssh/id_rsa.pub
 keys:
     - ~/.ssh/id_rsa
 
+domain: magento.dev
+
 databases:
     - magestead
 
-# bootstrap: magento
+bootstrap: magento
 # bootstrap: laravel
 # bootstrap: symfony
 

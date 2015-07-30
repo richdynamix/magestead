@@ -9,6 +9,9 @@ class Magestead
     # Bootstrap type
     bootstrap = settings["bootstrap"] ||= nil
 
+    # setup domain
+    domain = settings["domain"] ||= "magestead.dev"
+
     # Prevent TTY Errors
     config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
 
@@ -115,7 +118,7 @@ class Magestead
     if (bootstrap == "magento")
       config.vm.provision "shell" do |s|
         s.path = scriptDir + "/magento-bootstrap.sh"
-        s.args = [settings["databases"][0]]
+        s.args = [settings["databases"][0], domain]
       end      
     end
 
@@ -131,6 +134,11 @@ class Magestead
       config.vm.provision "shell" do |s|
         s.path = scriptDir + "/symfony-bootstrap.sh"
       end      
+    end
+
+    config.vm.provision "shell" do |s|
+      s.path = scriptDir + "/server.sh"
+      s.args = [domain, bootstrap]
     end
 
   end

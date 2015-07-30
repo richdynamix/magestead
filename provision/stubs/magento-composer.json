@@ -8,7 +8,9 @@
     "require": {
         "aydin-hassan/magento-core-composer-installer" : "~1.0",
         "magento/magento" : "1.9.1.0",
-        "magento-hackathon/magento-composer-installer": "3.0.*"
+        "magento-hackathon/magento-composer-installer": "3.0.*",
+        "inviqa/magento-symfony-container": "*",
+        "colinmollenhour/cache-backend-redis": "*"
     },
     "authors": [
         {
