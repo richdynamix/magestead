@@ -25,6 +25,7 @@ php -f install.php -- \
 --db_pass "root" \
 --url "$domain" \
 --use_rewrites "yes" \
+--skip_url_validation "yes" \
 --use_secure "no" \
 --use_secure_admin "no" \
 --secure_base_url "$domain" \
