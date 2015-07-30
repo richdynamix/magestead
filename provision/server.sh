@@ -1,20 +1,9 @@
 #!/usr/bin/env bash
 
-if [ $2 -eq "magento" ]
-then
-  root = "/vagrant/public"
-elif [ $2 -eq "laravel" ]
-then
-  root = "/vagrant/laravel/public"
-elif [ $2 -eq "symfony" ]
-then
-  root = "/vagrant/symfony/web"
-fi
-
 block="server {
     listen 80;
     server_name $1;
-    root \"$root\";
+    root $2;
     autoindex on;
 
     index index.html index.htm index.php;
@@ -93,9 +82,9 @@ block="server {
     }
     
     location ~ \.php$ {
-        #try_files $uri =404;
+        #try_files \$uri =404;
 
-        if (!-e $request_filename) { rewrite / /index.php last; }
+        if (!-e \$request_filename) { rewrite / /index.php last; }
 
         expires        off;
         fastcgi_pass   127.0.0.1:9000;
@@ -119,4 +108,4 @@ block="server {
 
 echo "$block" > "/etc/nginx/conf.d/$1"
 sudo service nginx restart
-sudo service php5-fpm restart
+sudo service php-fpm restart

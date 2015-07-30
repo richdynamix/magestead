@@ -8,13 +8,13 @@ cp -R /vagrant/provision/stubs/magento-composer.json /vagrant/composer.json
 cd /vagrant;
 /usr/local/bin/composer install;
 
-cp -R /vagrant/provision/stubs/services.xml /vagrant/public/app/etc/services.xml;
+cp -R /vagrant/provision/stubs/services.xml /vagrant/magento/app/etc/services.xml;
 
 echo "--- Installing Magento ---"
 
-cd /vagrant/public;
+cd /vagrant/magento;
 
-php-cli -f install.php -- \
+php -f install.php -- \
 --license_agreement_accepted "yes" \
 --locale "en_GB" \
 --timezone "Europe/London" \
@@ -25,6 +25,8 @@ php-cli -f install.php -- \
 --db_pass "root" \
 --url "$domain" \
 --use_rewrites "yes" \
+--use_secure "no" \
+--use_secure_admin "no" \
 --secure_base_url "$domain" \
 --admin_firstname "RichDynamix" \
 --admin_lastname "Magestead" \

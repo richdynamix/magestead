@@ -29,7 +29,7 @@
         }
     ],
     "extra": {
-        "magento-root-dir": "public"
+        "magento-root-dir": "magento"
     },
     "config": {
         "bin-dir": "bin"

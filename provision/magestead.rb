@@ -12,6 +12,18 @@ class Magestead
     # setup domain
     domain = settings["domain"] ||= "magestead.dev"
 
+    # Path setting
+    path = "/vagrant/public"
+    if (bootstrap == "magento")
+      path = "/vagrant/magento"
+    end
+    if (bootstrap == "laravel")
+      path = "/vagrant/laravel/public"
+    end
+    if (bootstrap == "symfony")
+      path = "/vagrant/symfony/web"
+    end
+
     # Prevent TTY Errors
     config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
 
@@ -138,7 +150,7 @@ class Magestead
 
     config.vm.provision "shell" do |s|
       s.path = scriptDir + "/server.sh"
-      s.args = [domain, bootstrap]
+      s.args = [domain, path]
     end
 
   end
