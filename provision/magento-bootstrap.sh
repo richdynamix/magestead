@@ -23,6 +23,7 @@ php -f install.php -- \
 --db_name "$DB" \
 --db_user "root" \
 --db_pass "root" \
+--session_save "db" \
 --url "$domain" \
 --use_rewrites "yes" \
 --skip_url_validation "yes" \
