@@ -18,9 +18,6 @@ export PATH=$PATH:/vagrant/magento2/bin;
 # Create the NGINX server block
 block="# Magento Vars
 
-set $MAGE_ROOT /vagrant/magento2;
-set $MAGE_MODE default; # or production or developer
-
 # Example configuration:
  upstream fastcgi_backend {
     # use tcp connection
@@ -31,7 +28,7 @@ set $MAGE_MODE default; # or production or developer
  server {
     listen 80;
     server_name mage.dev;
-    set $MAGE_ROOT /var/www/magento2;
+    set $MAGE_ROOT /vagrant/magento2;
     set $MAGE_MODE developer;
     include /vagrant/magento2/nginx.conf.sample;
  }
