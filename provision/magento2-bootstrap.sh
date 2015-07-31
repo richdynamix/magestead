@@ -3,9 +3,14 @@
 DB=$1;
 domain=$2;
 
+echo "--- Bootstrapping Magento 2 ---"
+
+# Install missing package
+sudo yum -y install php-intl;
+
 # Clone the repo
 cd /vagrant;
-git clone git@github.com:magento/magento2.git magento2;
+git clone https://github.com/magento/magento2.git
 
 # Set permissions
 cd magento2;
