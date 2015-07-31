@@ -131,26 +131,46 @@ class Magestead
       config.vm.provision "shell" do |s|
         s.path = scriptDir + "/magento-bootstrap.sh"
         s.args = [settings["databases"][0], domain]
-      end      
+      end
+
+      config.vm.provision "shell" do |s|
+        s.path = scriptDir + "/server.sh"
+        s.args = [domain, path]
+      end
+
+    end
+
+    # Bootstrap Magento2 Intallation
+    if (bootstrap == "magento2")
+      config.vm.provision "shell" do |s|
+        s.path = scriptDir + "/magento2-bootstrap.sh"
+        s.args = [settings["databases"][0], domain]
+      end
     end
 
     # Bootstrap Laravel Intallation
     if (bootstrap == "laravel")
       config.vm.provision "shell" do |s|
         s.path = scriptDir + "/laravel-bootstrap.sh"
-      end      
+      end
+
+      config.vm.provision "shell" do |s|
+        s.path = scriptDir + "/server.sh"
+        s.args = [domain, path]
+      end
+
     end
 
     # Bootstrap Symfony Intallation
     if (bootstrap == "symfony")
       config.vm.provision "shell" do |s|
         s.path = scriptDir + "/symfony-bootstrap.sh"
-      end      
-    end
+      end
 
-    config.vm.provision "shell" do |s|
-      s.path = scriptDir + "/server.sh"
-      s.args = [domain, path]
+      config.vm.provision "shell" do |s|
+        s.path = scriptDir + "/server.sh"
+        s.args = [domain, path]
+      end
     end
 
   end
