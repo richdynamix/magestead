@@ -13,7 +13,8 @@ domain: magento.dev
 databases:
     - magestead
 
-bootstrap: magento
+#bootstrap: magento
+bootstrap: magento2
 # bootstrap: laravel
 # bootstrap: symfony
 
