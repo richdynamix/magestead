@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+DB=$1;
+domain=$2;
+
 # Clone the repo
 cd /vagrant;
 git clone git@github.com:magento/magento2.git magento2;
@@ -40,3 +43,23 @@ sudo service nginx restart
 sudo service php-fpm restart
 
 # Run the setup wizard from command line
+
+magento setup:install --base-url=http://$domain/ \
+--db-host=localhost \
+--db-name=$DB \
+--db-user=root \
+--db-password=root \
+--admin-firstname=Magento \
+--admin-lastname=Admin \
+--admin-email=admin@admin.com \
+--admin-user=admin \
+--admin-password=password123 \
+--language=en_GB \
+--currency=GBP \
+--timezone=Europe/London \
+--use-rewrites=1 \
+--session-save=db
+
+echo "Magento admin username = admin";
+echo "Magento admin password = password123";
+echo "Magento installed at http://$domain/. Remember and set your hosts file.";
