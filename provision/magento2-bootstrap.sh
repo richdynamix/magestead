@@ -2,23 +2,28 @@
 
 DB=$1;
 domain=$2;
+sampledata=$3;
 
 echo "--- Bootstrapping Magento 2 ---"
 
 # Clone the repo
 cd /vagrant;
 if [ ! -d /vagrant/magento2 ]; then
+    echo "Cloning Magento 2 Repo"
     git clone https://github.com/magento/magento2.git
 fi
 
+echo "Setting Permissions"
 # Set permissions
 cd magento2;
 sudo find . -type d -exec chmod 700 {} \; && sudo find . -type f -exec chmod 600 {} \; && sudo chmod +x bin/magento
 /usr/local/bin/composer install;
 
+echo "Exporting PATH"
 # Export the path to use global
 export PATH=$PATH:/vagrant/magento2/bin;
 
+echo "Setting NGINX Server Block"
 # Create the NGINX server block
 block="server {
     listen 80;
@@ -57,11 +62,11 @@ block="server {
             expires    off;
 
             if (!-f \$request_filename) {
-               rewrite ^/static/(version\d*/)?(.*)$ /static.php?resource=$\2 last;
+               rewrite ^/static/(version\d*/)?(.*)$ /static.php?resource=\$2 last;
             }
         }
         if (!-f \$request_filename) {
-            rewrite ^/static/(version\d*/)?(.*)$ /static.php?resource=$\2 last;
+            rewrite ^/static/(version\d*/)?(.*)$ /static.php?resource=\$2 last;
         }
     }
 
@@ -120,28 +125,56 @@ block="server {
     }
 }
 "
-
+echo "Restart Services"
 # Add the block and restart PHP-FPM and NGINX
 echo "$block" > "/etc/nginx/conf.d/$domain"
 sudo service nginx restart
 sudo service php-fpm restart
 
-# Run the setup wizard from command line
-magento setup:install --base-url=http://$domain/ \
---db-host=localhost \
---db-name=$DB \
---db-user=root \
---db-password=root \
---admin-firstname=Magento \
---admin-lastname=Admin \
---admin-email=admin@admin.com \
---admin-user=admin \
---admin-password=password123 \
---language=en_GB \
---currency=GBP \
---timezone=Europe/London \
---use-rewrites=1 \
---session-save=db
+echo "Installing Magento 2"
+
+# Install Sample Data
+if [ $sampledata == "true" ]; then
+    echo "Setting Up Sample Data Install -- Please wait"
+    /usr/local/bin/composer config repositories.magento composer http://packages.magento.com
+    /usr/local/bin/composer require magento/sample-data:~1.0.0-beta
+
+    echo "Installing Sample Data"
+    # Run the setup wizard from command line
+    magento setup:install --base-url=http://$domain/ \
+    --db-host=localhost \
+    --db-name=$DB \
+    --db-user=root \
+    --db-password=vagrant \
+    --admin-firstname=Magento \
+    --admin-lastname=Admin \
+    --admin-email=admin@admin.com \
+    --admin-user=admin \
+    --admin-password=password123 \
+    --language=en_GB \
+    --currency=GBP \
+    --timezone=Europe/London \
+    --use-rewrites=1 \
+    --use-sample-data \
+    --session-save=db
+else
+    # Run the setup wizard from command line
+    magento setup:install --base-url=http://$domain/ \
+    --db-host=localhost \
+    --db-name=$DB \
+    --db-user=root \
+    --db-password=vagrant \
+    --admin-firstname=Magento \
+    --admin-lastname=Admin \
+    --admin-email=admin@admin.com \
+    --admin-user=admin \
+    --admin-password=password123 \
+    --language=en_GB \
+    --currency=GBP \
+    --timezone=Europe/London \
+    --use-rewrites=1 \
+    --session-save=db
+fi
 
 echo "Magento admin username = admin";
 echo "Magento admin password = password123";

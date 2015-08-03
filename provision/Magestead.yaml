@@ -18,6 +18,9 @@ bootstrap: magento2
 # bootstrap: laravel
 # bootstrap: symfony
 
+# Install Sample Data (MAGENTO 2 ONLY)
+sampledata: "true"
+
 # blackfire:
 #     - id: foo
 #       token: bar

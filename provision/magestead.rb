@@ -24,11 +24,15 @@ class Magestead
       path = "/vagrant/symfony/web"
     end
 
+    # Sample Data (MAGENTO 2 ONLY)
+    sampledata = settings["sampledata"] ||= "false"
+
     # Prevent TTY Errors
     config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
 
     # Configure The Box
-    config.vm.box = "richdynamix/magestead"
+    #config.vm.box = "richdynamix/magestead"
+    config.vm.box = "magestead"
     config.vm.hostname = settings["hostname"] ||= "magestead"
 
     # Configure A Private Network IP
@@ -144,7 +148,7 @@ class Magestead
     if (bootstrap == "magento2")
       config.vm.provision "shell" do |s|
         s.path = scriptDir + "/magento2-bootstrap.sh"
-        s.args = [settings["databases"][0], domain]
+        s.args = [settings["databases"][0], domain, sampledata]
       end
     end
 
