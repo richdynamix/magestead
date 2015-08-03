@@ -24,9 +24,6 @@ class Magestead
       path = "/vagrant/symfony/web"
     end
 
-    # Sample Data (MAGENTO 2 ONLY)
-    sampledata = settings["sampledata"] ||= "false"
-
     # Prevent TTY Errors
     config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
 
@@ -148,7 +145,7 @@ class Magestead
     if (bootstrap == "magento2")
       config.vm.provision "shell" do |s|
         s.path = scriptDir + "/magento2-bootstrap.sh"
-        s.args = [settings["databases"][0], domain, sampledata]
+        s.args = [settings["databases"][0], domain]
       end
     end
 

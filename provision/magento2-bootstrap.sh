@@ -2,7 +2,6 @@
 
 DB=$1;
 domain=$2;
-sampledata=$3;
 
 echo "--- Bootstrapping Magento 2 ---"
 
@@ -132,49 +131,22 @@ sudo service nginx restart
 sudo service php-fpm restart
 
 echo "Installing Magento 2"
-
-# Install Sample Data
-if [ $sampledata == "true" ]; then
-    echo "Setting Up Sample Data Install -- Please wait"
-    /usr/local/bin/composer config repositories.magento composer http://packages.magento.com
-    /usr/local/bin/composer require magento/sample-data:~1.0.0-beta
-
-    echo "Installing Sample Data"
-    # Run the setup wizard from command line
-    magento setup:install --base-url=http://$domain/ \
-    --db-host=localhost \
-    --db-name=$DB \
-    --db-user=root \
-    --db-password=vagrant \
-    --admin-firstname=Magento \
-    --admin-lastname=Admin \
-    --admin-email=admin@admin.com \
-    --admin-user=admin \
-    --admin-password=password123 \
-    --language=en_GB \
-    --currency=GBP \
-    --timezone=Europe/London \
-    --use-rewrites=1 \
-    --use-sample-data \
-    --session-save=db
-else
-    # Run the setup wizard from command line
-    magento setup:install --base-url=http://$domain/ \
-    --db-host=localhost \
-    --db-name=$DB \
-    --db-user=root \
-    --db-password=vagrant \
-    --admin-firstname=Magento \
-    --admin-lastname=Admin \
-    --admin-email=admin@admin.com \
-    --admin-user=admin \
-    --admin-password=password123 \
-    --language=en_GB \
-    --currency=GBP \
-    --timezone=Europe/London \
-    --use-rewrites=1 \
-    --session-save=db
-fi
+# Run the setup wizard from command line
+magento setup:install --base-url=http://$domain/ \
+--db-host=localhost \
+--db-name=$DB \
+--db-user=root \
+--db-password=vagrant \
+--admin-firstname=Magento \
+--admin-lastname=Admin \
+--admin-email=admin@admin.com \
+--admin-user=admin \
+--admin-password=password123 \
+--language=en_GB \
+--currency=GBP \
+--timezone=Europe/London \
+--use-rewrites=1 \
+--session-save=db
 
 echo "Magento admin username = admin";
 echo "Magento admin password = password123";
