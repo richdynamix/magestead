@@ -9,11 +9,27 @@ class Magestead
     # Bootstrap type
     bootstrap = settings["bootstrap"] ||= nil
 
+    # setup domain
+    domain = settings["domain"] ||= "magestead.dev"
+
+    # Path setting
+    path = "/vagrant/public"
+    if (bootstrap == "magento")
+      path = "/vagrant/magento"
+    end
+    if (bootstrap == "laravel")
+      path = "/vagrant/laravel/public"
+    end
+    if (bootstrap == "symfony")
+      path = "/vagrant/symfony/web"
+    end
+
     # Prevent TTY Errors
     config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
 
     # Configure The Box
     config.vm.box = "richdynamix/magestead"
+#     config.vm.box = "magestead"
     config.vm.hostname = settings["hostname"] ||= "magestead"
 
     # Configure A Private Network IP
@@ -115,22 +131,47 @@ class Magestead
     if (bootstrap == "magento")
       config.vm.provision "shell" do |s|
         s.path = scriptDir + "/magento-bootstrap.sh"
-        s.args = [settings["databases"][0]]
-      end      
+        s.args = [settings["databases"][0], domain]
+      end
+
+      config.vm.provision "shell" do |s|
+        s.path = scriptDir + "/server.sh"
+        s.args = [domain, path]
+      end
+
+    end
+
+    # Bootstrap Magento2 Intallation
+    if (bootstrap == "magento2")
+      config.vm.provision "shell" do |s|
+        s.path = scriptDir + "/magento2-bootstrap.sh"
+        s.args = [settings["databases"][0], domain]
+      end
     end
 
     # Bootstrap Laravel Intallation
     if (bootstrap == "laravel")
       config.vm.provision "shell" do |s|
         s.path = scriptDir + "/laravel-bootstrap.sh"
-      end      
+      end
+
+      config.vm.provision "shell" do |s|
+        s.path = scriptDir + "/server.sh"
+        s.args = [domain, path]
+      end
+
     end
 
     # Bootstrap Symfony Intallation
     if (bootstrap == "symfony")
       config.vm.provision "shell" do |s|
         s.path = scriptDir + "/symfony-bootstrap.sh"
-      end      
+      end
+
+      config.vm.provision "shell" do |s|
+        s.path = scriptDir + "/server.sh"
+        s.args = [domain, path]
+      end
     end
 
   end

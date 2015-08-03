@@ -6,13 +6,13 @@ While there is no perfect vagrant box setup that will fit the needs of everyone,
 Magestead is designed to be configurable like Homestead using the YAML configuration while maintaining a much easier per project workflow that ScotchBox offers. The most obvious change in Magestead is the switch from an Ubuntu box to a CentOS box. This switch is to accommodate the developers who work in a Red Hat/CentOS environment everyday and prefer the package managers and comfort of a system they know.
 
 #### What's in the box?
-With a CentOS 6.6 core server using NGINX, PHP 5.6, MySQL 5.5, Redis & Memcached, you know you have a development environment with performance!
+With a CentOS 6.6 core server using NGINX, PHP 5.6, MySQL 5.6, Redis & Memcached, you know you have a development environment with performance!
 
 #### The Full Stack
 - CentOS 6.6
 - NGINX
 - PHP 5.6
-- MySQL 5.5
+- MySQL 5.6
 - Redis
 - Memcached
 - PHPUnit
@@ -67,7 +67,11 @@ The `bootstrap:` setting is a new setting to magestead and has three different o
 
 `See https://github.com/colinmollenhour/Cm_Cache_Backend_Redis for documentation.`
 
-The second `bootstrap:` option is `laravel`. When you choose this option laravel will be downloaded and installed into a laravel directory and a symbolic link is created to the web `public` directory from your laravel `public` directory. The key is already set using composer and the directories of storage and bootstrap/cache are made writable by the server.
+New to version `v1.1` is Magento 2 using the option `magento2`. This will download the latest stable release from github, currently `1.0.0-beta`, setup database and install the Magento2 software. Please note that the admin url is left to autogenerate during installation, pay attention to the output when magestead finishes running. It will prompt you with admin login credentials.
+
+The third `bootstrap:` option is `laravel`. When you choose this option laravel will be downloaded and installed into a laravel directory and a symbolic link is created to the web `public` directory from your laravel `public` directory. The key is already set using composer and the directories of storage and bootstrap/cache are made writable by the server.
+
+
 
 #### Launching The Vagrant Box
 
