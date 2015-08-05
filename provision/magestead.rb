@@ -28,9 +28,9 @@ class Magestead
     config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
 
     # Configure The Box
-    config.vm.box = "richdynamix/magestead"
-#     config.vm.box = "magestead"
-    config.vm.hostname = settings["hostname"] ||= "magestead"
+#     config.vm.box = "richdynamix/magestead"
+    config.vm.box = "magestead"
+    config.vm.hostname = settings["domain"] ||= "magestead.dev"
 
     # Configure A Private Network IP
     config.vm.network :private_network, ip: settings["ip"] ||= "192.168.47.10"
@@ -166,11 +166,7 @@ class Magestead
     if (bootstrap == "symfony")
       config.vm.provision "shell" do |s|
         s.path = scriptDir + "/symfony-bootstrap.sh"
-      end
-
-      config.vm.provision "shell" do |s|
-        s.path = scriptDir + "/server.sh"
-        s.args = [domain, path]
+        s.args = [domain, path, settings["ip"]]
       end
     end
 
