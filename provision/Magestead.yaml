@@ -16,7 +16,7 @@ databases:
 #bootstrap: magento
 #bootstrap: magento2
 #bootstrap: laravel
-bootstrap: symfony
+#bootstrap: symfony
 
 # blackfire:
 #     - id: foo
