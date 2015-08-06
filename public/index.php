@@ -12,9 +12,9 @@
     <title>Magestead - A Vagrant LEMP Stack for Magento Developers</title>
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="http://magestead.richdynamix.com/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="http://www.magestead.co.uk/css/bootstrap.min.css" type="text/css">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="http://magestead.richdynamix.com/css/creative.css" type="text/css">
+    <link rel="stylesheet" href="http://www.magestead.co.uk/css/creative.css" type="text/css">
 </head>
 
 <body id="page-top">
@@ -34,19 +34,19 @@
         <div class="collapse navbar-collapse" id="menu">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a class="page-scroll" href="http://magestead.richdynamix.com/#about">About</a>
+                    <a class="page-scroll" href="http://www.magestead.co.uk/#about">About</a>
                 </li>
                 <li>
-                    <a class="page-scroll" href="http://magestead.richdynamix.com/#box">Box</a>
+                    <a class="page-scroll" href="http://www.magestead.co.uk/#box">Box</a>
                 </li>
                 <li>
-                    <a class="page-scroll" href="http://magestead.richdynamix.com/#stack">Stack</a>
+                    <a class="page-scroll" href="http://www.magestead.co.uk/#stack">Stack</a>
                 </li>
                 <li>
-                    <a class="page-scroll" href="http://magestead.richdynamix.com/#docs">Docs</a>
+                    <a class="page-scroll" href="http://www.magestead.co.uk/#docs">Docs</a>
                 </li>
                 <li>
-                    <a class="page-scroll" href="http://magestead.richdynamix.com/#download">Download</a>
+                    <a class="page-scroll" href="http://www.magestead.co.uk/#download">Download</a>
                 </li>
             </ul>
         </div>
@@ -61,16 +61,16 @@
             <h1>A Vagrant LEMP Stack for Magento Developers</h1>
             <hr>
             <p>Boostrap your Magento development painlessly!</p>
-            <a href="http://magestead.richdynamix.com/#box" class="btn btn-primary btn-xl page-scroll">Find Out More</a>
+            <a href="http://www.magestead.co.uk/#box" class="btn btn-primary btn-xl page-scroll">Find Out More</a>
         </div>
     </div>
 </header>
 
 <!-- jQuery -->
-<script src="http://magestead.richdynamix.com/js/jquery.js"></script>
+<script src="http://www.magestead.co.uk/js/jquery.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
-<script src="http://magestead.richdynamix.com/js/bootstrap.min.js"></script>
+<script src="http://www.magestead.co.uk/js/bootstrap.min.js"></script>
 
 </body>
 
