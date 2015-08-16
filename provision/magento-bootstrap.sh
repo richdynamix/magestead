@@ -8,8 +8,6 @@ cp -R /vagrant/provision/stubs/magento-composer.json /vagrant/composer.json
 cd /vagrant;
 /usr/local/bin/composer install;
 
-cp -R /vagrant/provision/stubs/services.xml /vagrant/magento/app/etc/services.xml;
-
 echo "--- Installing Magento ---"
 
 cd /vagrant/magento;
