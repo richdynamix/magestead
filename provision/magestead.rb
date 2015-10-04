@@ -28,14 +28,19 @@ class Magestead
     config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
 
     # Configure The Box
-    config.vm.box = "richdynamix/magestead"
-#     config.vm.box = "magestead"
+#     config.vm.box = "richdynamix/magestead"
+    config.vm.box = "magestead"
     config.vm.hostname = settings["domain"] ||= "magestead.dev"
 
     # Configure A Private Network IP
     config.vm.network :private_network, ip: settings["ip"] ||= "192.168.47.10"
 
-    config.vm.synced_folder ".", "/vagrant", :nfs => { :mount_options => ["dmode=777","fmode=666"] }
+    mount_opts = []
+    if (settings["mount_type"] == "nfs")
+        mount_opts = settings["mount_opts"] ? settings["mount_opts"] : ['actimeo=1']
+    end
+
+    config.vm.synced_folder ".", "/vagrant", type: settings["mount_type"] ||= nil, mount_options: mount_opts
 
     # Configure A Few VirtualBox Settings
     config.vm.provider "virtualbox" do |vb|
