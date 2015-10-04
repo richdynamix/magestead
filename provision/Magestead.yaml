@@ -11,6 +11,7 @@ keys:
 domain: magestead.dev
 
 mount_type: nfs
+#mount_opts:
 
 databases:
     - magestead
