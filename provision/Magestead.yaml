@@ -8,7 +8,9 @@ authorize: ~/.ssh/id_rsa.pub
 keys:
     - ~/.ssh/id_rsa
 
-domain: symfony.dev
+domain: magestead.dev
+
+mount_type: nfs
 
 databases:
     - magestead
