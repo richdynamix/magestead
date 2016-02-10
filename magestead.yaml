@@ -1,0 +1,215 @@
+vagrantfile:
+    target: local
+    vm:
+        box: puphpet/centos65-x64
+        box_url: puphpet/centos65-x64
+        hostname: magestead2
+        memory: '2048'
+        cpus: '1'
+        network:
+            private_network: 192.168.47.11
+        synced_folder:
+            vflsf_uocnhnxzm524:
+                source: ./
+                target: /var/www
+                sync_type: default
+                smb:
+                    smb_host: ''
+                    smb_username: ''
+                    smb_password: ''
+                    mount_options:
+                        dir_mode: '0775'
+                        file_mode: '0664'
+                rsync:
+                    args:
+                        - '--verbose'
+                        - '--archive'
+                        - '-z'
+                    exclude:
+                        - .vagrant/
+                        - .git/
+                    auto: 'true'
+                owner: www-data
+                group: www-data
+locale:
+    settings:
+        default_locale: en_GB.UTF-8
+        locales:
+            - en_GB.UTF-8
+            - en_US.UTF-8
+        timezone: Europe/London
+firewall:
+    install: '1'
+    rules: {  }
+cron:
+    install: '1'
+    jobs: {  }
+nginx:
+    vhosts:
+        nxv_hf89b705xwkg:
+            server_name: magestead2.dev
+            server_aliases:
+                - www.magestead2.dev
+            www_root: /var/www/magestead2
+            listen_port: '80'
+            index_files:
+                - index.html
+                - index.htm
+                - index.php
+            client_max_body_size: 1m
+            ssl: '0'
+            ssl_cert: ''
+            ssl_key: ''
+            ssl_port: '443'
+            ssl_protocols: ''
+            ssl_ciphers: ''
+            rewrite_to_https: '1'
+            spdy: '1'
+            locations:
+                nxvl_t0dk2ezxdsgr:
+                    location: /
+                    autoindex: 'off'
+                    internal: 'false'
+                    try_files:
+                        - $uri
+                        - $uri/
+                        - /index.php$is_args$args
+                    fastcgi: ''
+                    fastcgi_index: ''
+                    fastcgi_split_path: ''
+                    proxy: ''
+                    proxy_redirect: ''
+                nxvl_02bjurbx8w0x:
+                    location: '~ \.php$'
+                    autoindex: 'off'
+                    internal: 'false'
+                    try_files:
+                        - $uri
+                        - $uri/
+                        - /index.php$is_args$args
+                    fastcgi: '127.0.0.1:9000'
+                    fastcgi_index: index.php
+                    fastcgi_split_path: '^(.+\.php)(/.*)$'
+                    fast_cgi_params_extra:
+                        - 'SCRIPT_FILENAME $request_filename'
+                        - 'APP_ENV dev'
+                    set:
+                        - '$path_info $fastcgi_path_info'
+                    proxy: ''
+                    proxy_redirect: ''
+php:
+    settings:
+        version: '56'
+    ini:
+        display_errors: 'On'
+        error_reporting: '-1'
+        session.save_path: /var/lib/php/session
+        date.timezone: Europe/London
+    fpm_ini:
+        error_log: /var/log/php-fpm.log
+    fpm_pools:
+        phpfp_thqd2mn0axfz:
+            ini:
+                prefix: www
+                listen: '127.0.0.1:9000'
+                security.limit_extensions: .php
+                user: nginx
+                group: nginx
+    composer: '1'
+    composer_home: ''
+xdebug:
+    settings:
+        xdebug.default_enable: '1'
+        xdebug.remote_autostart: '0'
+        xdebug.remote_connect_back: '1'
+        xdebug.remote_enable: '1'
+        xdebug.remote_handler: dbgp
+        xdebug.remote_port: '9009'
+blackfire:
+    install: '0'
+    settings:
+        server_id: ''
+        server_token: ''
+        agent:
+            http_proxy: ''
+            https_proxy: ''
+            log_file: stderr
+            log_level: '1'
+        php:
+            agent_timeout: '0.25'
+            log_file: ''
+            log_level: '1'
+ruby:
+    versions:
+        rv_wz1bu37m2v1v:
+            default: '1'
+            bundler: '1'
+            version: 2.1.2
+mariadb:
+    settings:
+        version: '10.1'
+        root_password: '123'
+        override_options: {  }
+    adminer: 0
+    users:
+        mariadbnu_g74t0hbskehj:
+            name: magestead
+            password: vagrant
+    databases:
+        mariadbnd_lce5ph635qrz:
+            name: magestead
+            sql: ''
+    grants:
+        mariadbng_zs4ofjua3r4o:
+            user: magestead
+            table: '*.*'
+            privileges:
+                - ALL
+mailhog:
+    settings:
+        smtp_ip: 0.0.0.0
+        smtp_port: 1025
+        http_ip: 0.0.0.0
+        http_port: '8025'
+        path: /usr/local/bin/mailhog
+beanstalkd:
+    settings:
+        listenaddress: 0.0.0.0
+        listenport: '11300'
+        maxjobsize: '65535'
+        maxconnections: '1024'
+        binlogdir: /var/lib/beanstalkd/binlog
+        binlogfsync: null
+        binlogsize: '10485760'
+    beanstalk_console: '1'
+elastic_search:
+    install: '1'
+    settings:
+        version: 2.1.0
+        java_install: true
+    instances:
+        esi_be0xvycxsegj:
+            name: es-01
+solr:
+    install: '1'
+    settings:
+        version: 4.10.2
+        port: '8984'
+magestead:
+    apps:
+        mba_12345:
+            install: '1'
+            type: magento
+            dir: '/var/www/magestead2'
+            default_currency: 'GBP'
+            db_host: 'localhost'
+            db_name: 'magestead'
+            db_user: 'magestead'
+            db_pass: 'vagrant'
+            session_save: 'db'
+            base_url: 'http://magestead2.dev/'
+            admin_firstname: 'Steven'
+            admin_lastname: 'Richardson'
+            admin_email: 'steven@richdynamix.com'
+            admin_username: 'admin'
+            admin_password: 'password123'

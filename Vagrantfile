@@ -1,22 +1,28 @@
-require 'json'
+# -*- mode: ruby -*-
+
+dir = File.dirname(File.expand_path(__FILE__))
+
 require 'yaml'
+require "#{dir}/puphpet/ruby/deep_merge.rb"
+require "#{dir}/puphpet/ruby/puppet.rb"
 
-VAGRANTFILE_API_VERSION = "2"
+configValues = YAML.load_file("#{dir}/puphpet/config.yaml")
 
-magesteadYamlPath = File.dirname(__FILE__) + '/provision/Magestead.yaml'
-afterScriptPath = File.dirname(__FILE__) + '/provision/after.sh'
-aliasesPath = File.dirname(__FILE__) + '/provision/aliases'
-
-require File.expand_path(File.dirname(__FILE__) + '/provision/magestead.rb')
-
-Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-	if File.exists? aliasesPath then
-		config.vm.provision "file", source: aliasesPath, destination: "~/.bash_aliases"
-	end
-
-	Magestead.configure(config, YAML::load(File.read(magesteadYamlPath)))
-
-	if File.exists? afterScriptPath then
-		config.vm.provision "shell", path: afterScriptPath
-	end
+provider = ENV['VAGRANT_DEFAULT_PROVIDER']
+if File.file?("#{dir}/puphpet/config-#{provider}.yaml")
+  custom = YAML.load_file("#{dir}/puphpet/config-#{provider}.yaml")
+  configValues.deep_merge!(custom)
 end
+
+if File.file?("#{dir}/magestead.yaml")
+  custom = YAML.load_file("#{dir}/magestead.yaml")
+  configValues.deep_merge!(custom)
+end
+
+data = configValues['vagrantfile']
+
+magestead = configValues['magestead']
+
+Vagrant.require_version '>= 1.8.1'
+
+eval File.read("#{dir}/puphpet/vagrant/Vagrantfile-#{data['target']}")
