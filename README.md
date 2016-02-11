@@ -1,6 +1,6 @@
 # [Magestead](http://www.magestead.co.uk "Magestead")
 
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/richdynamix/magestead/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/richdynamix/magestead/?branch=master) [![Build Status](https://scrutinizer-ci.com/g/richdynamix/magestead/badges/build.png?b=master)](https://scrutinizer-ci.com/g/richdynamix/magestead/build-status/master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/richdynamix/magestead/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/richdynamix/magestead/?branch=develop) [![Build Status](https://scrutinizer-ci.com/g/richdynamix/magestead/badges/build.png?b=develop)](https://scrutinizer-ci.com/g/richdynamix/magestead/build-status/develop)
 
 #### Introduction
 While there is no perfect vagrant box setup that will fit the needs of everyone, there are many out there that do the job brilliantly. Inspired by the amazing [Laravel Homestead](http://laravel.com/docs/5.1/homestead "Laravel Homestead") & [ScotchBox](https://box.scotch.io/ "ScotchBox"), Magestead will fit the needs of most Magento developers who may also work in multiple different frameworks and don’t want the hassle of switching boxes.
