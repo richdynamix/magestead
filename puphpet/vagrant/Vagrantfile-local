@@ -335,7 +335,7 @@ Vagrant.configure('2') do |config|
       # Magento Bootstrap
       if (app[1]["type"] == "magento")
         config.vm.provision :shell, run: 'always' do |s|
-          s.path = 'puphpet/magestead/bootstrap-magento.sh'
+          s.path = 'puphpet/magestead/magento/bootstrap.sh'
           s.args = [app[0], app[1]['dir'], app[1]['locale'], app[1]['default_currency'], app[1]['db_name'], app[1]['session_save'], app[1]['base_url']]
         end
       end
