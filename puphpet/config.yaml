@@ -96,7 +96,6 @@ server:
         - nano
         - vim-common
         - htop
-        - vtop
 users_groups:
     install: '1'
     groups:
@@ -133,13 +132,13 @@ nginx:
             server_name: magestead2.dev
             server_aliases:
                 - www.magestead2.dev
-            www_root: /var/www/magestead2
+            www_root: /var/www
             listen_port: '80'
             index_files:
                 - index.html
                 - index.htm
                 - index.php
-            client_max_body_size: 1m
+            client_max_body_size: 64m
             ssl: '0'
             ssl_cert: ''
             ssl_key: ''
@@ -199,7 +198,7 @@ apache:
             servername: magestead2.dev
             serveraliases:
                 - www.magestead2.dev
-            docroot: /var/www/magestead2
+            docroot: /var/www
             port: '80'
             setenv:
                 - 'APP_ENV dev'
@@ -312,19 +311,31 @@ drush:
 ruby:
     install: '1'
     versions:
-        rv_wz1bu37m2v1v:
+        rv_742ra3j61x5k:
             default: '1'
             bundler: '1'
             version: 2.1.2
+            gems:
+                - sass
+                - compass
 python:
     install: '1'
     packages: {  }
     versions: {  }
 nodejs:
-    install: '0'
+    install: '1'
     settings:
-        version: '5'
-    npm_packages: {  }
+        version: '0.12'
+    npm_packages:
+        - gulp
+        - grunt
+        - yo
+        - jslint
+        - csslint
+        - coffee-script
+        - grunt-cli
+        - eslint
+        - bower
 hhvm:
     install: '0'
     nightly: 0
@@ -403,7 +414,7 @@ mongodb:
         version: 2.6.0
     databases: {  }
 redis:
-    install: '0'
+    install: '1'
     settings:
         port: '6379'
 sqlite:
@@ -419,7 +430,7 @@ mailhog:
         http_port: '8025'
         path: /usr/local/bin/mailhog
 beanstalkd:
-    install: '1'
+    install: '0'
     settings:
         listenaddress: 0.0.0.0
         listenport: '11300'
@@ -437,7 +448,7 @@ rabbitmq:
     vhosts: {  }
     plugins: {  }
 elastic_search:
-    install: '1'
+    install: '0'
     settings:
         version: 2.1.0
         java_install: true
@@ -445,8 +456,14 @@ elastic_search:
         esi_be0xvycxsegj:
             name: es-01
 solr:
-    install: '1'
+    install: '0'
     settings:
         version: 4.10.2
         port: '8984'
-
+varnish:
+    install: '1'
+    settings:
+        varnish_listen_port: 80
+        varnish_storage_size: 0.5G
+        host: '192.168.47.11'
+        host_port: 8080

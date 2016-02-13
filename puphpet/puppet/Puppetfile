@@ -94,5 +94,8 @@ mod 'puppetlabs/vcsrepo',
 mod 'example42/yum',
     :git => 'https://github.com/puphpet/puppet-yum.git',
     :ref => '8233e01382f9989e9a7b15fc529e34069f99fb37'
+mod 'varnish', 
+    :git => 'https://github.com/maxchk/puppet-varnish.git',
+    :ref => '065e6c62addf261d51af80d69295aa32448aefb4'
 exclusion 'ceritsc-yum'
 exclusion 'n1tr0g/gnupg'

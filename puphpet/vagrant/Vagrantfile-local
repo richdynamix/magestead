@@ -96,6 +96,13 @@ Vagrant.configure('2') do |config|
       end
     end
 
+    # Add bootstrapped apps to hostmanager
+    if configValues['magestead']['apps'].is_a?(Hash)
+      configValues['magestead']['apps'].each do |i, app|
+        hosts.push(app['base_url'])
+      end
+    end
+
     if hosts.any?
       if config.vm.hostname.to_s.strip.length == 0
         config.vm.hostname = 'puphpet-dev-machine'
@@ -328,8 +335,8 @@ Vagrant.configure('2') do |config|
       # Magento Bootstrap
       if (app[1]["type"] == "magento")
         config.vm.provision :shell, run: 'always' do |s|
-          s.path = 'puphpet/magestead/magento.sh'
-          s.args = ["#{app[1]['type']}", "#{app[1]['dir']}", "#{app[1]['default_currency']}", "#{app[1]['db_host']}", "#{app[1]['db_name']}", "#{app[1]['db_user']}", "#{app[1]['db_pass']}", "#{app[1]['session_save']}", "#{app[1]['base_url']}"]
+          s.path = 'puphpet/magestead/bootstrap-magento.sh'
+          s.args = [app[0], app[1]['dir'], app[1]['locale'], app[1]['default_currency'], app[1]['db_name'], app[1]['session_save'], app[1]['base_url']]
         end
       end
 
