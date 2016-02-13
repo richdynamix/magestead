@@ -25,13 +25,16 @@ if ! grep -x -q "${APP_NAME}" "/.puphpet-stuff/${APP_NAME}-ran"; then
     sudo /bin/bash -c "echo \"${APP_NAME}\" >> \"/.puphpet-stuff/${APP_NAME}-ran\""
 
 	echo "--- Installing Database for Magento ---"
-    /bin/bash /vagrant/puphpet/magestead/magento/install-db.sh $DB_NAME
+  /bin/bash /vagrant/puphpet/magestead/magento/install-db.sh $DB_NAME
     
 	echo "--- Installing Magento With Composer ---"
-    /bin/bash /vagrant/puphpet/magestead/magento/install.sh $DIR $LOCALE $CURRENCY $DB_NAME $SESSION_SAVE $BASE_URL
+  /bin/bash /vagrant/puphpet/magestead/magento/install.sh $DIR $LOCALE $CURRENCY $DB_NAME $SESSION_SAVE $BASE_URL
 
-    echo "--- Configuring NGINX VHOST for Magento ---"
-    /bin/bash /vagrant/puphpet/magestead/magento/configure-nginx.sh $APP_NAME $DIR $BASE_URL
+  echo "--- Configuring NGINX VHOST for Magento ---"
+  /bin/bash /vagrant/puphpet/magestead/magento/configure-nginx.sh $APP_NAME $DIR $BASE_URL
+
+  echo "--- Installing Magerun ---"
+  /bin/bash /vagrant/puphpet/magestead/magento/magerun.sh $DIR  
 
 else
     echo "Skipping magento bootstrap for ${DIR} as contents have not changed"
