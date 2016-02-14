@@ -9,10 +9,28 @@ vagrantfile:
         network:
             private_network: 192.168.47.11
         synced_folder:
-            vflsf_uocnhnxzm524:
+            magestead:
                 source: ./
                 target: /var/www
                 sync_type: nfs
+                smb:
+                    smb_host: ''
+                    smb_username: ''
+                    smb_password: ''
+                    mount_options:
+                        dir_mode: '0775'
+                        file_mode: '0664'
+                rsync:
+                    args:
+                        - '--verbose'
+                        - '--archive'
+                        - '-z'
+                    exclude:
+                        - .vagrant/
+                        - .git/
+                    auto: 'true'
+                owner: www-data
+                group: www-data
 magestead:
     apps:
         mba_12345:

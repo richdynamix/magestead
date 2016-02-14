@@ -11,6 +11,7 @@ CURRENCY=${4};
 DB_NAME=${5};
 SESSION_SAVE=${6};
 BASE_URL=${7};
+REDIS_INSTALL=${8};
 
 if [ -d "/.puphpet-stuff/${APP_NAME}-ran" ]; then
     rm -rf "/.puphpet-stuff/${APP_NAME}-ran"
@@ -21,21 +22,26 @@ if [ ! -f "/.puphpet-stuff/${APP_NAME}-ran" ]; then
    echo "Created file /.puphpet-stuff/${APP_NAME}-ran"
 fi
 
-if ! grep -x -q "${APP_NAME}" "/.puphpet-stuff/${APP_NAME}-ran"; then
-    sudo /bin/bash -c "echo \"${APP_NAME}\" >> \"/.puphpet-stuff/${APP_NAME}-ran\""
+# if ! grep -x -q "${APP_NAME}" "/.puphpet-stuff/${APP_NAME}-ran"; then
+#     sudo /bin/bash -c "echo \"${APP_NAME}\" >> \"/.puphpet-stuff/${APP_NAME}-ran\""
 
-	echo "--- Installing Database for Magento ---"
-  /bin/bash /vagrant/puphpet/magestead/magento/install-db.sh $DB_NAME
+	# echo "--- Installing Database for Magento ---"
+ #  /bin/bash /vagrant/puphpet/magestead/magento/install-db.sh $DB_NAME
     
-	echo "--- Installing Magento With Composer ---"
-  /bin/bash /vagrant/puphpet/magestead/magento/install.sh $DIR $LOCALE $CURRENCY $DB_NAME $SESSION_SAVE $BASE_URL
+	# echo "--- Installing Magento With Composer ---"
+ #  /bin/bash /vagrant/puphpet/magestead/magento/install.sh $DIR $LOCALE $CURRENCY $DB_NAME $SESSION_SAVE $BASE_URL
 
-  echo "--- Configuring NGINX VHOST for Magento ---"
-  /bin/bash /vagrant/puphpet/magestead/magento/configure-nginx.sh $APP_NAME $DIR $BASE_URL
+ #  echo "--- Configuring NGINX VHOST for Magento ---"
+ #  /bin/bash /vagrant/puphpet/magestead/magento/configure-nginx.sh $APP_NAME $DIR $BASE_URL
 
+  if [ $REDIS_INSTALL = "1" ]; then
+    echo "--- Configuring Magento Sessions with Redis ---"
+    /bin/bash /vagrant/puphpet/magestead/magento/redis-sessions.sh $DIR
+  fi
+  
   echo "--- Installing Magerun ---"
-  /bin/bash /vagrant/puphpet/magestead/magento/magerun.sh $DIR  
+  /bin/bash /vagrant/puphpet/magestead/magento/magerun.sh $DIR
 
-else
-    echo "Skipping magento bootstrap for ${DIR} as contents have not changed"
-fi
+# else
+#     echo "Skipping magento bootstrap for ${DIR} as contents have not changed"
+# fi
