@@ -39,5 +39,4 @@ magestead:
             locale: 'en_GB'
             default_currency: 'GBP'
             db_name: 'magetest'
-            session_save: 'db'
             base_url: 'magetest.dev'

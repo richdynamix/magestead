@@ -4,8 +4,7 @@ DIR=${1};
 LOCALE=${2};
 CURRENCY=${3};
 DB_NAME=${4};
-SESSION_SAVE=${5};
-BASE_URL=${6};
+BASE_URL=${5};
 
 sudo mkdir $DIR
 if [ $? -ne 0 ] ; then
@@ -32,7 +31,7 @@ php -f install.php -- \
 --db_name "$DB_NAME" \
 --db_user "magestead" \
 --db_pass "vagrant" \
---session_save "$SESSION_SAVE" \
+--session_save "db" \
 --url "http://$BASE_URL/" \
 --use_rewrites "yes" \
 --skip_url_validation "yes" \
