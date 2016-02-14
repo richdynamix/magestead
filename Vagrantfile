@@ -21,8 +21,7 @@ end
 
 data = configValues['vagrantfile']
 
-magestead = configValues['magestead']
-redis = configValues['redis']
+magestead = configValues
 
 Vagrant.require_version '>= 1.8.1'
 

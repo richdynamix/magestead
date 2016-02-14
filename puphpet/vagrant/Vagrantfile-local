@@ -329,8 +329,8 @@ Vagrant.configure('2') do |config|
 
 
   # Application Bootstrapping
-  if magestead.has_key?("apps")
-    magestead["apps"].each do |app|
+  if magestead['magestead'].has_key?("apps")
+    magestead['magestead']["apps"].each do |app|
 
       if app[1]["type"] == "magento"
         path = 'puphpet/magestead/magento/bootstrap.sh'
@@ -341,7 +341,7 @@ Vagrant.configure('2') do |config|
       # Magento/Magento 2 Bootstrap
       config.vm.provision :shell, run: 'always' do |s|
         s.path = path
-        s.args = [app[0], app[1]['dir'], app[1]['locale'], app[1]['default_currency'], app[1]['db_name'], app[1]['base_url'], redis['install']]
+        s.args = [app[0], app[1]['dir'], app[1]['locale'], app[1]['default_currency'], app[1]['db_name'], app[1]['base_url'], magestead['redis']['install']]
       end
 
     end

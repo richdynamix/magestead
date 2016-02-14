@@ -21,8 +21,8 @@ if [ ! -f "/.puphpet-stuff/${APP_NAME}-ran" ]; then
    echo "Created file /.puphpet-stuff/${APP_NAME}-ran"
 fi
 
-# if ! grep -x -q "${APP_NAME}" "/.puphpet-stuff/${APP_NAME}-ran"; then
-    # sudo /bin/bash -c "echo \"${APP_NAME}\" >> \"/.puphpet-stuff/${APP_NAME}-ran\""
+if ! grep -x -q "${APP_NAME}" "/.puphpet-stuff/${APP_NAME}-ran"; then
+    sudo /bin/bash -c "echo \"${APP_NAME}\" >> \"/.puphpet-stuff/${APP_NAME}-ran\""
 
 	echo "--- Installing Database for Magento 2 ---"
   /bin/bash /vagrant/puphpet/magestead/install-db.sh $DB_NAME
@@ -36,11 +36,11 @@ fi
   echo "--- Finalising Setup ---"
   /bin/bash /vagrant/puphpet/magestead/magento2/finalise.sh $DIR
 
-  # if [ $REDIS_INSTALL = "1" ]; then
-    # echo "--- Configuring Magento Sessions with Redis ---"
-    # /bin/bash /vagrant/puphpet/magestead/magento2/redis-sessions.sh $DIR
-  # fi
+  if [ $REDIS_INSTALL = "1" ]; then
+    echo "--- Configuring Magento Sessions with Redis ---"
+    php /vagrant/puphpet/magestead/magento2/add_redis_env.php $DIR
+  fi
 
-# else
-#     echo "Skipping magento 2 bootstrap for ${DIR} as contents have not changed"
-# fi
+else
+    echo "Skipping magento 2 bootstrap for ${DIR} as contents have not changed"
+fi
