@@ -26,7 +26,7 @@ sudo find . -type d -exec chmod 700 {} \; && sudo find . -type f -exec chmod 600
 /usr/local/bin/composer install;
 
 echo "--- Exporting PATH ---"
-export PATH=$PATH:/vagrant/magento2/bin;
+export PATH=$PATH:/$DIR/magento2/bin;
 
 echo "--- Installing Magento 2 ---"
 # Run the setup wizard from command line

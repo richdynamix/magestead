@@ -21,23 +21,26 @@ if [ ! -f "/.puphpet-stuff/${APP_NAME}-ran" ]; then
    echo "Created file /.puphpet-stuff/${APP_NAME}-ran"
 fi
 
-if ! grep -x -q "${APP_NAME}" "/.puphpet-stuff/${APP_NAME}-ran"; then
-    sudo /bin/bash -c "echo \"${APP_NAME}\" >> \"/.puphpet-stuff/${APP_NAME}-ran\""
+# if ! grep -x -q "${APP_NAME}" "/.puphpet-stuff/${APP_NAME}-ran"; then
+    # sudo /bin/bash -c "echo \"${APP_NAME}\" >> \"/.puphpet-stuff/${APP_NAME}-ran\""
 
 	echo "--- Installing Database for Magento 2 ---"
   /bin/bash /vagrant/puphpet/magestead/install-db.sh $DB_NAME
     
-	echo "--- Installing Magento 2 With Composer ---"
+	echo "--- Installing Magento 2 Software ---"
   /bin/bash /vagrant/puphpet/magestead/magento2/install.sh $DIR $LOCALE $CURRENCY $DB_NAME $BASE_URL
 
   echo "--- Configuring NGINX VHOST for Magento ---"
   /bin/bash /vagrant/puphpet/magestead/magento2/configure-nginx.sh $APP_NAME $DIR $BASE_URL
 
-  if [ $REDIS_INSTALL = "1" ]; then
+  echo "--- Finalising Setup ---"
+  /bin/bash /vagrant/puphpet/magestead/magento2/finalise.sh $DIR
+
+  # if [ $REDIS_INSTALL = "1" ]; then
     # echo "--- Configuring Magento Sessions with Redis ---"
     # /bin/bash /vagrant/puphpet/magestead/magento2/redis-sessions.sh $DIR
-  fi
+  # fi
 
-else
-    echo "Skipping magento bootstrap for ${DIR} as contents have not changed"
-fi
+# else
+#     echo "Skipping magento 2 bootstrap for ${DIR} as contents have not changed"
+# fi
