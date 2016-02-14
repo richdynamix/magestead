@@ -40,3 +40,10 @@ magestead:
             default_currency: 'GBP'
             db_name: 'magetest'
             base_url: 'magetest.dev'
+        mba_54321:
+            type: magento2
+            dir: '/var/www/magetest2'
+            locale: 'en_GB'
+            default_currency: 'GBP'
+            db_name: 'magetest2'
+            base_url: 'magetest2.dev'
