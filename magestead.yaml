@@ -1,96 +1,20 @@
 vagrantfile:
     vm:
-        box: puphpet/centos65-x64
-        box_url: puphpet/centos65-x64
-        hostname: magestead2
         memory: '2048'
         cpus: '1'
         chosen_provider: virtualbox
-        network:
-            private_network: 192.168.47.11
         synced_folder:
             magestead:
-                source: ./
-                target: /var/www
                 sync_type: nfs
-                smb:
-                    smb_host: ''
-                    smb_username: ''
-                    smb_password: ''
-                    mount_options:
-                        dir_mode: '0775'
-                        file_mode: '0664'
-                rsync:
-                    args:
-                        - '--verbose'
-                        - '--archive'
-                        - '-z'
-                    exclude:
-                        - .vagrant/
-                        - .git/
-                    auto: 'true'
-                owner: www-data
-                group: www-data
 php:
-    install: '1'
     settings:
         version: '70'
-    modules:
-        php:
-            - cli
-            - intl
-            - common
-            - fpm
-            - gd
-            - geoip
-            - imap
-            - mbstring
-            - mcrypt
-            - memcache
-            - mysql
-            - mysqlnd
-            - opcache
-            - xcache
-            - xmlrpc
-            - xsl
-            - bcmath
-            - cgi
-            - dbg
-            - xml
-            - libxml
-        pear: {  }
-        pecl: {  }
-    ini:
-        display_errors: 'On'
-        error_reporting: '-1'
-        session.save_path: /var/lib/php/session
-        date.timezone: Europe/London
-        memory_limit: 1024M
-    fpm_ini:
-        error_log: /var/log/php-fpm.log
-    fpm_pools:
-        phpfp_thqd2mn0axfz:
-            ini:
-                prefix: www
-                listen: '127.0.0.1:9090'
-                security.limit_extensions: .php
-                user: nginx
-                group: nginx
-    composer: '1'
-    composer_home: ''
 magestead:
     apps:
         mba_12345:
-            type: magento
+            type: magento2
             dir: '/var/www/magetest'
             locale: 'en_GB'
             default_currency: 'GBP'
             db_name: 'magetest'
             base_url: 'magetest.dev'
-        mba_54321:
-            type: magento2
-            dir: '/var/www/magetest2'
-            locale: 'en_GB'
-            default_currency: 'GBP'
-            db_name: 'magetest2'
-            base_url: 'magetest2.dev'

@@ -307,6 +307,25 @@ Vagrant.configure('2') do |config|
     end
   end
 
+    # Application Bootstrapping
+  if magestead['magestead'].has_key?("apps")
+    magestead['magestead']["apps"].each do |app|
+
+      if app[1]["type"] == "magento"
+        path = 'puphpet/magestead/magento/bootstrap.sh'
+      elsif app[1]["type"] == "magento2"
+        path = 'puphpet/magestead/magento2/bootstrap.sh'
+      end
+
+      # Magento/Magento 2 Bootstrap
+      config.vm.provision :shell, run: 'always' do |s|
+        s.path = path
+        s.args = [app[0], app[1]['dir'], app[1]['locale'], app[1]['default_currency'], app[1]['db_name'], app[1]['base_url'], magestead['redis']['install']]
+      end
+
+    end
+  end
+
   # config.vm.provision :shell do |s|
   #   s.path = 'puphpet/shell/execute-files.sh'
   #   s.args = ['exec-once', 'exec-always']
@@ -326,27 +345,6 @@ Vagrant.configure('2') do |config|
   # end
 
   config.vm.provision :shell, :path => 'puphpet/shell/important-notices.sh'
-
-
-  # Application Bootstrapping
-  if magestead['magestead'].has_key?("apps")
-    magestead['magestead']["apps"].each do |app|
-
-      if app[1]["type"] == "magento"
-        path = 'puphpet/magestead/magento/bootstrap.sh'
-      elsif app[1]["type"] == "magento2"
-        path = 'puphpet/magestead/magento2/bootstrap.sh'
-      end
-
-      # Magento/Magento 2 Bootstrap
-      config.vm.provision :shell, run: 'always' do |s|
-        s.path = path
-        s.args = [app[0], app[1]['dir'], app[1]['locale'], app[1]['default_currency'], app[1]['db_name'], app[1]['base_url'], magestead['redis']['install']]
-      end
-
-    end
-  end
-
 
   customKey  = "#{dir}/puphpet/files/dot/ssh/id_rsa"
   vagrantKey = "#{vagrant_dot}/machines/default/#{ENV['VAGRANT_DEFAULT_PROVIDER']}/private_key"
