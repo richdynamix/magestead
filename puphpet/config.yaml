@@ -97,7 +97,7 @@ server:
         - vim-common
         - htop
 users_groups:
-    install: '1'
+    install: '0'
     groups:
         - nginx
     users:
@@ -260,7 +260,7 @@ php:
         error_reporting: '-1'
         session.save_path: /var/lib/php/session
         date.timezone: Europe/London
-        memory_limit: '1024M'
+        memory_limit: 1024M
     fpm_ini:
         error_log: /var/log/php-fpm.log
     fpm_pools:
@@ -269,8 +269,8 @@ php:
                 prefix: www
                 listen: '127.0.0.1:9090'
                 security.limit_extensions: .php
-                user: nginx
-                group: nginx
+                user: www-data
+                group: www-data
     composer: '1'
     composer_home: ''
 xdebug:
