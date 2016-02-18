@@ -4,15 +4,12 @@ vagrantfile:
         cpus: '1'
         chosen_provider: virtualbox
         synced_folder:
-            magestead:
+            vflsf_uocnhnxzm524:
                 sync_type: nfs
-php:
-    settings:
-        version: '70'
 magestead:
     apps:
         mba_12345:
-            type: magento2
+            type: magento
             dir: '/var/www/magetest'
             locale: 'en_GB'
             default_currency: 'GBP'

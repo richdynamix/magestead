@@ -100,6 +100,7 @@ block="server {
         ## Store code is defined in administration > Configuration > Manage Stores
         fastcgi_param  MAGE_RUN_CODE default;
         fastcgi_param  MAGE_RUN_TYPE store;
+        fastcgi_param  MAGE_IS_DEVELOPER_MODE true;
         
         include        fastcgi_params; ## See /etc/nginx/fastcgi_params
 

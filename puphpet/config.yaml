@@ -9,7 +9,7 @@ vagrantfile:
         chosen_provider: virtualbox
         box_version: ''
         network:
-            private_network: 192.168.47.11
+            private_network: 192.168.47.47
             forwarded_port:
                 vflnp_9hhzguwqz1nt:
                     host: '8000'
@@ -117,7 +117,7 @@ cron:
     install: '1'
     jobs: {  }
 nginx:
-    install: '1'
+    install: '0'
     settings:
         default_vhost: 1
         proxy_buffer_size: 128k
@@ -181,9 +181,8 @@ nginx:
                     proxy_redirect: ''
     proxies: {  }
 apache:
-    install: '0'
+    install: '1'
     settings:
-        version: 2.4
         user: www-data
         group: www-data
         default_vhost: true
@@ -194,16 +193,14 @@ apache:
         - proxy_fcgi
         - rewrite
     vhosts:
-        av_qhw0g5ux4e4q:
+        av_29czxbhdh2gg:
             servername: magestead2.dev
             serveraliases:
                 - www.magestead2.dev
-            docroot: /var/www
+            docroot: /var/www/magestead
             port: '80'
             setenv:
                 - 'APP_ENV dev'
-            setenvif:
-                - 'Authorization "(.*)" HTTP_AUTHORIZATION=$1'
             custom_fragment: ''
             ssl: '0'
             ssl_cert: ''
@@ -213,8 +210,8 @@ apache:
             ssl_protocol: ''
             ssl_cipher: ''
             directories:
-                avd_13mnkfbyp8sl:
-                    path: /var/www/magestead2
+                avd_g5ajze44oixk:
+                    path: /var/www/magestead
                     options:
                         - Indexes
                         - FollowSymlinks
@@ -225,7 +222,7 @@ apache:
                         - 'all granted'
                     custom_fragment: ''
                     files_match:
-                        avdfm_01ky1vi606a1:
+                        avdfm_jbs20rxkqn2d:
                             path: \.php$
                             sethandler: 'proxy:fcgi://127.0.0.1:9090'
                             custom_fragment: ''
@@ -242,14 +239,11 @@ php:
             - common
             - fpm
             - gd
-            - geoip
             - imap
             - mbstring
             - mcrypt
-            - memcache
             - mysql
             - mysqlnd
-            - opcache
             - xcache
             - xmlrpc
             - xsl
@@ -258,6 +252,7 @@ php:
             - dbg
             - xml
             - libxml
+            - soap
         pear: {  }
         pecl: {  }
     ini:
@@ -265,6 +260,7 @@ php:
         error_reporting: '-1'
         session.save_path: /var/lib/php/session
         date.timezone: Europe/London
+        memory_limit: '1024M'
     fpm_ini:
         error_log: /var/log/php-fpm.log
     fpm_pools:
@@ -460,10 +456,3 @@ solr:
     settings:
         version: 4.10.2
         port: '8984'
-varnish:
-    install: '1'
-    settings:
-        varnish_listen_port: 80
-        varnish_storage_size: 0.5G
-        host: '192.168.47.11'
-        host_port: 8080

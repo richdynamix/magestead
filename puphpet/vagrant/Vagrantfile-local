@@ -130,7 +130,7 @@ Vagrant.configure('2') do |config|
       if folder['sync_type'] == 'nfs'
         if Vagrant.has_plugin?('vagrant-bindfs')
           config.vm.synced_folder "#{folder['source']}", "/mnt/vagrant-#{i}", id: "#{i}", type: 'nfs'
-          config.bindfs.bind_folder "/mnt/vagrant-#{i}", "#{folder['target']}", after: :provision, force_user: sync_owner, force_group: sync_group, perms: "u=rwX:g=rwX:o=rD", o: 'nonempty'
+          config.bindfs.bind_folder "/mnt/vagrant-#{i}", "#{folder['target']}", force_user: sync_owner, force_group: sync_group, perms: "u=rwX:g=rwX:o=rD", o: 'nonempty'
         else
           config.vm.synced_folder "#{folder['source']}", "#{folder['target']}", id: "#{i}", type: 'nfs', :nfs => { :mount_options => ["dmode=777","fmode=666"] }
         end
@@ -320,7 +320,8 @@ Vagrant.configure('2') do |config|
       # Magento/Magento 2 Bootstrap
       config.vm.provision :shell, run: 'always' do |s|
         s.path = path
-        s.args = [app[0], app[1]['dir'], app[1]['locale'], app[1]['default_currency'], app[1]['db_name'], app[1]['base_url'], magestead['redis']['install']]
+        s.args = [app[0], app[1]['dir'], app[1]['locale'], app[1]['default_currency'], 
+        app[1]['db_name'], app[1]['base_url'], magestead['redis']['install'], magestead['apache']['install'], magestead['nginx']['install']]
       end
 
     end

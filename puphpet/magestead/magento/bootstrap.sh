@@ -11,6 +11,8 @@ CURRENCY=${4};
 DB_NAME=${5};
 BASE_URL=${6};
 REDIS_INSTALL=${7};
+APACHE=${8};
+NGINX=${9};
 
 if [ -d "/.puphpet-stuff/${APP_NAME}-ran" ]; then
     rm -rf "/.puphpet-stuff/${APP_NAME}-ran"
@@ -27,11 +29,18 @@ if ! grep -x -q "${APP_NAME}" "/.puphpet-stuff/${APP_NAME}-ran"; then
 	echo "--- Installing Database for Magento ---"
   /bin/bash /vagrant/puphpet/magestead/install-db.sh $DB_NAME
     
-	echo "--- Installing Magento With Composer ---"
-  /bin/bash /vagrant/puphpet/magestead/magento/install.sh $DIR $LOCALE $CURRENCY $DB_NAME $BASE_URL
+  if [ $APACHE = "1" ]; then
+    echo "--- Configuring APACHE VHOST for Magento ---"
+    /bin/bash /vagrant/puphpet/magestead/magento/configure-apache.sh $APP_NAME $DIR $BASE_URL
+  fi
 
-  echo "--- Configuring NGINX VHOST for Magento ---"
-  /bin/bash /vagrant/puphpet/magestead/magento/configure-nginx.sh $APP_NAME $DIR $BASE_URL
+  if [ $NGINX = "1" ]; then
+    echo "--- Configuring NGINX VHOST for Magento ---"
+    /bin/bash /vagrant/puphpet/magestead/magento/configure-nginx.sh $APP_NAME $DIR $BASE_URL
+  fi
+
+  echo "--- Installing Magento With Composer ---"
+  /bin/bash /vagrant/puphpet/magestead/magento/install.sh $DIR $LOCALE $CURRENCY $DB_NAME $BASE_URL
 
   if [ $REDIS_INSTALL = "1" ]; then
     echo "--- Configuring Magento Sessions with Redis ---"
@@ -40,6 +49,9 @@ if ! grep -x -q "${APP_NAME}" "/.puphpet-stuff/${APP_NAME}-ran"; then
   
   echo "--- Installing Magerun ---"
   /bin/bash /vagrant/puphpet/magestead/magento/magerun.sh $DIR
+
+  echo "--- Finalising Setup ---"
+  /bin/bash /vagrant/puphpet/magestead/magento/finalise.sh $DIR
 
 else
     echo "Skipping magento bootstrap for ${DIR} as contents have not changed"
