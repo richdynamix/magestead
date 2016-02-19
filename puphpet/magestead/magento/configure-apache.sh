@@ -5,31 +5,33 @@ DIR=${2};
 BASE_URL=${3};
 
 vhost="
+# ************************************
+# Vhost template applied during provision
+# Managed by Magestead
+# ************************************
+
 <VirtualHost *:80>
   ServerName $BASE_URL
 
   ## Vhost docroot
   DocumentRoot \"$DIR/magento\"
 
-  ## Directories, there should at least be a declaration for /var/www/magestead
-
-  <Directory \"$DIR\">
+  <Directory \"$DIR/magento\">
     Options Indexes FollowSymlinks MultiViews
     AllowOverride All
     Require all granted
 
-    <FilesMatch "\.php$">
+    <FilesMatch \"\.php\$\">
       Require all granted
       SetHandler proxy:fcgi://127.0.0.1:9090
-
     </FilesMatch>
 
   </Directory>
 
   ## Logging
   ServerSignature Off
-  ErrorLog  \"/var/log/httpd/$BASE_URL-error.log\"
-  CustomLog \"/var/log/httpd/$BASE_URL-access.log\" combined
+  ErrorLog  \"/var/log/httpd/$BASE_URL_error.log\"
+  CustomLog \"/var/log/httpd/$BASE_URL_access.log\" combined
 
   ## SetEnv/SetEnvIf for environment variables
   SetEnv MAGE_IS_DEVELOPER_MODE true
