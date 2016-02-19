@@ -261,6 +261,8 @@ php:
         session.save_path: /var/lib/php/session
         date.timezone: Europe/London
         memory_limit: 1024M
+        upload_max_filesize: 10M
+        post_max_size: 10M
     fpm_ini:
         error_log: /var/log/php-fpm.log
     fpm_pools:
