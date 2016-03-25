@@ -28,7 +28,8 @@
         }
     ],
     "extra": {
-        "magento-root-dir": "magento"
+        "magento-root-dir": "magento",
+        "magento-force": true
     },
     "config": {
         "bin-dir": "bin"
