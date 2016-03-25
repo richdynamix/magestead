@@ -20,7 +20,7 @@ php -f install.php -- \
 --db_host "localhost" \
 --db_name "$DB" \
 --db_user "root" \
---db_pass "root" \
+--db_pass "vagrant" \
 --session_save "db" \
 --url "$domain" \
 --use_rewrites "yes" \
