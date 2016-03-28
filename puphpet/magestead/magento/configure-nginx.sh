@@ -85,7 +85,7 @@ block="server {
         rewrite ^(.*.php)/ \$1 last;
     }
     
-    location ~ \.php$ {
+    location ~ \.php\$ {
         #try_files \$uri =404;
 
         if (!-e \$request_filename) { rewrite / /index.php last; }
