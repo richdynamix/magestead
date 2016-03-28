@@ -148,6 +148,16 @@ magento setup:install --base-url=http://$domain/ \
 --use-rewrites=1 \
 --session-save=db
 
+echo "--- Reindexing Tables ---"
+magento indexer:reindex;
+
+echo "--- Flushing All Cache ---"
+magento cache:flush;
+
+echo "Adding REDIS cache settings"
+php /vagrant/provision/stubs/add_redis_env.php
+
 echo "Magento admin username = admin";
 echo "Magento admin password = password123";
 echo "Magento installed at http://$domain/. Remember and set your hosts file.";
+
