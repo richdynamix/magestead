@@ -23,11 +23,12 @@
         },
         {
             "type": "composer",
-            "url": "http://packages.firegento.com"
+            "url": "https://packages.firegento.com"
         }
     ],
     "extra": {
-        "magento-root-dir": "magento"
+        "magento-root-dir": "magento",
+        "magento-force": true
     },
     "config": {
         "bin-dir": "bin"
