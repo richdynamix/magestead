@@ -1,8 +1,5 @@
-# [Magestead](http://www.magestead.co.uk "Magestead")
+## Magestead CLI 2.0
 
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/richdynamix/magestead/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/richdynamix/magestead/?branch=develop) [![Build Status](https://scrutinizer-ci.com/g/richdynamix/magestead/badges/build.png?b=develop)](https://scrutinizer-ci.com/g/richdynamix/magestead/build-status/develop)
+The Magestead cli provides a convenient installer for your magento applications using the Vagrant development environment.
 
-#### Installation & Setup
-
-See the docs - [Magestead](http://www.magestead.co.uk "Magestead")
-
+The CLI utility will also act as a proxy to the CLI tools installed on the Vagrant machine.

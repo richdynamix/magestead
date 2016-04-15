@@ -22,7 +22,13 @@ fi
 
 echo "--- Setting Permissions ---"
 cd magento2;
-sudo find . -type d -exec chmod 700 {} \; && sudo find . -type f -exec chmod 600 {} \; && sudo chmod +x bin/magento
+
+# redis no longer installed by default
+/usr/local/bin/composer require predis/predis;
+
+sudo find . -type d -exec chmod 700 {} \; &&
+sudo find . -type f -exec chmod 600 {} \; &&
+sudo chmod +x bin/magento
 /usr/local/bin/composer install;
 
 echo "--- Exporting PATH ---"

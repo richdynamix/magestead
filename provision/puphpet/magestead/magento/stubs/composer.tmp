@@ -27,7 +27,7 @@
         }
     ],
     "extra": {
-        "magento-root-dir": "magento",
+        "magento-root-dir": "public",
         "magento-force": true
     },
     "config": {

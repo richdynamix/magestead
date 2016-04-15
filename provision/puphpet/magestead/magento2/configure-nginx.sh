@@ -7,7 +7,7 @@ BASE_URL=${3};
 block="server {
     listen 80;
     server_name $BASE_URL;
-    set \$MAGE_ROOT $DIR/magento2;
+    set \$MAGE_ROOT $DIR/public;
     set \$MAGE_MODE developer;
 
     root \$MAGE_ROOT/pub;

@@ -1,5 +1,6 @@
 vagrantfile:
     target: local
+    puphpet: true
     vm:
         box: puphpet/centos65-x64
         box_url: puphpet/centos65-x64
@@ -231,7 +232,7 @@ apache:
 php:
     install: '1'
     settings:
-        version: '56'
+        version: '70'
     modules:
         php:
             - cli
@@ -242,15 +243,17 @@ php:
             - imap
             - mbstring
             - mcrypt
+            - mhash
             - mysql
             - mysqlnd
-            - xcache
             - xmlrpc
             - xsl
             - bcmath
             - cgi
             - dbg
             - xml
+            - zip
+            - json
             - libxml
             - soap
         pear: {  }

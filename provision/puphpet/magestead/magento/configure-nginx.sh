@@ -7,7 +7,7 @@ BASE_URL=${3};
 block="server {
     listen 80;
     server_name $BASE_URL;
-    root \"$DIR/magento\";
+    root \"$DIR/public\";
     autoindex on;
 
     index index.html index.htm index.php;

@@ -39,19 +39,19 @@ if ! grep -x -q "${APP_NAME}" "/.puphpet-stuff/${APP_NAME}-ran"; then
     /bin/bash /vagrant/puphpet/magestead/magento/configure-nginx.sh $APP_NAME $DIR $BASE_URL
   fi
 
-  echo "--- Installing Magento With Composer ---"
-  /bin/bash /vagrant/puphpet/magestead/magento/install.sh $DIR $LOCALE $CURRENCY $DB_NAME $BASE_URL
-
-  if [ $REDIS_INSTALL = "1" ]; then
-    echo "--- Configuring Magento Sessions with Redis ---"
-    /bin/bash /vagrant/puphpet/magestead/magento/redis-sessions.sh $DIR
-  fi
+#  echo "--- Installing Magento With Composer ---"
+#  /bin/bash /vagrant/puphpet/magestead/magento/install.sh $DIR $LOCALE $CURRENCY $DB_NAME $BASE_URL
+#
+#  if [ $REDIS_INSTALL = "1" ]; then
+#    echo "--- Configuring Magento Sessions with Redis ---"
+#    /bin/bash /vagrant/puphpet/magestead/magento/redis-sessions.sh $DIR
+#  fi
   
-  echo "--- Installing Magerun ---"
-  /bin/bash /vagrant/puphpet/magestead/magento/magerun.sh $DIR
-
-  echo "--- Finalising Setup ---"
-  /bin/bash /vagrant/puphpet/magestead/magento/finalise.sh $DIR
+#  echo "--- Installing Magerun ---"
+#  /bin/bash /vagrant/puphpet/magestead/magento/magerun.sh $DIR
+#
+#  echo "--- Finalising Setup ---"
+#  /bin/bash /vagrant/puphpet/magestead/magento/finalise.sh $DIR
 
 else
     echo "Skipping magento bootstrap for ${DIR} as contents have not changed"
