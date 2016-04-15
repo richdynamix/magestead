@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "19bf3a1cfb752a20e050cae5f7c2d317",
-    "content-hash": "d7960c6ac1645de2c402896e62cc65bd",
+    "hash": "b7fefb0687e16095355de933ab91fb58",
+    "content-hash": "1ffde250e16458446782f7d100626ce0",
     "packages": [
         {
             "name": "doctrine/instantiator",
@@ -60,6 +60,59 @@
                 "instantiate"
             ],
             "time": "2015-06-14 21:17:01"
+        },
+        {
+            "name": "jolicode/jolinotif",
+            "version": "v1.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jolicode/JoliNotif.git",
+                "reference": "8b0af95c95711cfb77d0af579c8dbe1c62f40a14"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jolicode/JoliNotif/zipball/8b0af95c95711cfb77d0af579c8dbe1c62f40a14",
+                "reference": "8b0af95c95711cfb77d0af579c8dbe1c62f40a14",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0",
+                "symfony/process": "~2.3|~3.0"
+            },
+            "require-dev": {
+                "fabpot/php-cs-fixer": "~1.5",
+                "phpunit/phpunit": "~4.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Joli\\JoliNotif\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Loïck Piera",
+                    "email": "pyrech@gmail.com"
+                }
+            ],
+            "description": "Send desktop notifications on Windows, Linux, MacOS.",
+            "keywords": [
+                "MAC",
+                "growl",
+                "linux",
+                "notification",
+                "windows"
+            ],
+            "time": "2016-03-22 20:13:26"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
