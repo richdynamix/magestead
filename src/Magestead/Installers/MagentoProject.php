@@ -1,5 +1,7 @@
 <?php namespace Magestead\Installers;
 
+use Magestead\Service\Notification;
+use Magestead\Service\VersionControl;
 use Magestead\Command\ProcessCommand;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -9,20 +11,23 @@ class MagentoProject
     /**
      * MagentoProject constructor.
      * @param array $options
+     * @param array $config
      * @param $projectPath
      * @param OutputInterface $output
      */
-    public function __construct(array $options, $projectPath, OutputInterface $output)
+    public function __construct(array $options, array $config, $projectPath, OutputInterface $output)
     {
         $output->writeln('<info>Installing Magento with Composer</info>');
         $this->composerInstall($projectPath, $output);
 
         $output->writeln('<info>Installing Magento Software</info>');
-        $this->installMagento($options, $projectPath, $output);
+        $this->installMagento($config, $projectPath, $output);
 
         $output->writeln('<info>Finalising Setup</info>');
         $this->finaliseSetup($options, $projectPath, $output);
-        $this->showCredentials($options, $output);
+        $this->showCredentials($config, $output);
+
+        Notification::send();
     }
 
     /**
@@ -120,7 +125,7 @@ class MagentoProject
         new ProcessCommand($command, $projectPath, $output);
     }
 
-    protected function finaliseSetup($options, $projectPath, OutputInterface $output)
+    protected function finaliseSetup(array $options, $projectPath, OutputInterface $output)
     {
         $command = 'vagrant ssh -c \'cd /var/www/public; ../bin/n98-magerun.phar index:reindex:all;\'';
         $output->writeln('<comment>Reindexing Tables</comment>');
@@ -161,17 +166,7 @@ class MagentoProject
     {
         if (!empty($options['repo_url'])) {
             copy($projectPath . "/puphpet/magestead/magento/stubs/gitignore.tmp", $projectPath . "/.gitignore");
-            $command = 'git init; git remote add origin ' . $options['repo_url'];
-            $output->writeln('<info>Configuring GIT repo</info>');
-            new ProcessCommand($command, $projectPath, $output);
-
-            $add = 'git add -A';
-            $output->writeln('<comment>Adding files to repo</comment>');
-            new ProcessCommand($add, $projectPath, $output);
-
-            $commit = "git commit -m 'Initial commit'";
-            $output->writeln('<comment>Committing files to repo</comment>');
-            new ProcessCommand($commit, $projectPath, $output);
+            return new VersionControl($options['repo_url'], $projectPath, $output);
         }
     }
 

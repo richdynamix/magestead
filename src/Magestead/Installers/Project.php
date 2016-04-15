@@ -6,10 +6,10 @@ class Project
     {
         switch ($options['app']) {
             case "magento":
-                return new MagentoProject($config, $projectPath, $output);
+                return new MagentoProject($options, $config, $projectPath, $output);
             break;
             case "magento 2":
-                return new Magento2Project($config, $projectPath, $output);
+                return new Magento2Project($options, $config, $projectPath, $output);
             break;
         }
     }
