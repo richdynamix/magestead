@@ -21,7 +21,7 @@ class MagentoProject
         $this->installMagento($options, $projectPath, $output);
 
         $output->writeln('<info>Finalising Setup</info>');
-        $this->finaliseSetup($projectPath, $output);
+        $this->finaliseSetup($options, $projectPath, $output);
         $this->showCredentials($options, $output);
     }
 
@@ -120,11 +120,7 @@ class MagentoProject
         new ProcessCommand($command, $projectPath, $output);
     }
 
-    /**
-     * @param $projectPath
-     * @param OutputInterface $output
-     */
-    protected function finaliseSetup($projectPath, OutputInterface $output)
+    protected function finaliseSetup($options, $projectPath, OutputInterface $output)
     {
         $command = 'vagrant ssh -c \'cd /var/www/public; ../bin/n98-magerun.phar index:reindex:all;\'';
         $output->writeln('<comment>Reindexing Tables</comment>');
@@ -137,6 +133,8 @@ class MagentoProject
         $command = 'vagrant ssh -c \'cd /var/www/public; ../bin/n98-magerun.phar cache:flush;\'';
         $output->writeln('<comment>Flushing All Cache</comment>');
         new ProcessCommand($command, $projectPath, $output);
+
+        $this->processVcs($options, $projectPath, $output);
 
         $command = 'vagrant ssh -c \'cd /var/www/public; ../bin/n98-magerun.phar sys:check;\'';
         $output->writeln('<comment>System Check</comment>');
@@ -157,6 +155,24 @@ class MagentoProject
                 ['admin', 'password123', $options['magestead']['apps']['mba_12345']['base_url']],
             ]);
         $table->render();
+    }
+
+    protected function processVcs(array $options, $projectPath, OutputInterface $output)
+    {
+        if (!empty($options['repo_url'])) {
+            copy($projectPath . "/puphpet/magestead/magento/stubs/gitignore.tmp", $projectPath . "/.gitignore");
+            $command = 'git init; git remote add origin ' . $options['repo_url'];
+            $output->writeln('<info>Configuring GIT repo</info>');
+            new ProcessCommand($command, $projectPath, $output);
+
+            $add = 'git add -A';
+            $output->writeln('<comment>Adding files to repo</comment>');
+            new ProcessCommand($add, $projectPath, $output);
+
+            $commit = "git commit -m 'Initial commit'";
+            $output->writeln('<comment>Committing files to repo</comment>');
+            new ProcessCommand($commit, $projectPath, $output);
+        }
     }
 
     /**

@@ -46,6 +46,7 @@ class Options
           'box' => $this->getBox(),
           'm2user' => $this->getM2Username(),
           'm2pass' => $this->getM2Password(),
+          'repo_url' => $this->getRepoUrl(),
           'ip_address' => $this->getIpAddress(),
           'cpus' => $this->getCpus(),
           'memory_limit' => $this->getMemorylimit(),
@@ -122,6 +123,14 @@ class Options
     public function getCpus()
     {
         return $this->_cpus;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRepoUrl()
+    {
+        return $this->_repoUrl;
     }
 
     /**
