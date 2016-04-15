@@ -11,11 +11,13 @@ use Symfony\Component\Yaml\Exception\ParseException;
 
 class SetupCommand extends Command
 {
+    protected $_basePath;
     protected $_projectPath;
     protected $_magesteadConfig;
 
     protected function configure()
     {
+        $this->_basePath = dirname( __FILE__ ) . '/../../../';
         $this->_projectPath = getcwd();
 
         $this->setName("setup");
