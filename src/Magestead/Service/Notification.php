@@ -12,7 +12,7 @@ class Notification
         $notification =
             (new Notify())
                 ->setTitle('Magestead')
-                ->setBody('Magento has successfully been installed!')
+                ->setBody('Magento was successfully installed!')
                 ->setIcon($basePath .'assets/magentologo.png')
         ;
 
