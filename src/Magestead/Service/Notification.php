@@ -5,14 +5,14 @@ use Joli\JoliNotif\NotifierFactory;
 
 class Notification
 {
-    public static function send()
+    public static function send($message)
     {
         $notifier = NotifierFactory::create();
         $basePath = dirname( __FILE__ ) . '/../../../';
         $notification =
             (new Notify())
                 ->setTitle('Magestead')
-                ->setBody('Magento was successfully installed!')
+                ->setBody($message)
                 ->setIcon($basePath .'assets/magentologo.png')
         ;
 

@@ -1,5 +1,6 @@
 <?php namespace Magestead\Installers;
 
+use Magestead\Helper\HostsPluginChecker;
 use Magestead\Service\Notification;
 use Magestead\Service\VersionControl;
 use Magestead\Command\ProcessCommand;
@@ -27,7 +28,7 @@ class MagentoProject
         $this->finaliseSetup($options, $projectPath, $output);
         $this->showCredentials($config, $output);
 
-        Notification::send();
+        Notification::send('Magento was successfully installed!');
     }
 
     /**
@@ -160,6 +161,8 @@ class MagentoProject
                 ['admin', 'password123', $options['magestead']['apps']['mba_12345']['base_url']],
             ]);
         $table->render();
+
+        HostsPluginChecker::verify($options, $output);
     }
 
     protected function processVcs(array $options, $projectPath, OutputInterface $output)

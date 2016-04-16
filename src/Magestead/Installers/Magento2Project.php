@@ -1,6 +1,9 @@
 <?php namespace Magestead\Installers;
 
 use Magestead\Command\ProcessCommand;
+use Magestead\Helper\HostsPluginChecker;
+use Magestead\Service\Notification;
+use Magestead\Service\VersionControl;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -9,15 +12,18 @@ class Magento2Project
     /**
      * Magento2Project constructor.
      * @param array $options
+     * @param array $config
      * @param $projectPath
      * @param OutputInterface $output
      */
-    public function __construct(array $options, $projectPath, OutputInterface $output)
+    public function __construct(array $options, array $config, $projectPath, OutputInterface $output)
     {
         $this->composerInstall($projectPath, $output);
-        $this->installMagento($options, $projectPath, $output);
-        $this->finaliseSetup($projectPath, $output);
-        $this->showCredentials($options, $output);
+        $this->installMagento($config, $projectPath, $output);
+        $this->finaliseSetup($options, $projectPath, $output);
+        $this->showCredentials($config, $output);
+
+        Notification::send('Magento 2 was successfully installed!');
     }
 
     /**
@@ -45,7 +51,6 @@ class Magento2Project
 
         $output->writeln('<comment>Installing Predis package</comment>');
         $command = 'composer require predis/predis;';
-//        $command = 'vagrant ssh -c \'cd /var/www/public; composer require predis/predis; \'';
         new ProcessCommand($command, $projectPath, $output);
     }
 
@@ -165,18 +170,21 @@ class Magento2Project
     }
 
     /**
+     * @param array $options
      * @param $projectPath
      * @param OutputInterface $output
      */
-    protected function finaliseSetup($projectPath, OutputInterface $output)
+    protected function finaliseSetup(array $options, $projectPath, OutputInterface $output)
     {
+        $command = 'vagrant ssh -c \'cd /var/www/public; bin/magento cache:flush;\'';
+        $output->writeln('<comment>Flushing All Cache</comment>');
+        new ProcessCommand($command, $projectPath, $output);
+
         $command = 'vagrant ssh -c \'cd /var/www/public; bin/magento indexer:reindex; \'';
         $output->writeln('<comment>Reindexing Tables</comment>');
         new ProcessCommand($command, $projectPath, $output);
 
-        $command = 'vagrant ssh -c \'cd /var/www/public; bin/magento cache:flush;\'';
-        $output->writeln('<comment>Flushing All Cache</comment>');
-        new ProcessCommand($command, $projectPath, $output);
+        $this->processVcs($options, $projectPath, $output);
     }
 
     /**
@@ -193,5 +201,15 @@ class Magento2Project
                 ['admin', 'password123', $options['magestead']['apps']['mba_12345']['base_url'], 'admin'],
             ]);
         $table->render();
+
+        HostsPluginChecker::verify($options, $output);
+    }
+
+    protected function processVcs(array $options, $projectPath, OutputInterface $output)
+    {
+        if (!empty($options['repo_url'])) {
+            copy($projectPath . "/puphpet/magestead/magento2/stubs/gitignore.tmp", $projectPath . "/.gitignore");
+            return new VersionControl($options['repo_url'], $projectPath, $output);
+        }
     }
 }

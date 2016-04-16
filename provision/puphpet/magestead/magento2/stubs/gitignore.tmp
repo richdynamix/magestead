@@ -1,0 +1,13 @@
+.vagrant
+vendor/
+composer.lock
+
+/.buildpath
+/.cache
+/.metadata
+/.project
+/.settings
+atlassian*
+/nbproject
+/.idea
+/.gitattributes

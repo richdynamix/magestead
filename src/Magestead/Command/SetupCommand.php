@@ -2,6 +2,7 @@
 
 use Magestead\Helper\Options;
 use Magestead\Installers\Project;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Yaml\Parser;
 use Symfony\Component\Yaml\Dumper;
 use Symfony\Component\Console\Command\Command;
@@ -34,12 +35,7 @@ class SetupCommand extends Command
         $helper = $this->getHelper('question');
         $options = new Options($helper, $input, $output);
 
-        $output->writeln('<info>Setting up project structure</info>');
-        $provisionFolder = $this->_basePath . "provision";
-        $this->copyConfigFiles($provisionFolder, $this->_projectPath, $output);
-
-        $output->writeln('<info>Customising the project</info>');
-        $this->configureProject($options->getAllOptions(), $output);
+        $this->setupProject($output, $options);
 
         $output->writeln('<info>Spinning up your custom box</info>');
         new ProcessCommand('vagrant up', $this->_projectPath, $output);
@@ -55,6 +51,8 @@ class SetupCommand extends Command
     protected function copyConfigFiles($source, $target, OutputInterface $output)
     {
         try {
+            $progress = new ProgressBar($output, 3720);
+            $progress->start();
             foreach (
                 $iterator = new \RecursiveIteratorIterator(
                     new \RecursiveDirectoryIterator($source, \RecursiveDirectoryIterator::SKIP_DOTS),
@@ -65,7 +63,10 @@ class SetupCommand extends Command
                 } else {
                     copy($item, $target . DIRECTORY_SEPARATOR . $iterator->getSubPathName());
                 }
+                $progress->advance();
             }
+            $progress->finish();
+            echo "\n";
         } catch (\Exception $e) {
             $output->writeln('<error>There was an error while setting up the project structure</error>');
         }
@@ -118,5 +119,17 @@ class SetupCommand extends Command
         } catch (\Exception $e) {
             $output->writeln('<error>Unable to write to the YAML file</error>');
         }
+    }
+
+    /**
+     * @param OutputInterface $output
+     * @param $options
+     */
+    protected function setupProject(OutputInterface $output, $options)
+    {
+        $output->writeln('<info>Setting up project structure</info>');
+        $provisionFolder = $this->_basePath . "provision";
+        $this->copyConfigFiles($provisionFolder, $this->_projectPath, $output);
+        $this->configureProject($options->getAllOptions(), $output);
     }
 }
