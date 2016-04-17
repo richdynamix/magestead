@@ -20,7 +20,7 @@
 
     define('APP_PATH',  __DIR__);
 
-    $app = new Application('Magestead CLI', '2.0');
+    $app = new Application('Magestead CLI', '2.0.0');
     $app->addCommands(array(
         // Project Setup Command
         new Magestead\Command\SetupCommand(),
@@ -42,5 +42,11 @@
         new Magestead\Command\Cache\FlushCommand(),
         new Magestead\Command\Cache\StatusCommand(),
 
+        // Index Commands
+        new Magestead\Command\Index\InfoCommand(),
+        new Magestead\Command\Index\ReindexCommand(),
+        new Magestead\Command\Index\SetModeCommand(),
+        new Magestead\Command\Index\ShowModeCommand(),
+        new Magestead\Command\Index\StatusCommand(),
     ));
     $app->run();
