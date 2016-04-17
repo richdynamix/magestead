@@ -22,6 +22,25 @@
 
     $app = new Application('Magestead CLI', '2.0');
     $app->addCommands(array(
+        // Project Setup Command
         new Magestead\Command\SetupCommand(),
+
+        // VM Related Commands
+        new Magestead\Command\VM\UpCommand(),
+        new Magestead\Command\VM\HaltCommand(),
+        new Magestead\Command\VM\DestroyCommand(),
+        new Magestead\Command\VM\SshCommand(),
+        new Magestead\Command\VM\StatusCommand(),
+        new Magestead\Command\VM\SuspendCommand(),
+        new Magestead\Command\VM\ResumeCommand(),
+        new Magestead\Command\VM\RunCommand(),
+
+        // Cache Commands
+        new Magestead\Command\Cache\CleanCommand(),
+        new Magestead\Command\Cache\DisableCommand(),
+        new Magestead\Command\Cache\EnableCommand(),
+        new Magestead\Command\Cache\FlushCommand(),
+        new Magestead\Command\Cache\StatusCommand(),
+
     ));
     $app->run();

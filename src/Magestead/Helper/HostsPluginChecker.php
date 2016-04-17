@@ -6,11 +6,11 @@ class HostsPluginChecker
 {
     public static function verify(array $options, OutputInterface $output)
     {
-        $hostPlugin = `vagrant plugin list | grep vagrant-hostsupdaterqwerty`;
+        $hostPlugin = `vagrant plugin list | grep vagrant-hostsupdater`;
         if (is_null($hostPlugin)) {
             self::editHostsInstructions($options, $output);
 
-            $output->writeln('<comment>Installing the vagrant-hostsupdater plugin will remove the need for manual editing of your hosts file.</comment>');
+            $output->writeln('<comment>Installing the vagrant-hostsupdater plugin will remove the need for manual edits of your hosts file.</comment>');
         }
     }
 
@@ -23,6 +23,6 @@ class HostsPluginChecker
         $output->writeln('<comment>NOTE: You will need to add the following to your hosts file!</comment>');
         $comment = $options['vagrantfile']['vm']['network']['private_network'] .
             ' ' . $options['magestead']['apps']['mba_12345']['base_url'];
-        $output->writeln('<comment>' . $comment . '</comment>');
+        $output->writeln('<info>' . $comment . '</info>');
     }
 }

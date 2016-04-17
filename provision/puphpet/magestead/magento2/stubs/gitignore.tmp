@@ -11,3 +11,6 @@ atlassian*
 /nbproject
 /.idea
 /.gitattributes
+
+public/update
+public/phpserver

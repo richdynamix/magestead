@@ -87,8 +87,6 @@ class Magento2Project
 --session-save=db \'';
 
         new ProcessCommand($install, $projectPath, $output);
-
-        $this->configureRedis($projectPath, $output);
     }
 
     /**
@@ -121,50 +119,44 @@ class Magento2Project
         $file = "$projectPath/public/app/etc/env.php";
         $env = include $file;
 
-        $env['cache'] =
-            array (
-                'frontend' =>
-                    array (
-                        'default' =>
-                            array (
-                                'backend' => 'Cm_Cache_Backend_Redis',
-                                'backend_options' =>
-                                    array (
-                                        'server' => '127.0.0.1',
-                                        'port' => '6379',
-                                        'persistent' => '',
-                                        'database' => '0',
-                                        'force_standalone' => '0',
-                                        'connect_retries' => '1',
-                                        'read_timeout' => '10',
-                                        'automatic_cleaning_factor' => '0',
-                                        'compress_data' => '1',
-                                        'compress_tags' => '1',
-                                        'compress_threshold' => '20480',
-                                        'compression_lib' => 'gzip',
-                                    )
-                            ),
-                        'page_cache' =>
-                            array (
-                                'backend' => 'Cm_Cache_Backend_Redis',
-                                'backend_options' =>
-                                    array (
-                                        'server' => '127.0.0.1',
-                                        'port' => '6379',
-                                        'persistent' => '',
-                                        'database' => '1',
-                                        'force_standalone' => '0',
-                                        'connect_retries' => '1',
-                                        'read_timeout' => '10',
-                                        'automatic_cleaning_factor' => '0',
-                                        'compress_data' => '0',
-                                        'compress_tags' => '1',
-                                        'compress_threshold' => '20480',
-                                        'compression_lib' => 'gzip',
-                                    ),
-                            ),
-                    )
-            );
+        $env['cache'] = [
+            'frontend' => [
+                'default' => [
+                    'backend' => 'Cm_Cache_Backend_Redis',
+                    'backend_options' => [
+                        'server' => '127.0.0.1',
+                        'port' => '6379',
+                        'persistent' => '',
+                        'database' => '0',
+                        'force_standalone' => '0',
+                        'connect_retries' => '1',
+                        'read_timeout' => '10',
+                        'automatic_cleaning_factor' => '0',
+                        'compress_data' => '1',
+                        'compress_tags' => '1',
+                        'compress_threshold' => '20480',
+                        'compression_lib' => 'gzip',
+                    ]
+                ],
+                'page_cache' => [
+                    'backend' => 'Cm_Cache_Backend_Redis',
+                    'backend_options' => [
+                        'server' => '127.0.0.1',
+                        'port' => '6379',
+                        'persistent' => '',
+                        'database' => '1',
+                        'force_standalone' => '0',
+                        'connect_retries' => '1',
+                        'read_timeout' => '10',
+                        'automatic_cleaning_factor' => '0',
+                        'compress_data' => '0',
+                        'compress_tags' => '1',
+                        'compress_threshold' => '20480',
+                        'compression_lib' => 'gzip',
+                    ],
+                ],
+            ],
+        ];
 
         file_put_contents($file, "<?php \n \n return ".var_export($env,true).";");
     }
@@ -176,14 +168,15 @@ class Magento2Project
      */
     protected function finaliseSetup(array $options, $projectPath, OutputInterface $output)
     {
-        $command = 'vagrant ssh -c \'cd /var/www/public; bin/magento cache:flush;\'';
-        $output->writeln('<comment>Flushing All Cache</comment>');
-        new ProcessCommand($command, $projectPath, $output);
-
         $command = 'vagrant ssh -c \'cd /var/www/public; bin/magento indexer:reindex; \'';
         $output->writeln('<comment>Reindexing Tables</comment>');
         new ProcessCommand($command, $projectPath, $output);
 
+        $command = 'vagrant ssh -c \'cd /var/www/public; bin/magento cache:flush;\'';
+        $output->writeln('<comment>Flushing All Cache</comment>');
+        new ProcessCommand($command, $projectPath, $output);
+
+        $this->configureRedis($projectPath, $output);
         $this->processVcs($options, $projectPath, $output);
     }
 

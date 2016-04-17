@@ -16,7 +16,9 @@ class Options
     protected $_m2Password;
     protected $_ipAddress;
     protected $_cpus;
-    protected $_memorylimit;
+    protected $_locale;
+    protected $_currency;
+    protected $_baseUrl;
     protected $_repoUrl = '';
 
     /**
@@ -50,6 +52,9 @@ class Options
           'ip_address' => $this->getIpAddress(),
           'cpus' => $this->getCpus(),
           'memory_limit' => $this->getMemorylimit(),
+          'locale' => $this->getLocale(),
+          'default_currency' => $this->getCurrency(),
+          'base_url' => $this->getBaseUrl(),
         ];
     }
 
@@ -134,6 +139,30 @@ class Options
     }
 
     /**
+     * @return mixed
+     */
+    public function getLocale()
+    {
+        return $this->_locale;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCurrency()
+    {
+        return $this->_currency;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBaseUrl()
+    {
+        return $this->_baseUrl;
+    }
+
+    /**
      * @param $helper
      * @param InputInterface $input
      * @param OutputInterface $output
@@ -145,10 +174,10 @@ class Options
         $ipQuestion = new Question("Configure the IP for your VM (192.168.47.47): ", '192.168.47.47');
         $this->_ipAddress = strtolower($helper->ask($input, $output, $ipQuestion));
 
-        $cpuQuestion = new Question("How many CPU's should we use? (1): ", '1');
+        $cpuQuestion = new Question("How many CPU's would you like to use? (1): ", '1');
         $this->_cpus = strtolower($helper->ask($input, $output, $cpuQuestion));
 
-        $memoryQuestion = new Question("Enter VM memory limit (2048): ", '2048');
+        $memoryQuestion = new Question("Define the VM memory limit (2048): ", '2048');
         $this->_memorylimit = strtolower($helper->ask($input, $output, $memoryQuestion));
     }
 
@@ -166,6 +195,15 @@ class Options
             0
         );
         $this->_app = strtolower($helper->ask($input, $output, $appQuestion));
+
+        $baseUrlQuestion = new Question("Enter your application's base_url (magestead.dev): ", 'magestead.dev');
+        $this->_baseUrl = strtolower($helper->ask($input, $output, $baseUrlQuestion));
+
+        $currenyQuestion = new Question("Enter your application's default currency (GBP): ", 'GBP');
+        $this->_currency = $helper->ask($input, $output, $currenyQuestion);
+
+        $localeQuestion = new Question("Enter your application's default locale (en_GB): ", 'en_GB');
+        $this->_locale = $helper->ask($input, $output, $localeQuestion);
 
         $serverQuestion = new ChoiceQuestion(
             "Which webserver would you like?",

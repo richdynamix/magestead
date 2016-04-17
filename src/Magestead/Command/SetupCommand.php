@@ -22,7 +22,7 @@ class SetupCommand extends Command
         $this->_projectPath = getcwd();
 
         $this->setName("setup");
-        $this->setDescription("Initialise Vagrant Project into current working directory");
+        $this->setDescription("Initialise Magestead project into current working directory");
     }
 
     /**
@@ -85,6 +85,9 @@ class SetupCommand extends Command
         $this->_magesteadConfig['vagrantfile']['vm']['memory'] = $options['memory_limit'];
         $this->_magesteadConfig['vagrantfile']['vm']['network']['private_network'] = $options['ip_address'];
         $this->_magesteadConfig['magestead']['apps']['mba_12345']['type'] = ($options['app'] == 'magento 2') ? 'magento2' : 'magento';
+        $this->_magesteadConfig['magestead']['apps']['mba_12345']['locale'] = $options['locale'];
+        $this->_magesteadConfig['magestead']['apps']['mba_12345']['default_currency'] = $options['default_currency'];
+        $this->_magesteadConfig['magestead']['apps']['mba_12345']['base_url'] = $options['base_url'];
 
         $this->saveConfigFile($this->_magesteadConfig, $output);
 
