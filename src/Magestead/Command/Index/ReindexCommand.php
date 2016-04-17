@@ -45,8 +45,8 @@ class ReindexCommand extends Command
         $type = $config->type;
         switch ($type) {
             case 'magento':
-                // todo add magerun commands
-                return "";
+                $index = (!is_null($index)) ? ' '.$index : ':all';
+                return "cd /var/www/public;../bin/n98-magerun.phar index:reindex$index";
                 break;
             case 'magento2':
                 return "cd /var/www/public;bin/magento indexer:reindex $index";
