@@ -41,8 +41,7 @@ class DisableCommand extends Command
         $type = $config->type;
         switch ($type) {
             case 'magento':
-                // todo add magerun commands
-                return "";
+                return "cd /var/www/public;../bin/n98-magerun.phar cache:disable";
                 break;
             case 'magento2':
                 return "cd /var/www/public;bin/magento cache:disable";
