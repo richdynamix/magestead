@@ -2,6 +2,7 @@
     "name": "richdynamix/magestead",
     "description": "Magento build for ...",
     "require-dev": {
+        "phpspec/phpspec": "~2.5.0",
         "magetest/magento-phpspec-extension": "~2.0",
         "magetest/magento-behat-extension": "dev-develop"
     },

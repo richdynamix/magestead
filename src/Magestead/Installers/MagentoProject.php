@@ -4,8 +4,12 @@ use Magestead\Helper\HostsPluginChecker;
 use Magestead\Service\Notification;
 use Magestead\Service\VersionControl;
 use Magestead\Command\ProcessCommand;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Yaml\Dumper;
+use Symfony\Component\Yaml\Exception\ParseException;
+use Symfony\Component\Yaml\Parser;
 
 class MagentoProject
 {
@@ -23,6 +27,8 @@ class MagentoProject
 
         $output->writeln('<info>Installing Magento Software</info>');
         $this->installMagento($config, $projectPath, $output);
+
+        $this->configureTestSuites($options, $projectPath, $output);
 
         $output->writeln('<info>Finalising Setup</info>');
         $this->finaliseSetup($options, $projectPath, $output);
@@ -233,5 +239,38 @@ class MagentoProject
         $config = new \SimpleXMLElement($moduleXml);
         $config->modules[0]->Cm_RedisSession[0]->active = 'true';
         file_put_contents($projectPath . $moduleFile, $config->asXML());
+    }
+
+    /**
+     * @param array $options
+     * @param $projectPath
+     * @param OutputInterface $output
+     */
+    protected function configureTestSuites(array $options, $projectPath, OutputInterface $output)
+    {
+        $progress = new ProgressBar($output, 2);
+
+        $progress->start();
+        copy($projectPath . "/puphpet/magestead/magento/stubs/phpspec.yml", $projectPath . "/phpspec.yml");
+        $progress->advance();
+
+        $yaml = new Parser();
+        try {
+            $behat = $yaml->parse(file_get_contents($projectPath . "/puphpet/magestead/magento/stubs/behat.yml"));
+            $behat['default']['extensions']['MageTest\MagentoExtension\Extension']['base_url'] = $options['base_url'];
+        } catch (ParseException $e) {
+            $output->writeln('<error>Unable to parse the YAML config</error>');
+        }
+
+        $dumper = new Dumper();
+        $yaml = $dumper->dump($behat, 6);
+        try {
+            file_put_contents($this->_projectPath . '/behat.yml', $yaml);
+            $progress->advance();
+        } catch (\Exception $e) {
+            $output->writeln('<error>Unable to write to the YAML file</error>');
+        }
+
+        $progress->finish();
     }
 }

@@ -1,0 +1,7 @@
+default:
+  paths:
+    features: features
+    bootstrap: %behat.paths.features%/bootstrap
+  extensions:
+    MageTest\MagentoExtension\Extension:
+      base_url: "{{base_url}}"

@@ -48,5 +48,9 @@
         new Magestead\Command\Index\SetModeCommand(),
         new Magestead\Command\Index\ShowModeCommand(),
         new Magestead\Command\Index\StatusCommand(),
+
+        // Tests Suite Tools
+        new Magestead\Command\PhpspecCommand(),
+        new Magestead\Command\BehatCommand(),
     ));
     $app->run();
