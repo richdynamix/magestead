@@ -2,9 +2,30 @@
     "name": "richdynamix/magestead",
     "description": "Magento build for ...",
     "require-dev": {
-        "phpspec/phpspec": "~2.5.0",
-        "magetest/magento-phpspec-extension": "~2.0",
-        "magetest/magento-behat-extension": "dev-develop"
+        "magetest/magento-phpspec-extension": "3.0.0",
+        "sensiolabs/behat-page-object-extension": "2.0.*@dev",
+        "magetest/magento-behat-extension": "dev-feature/Behat3",
+        "magetest/manager": "*",
+        "behat/mink": "1.6.*",
+        "behat/mink-goutte-driver": "1.1.*",
+        "behat/mink-selenium2-driver": "*",
+        "behat/mink-extension": "*",
+        "phpunit/phpunit": "3.7.*",
+        "phpunit/dbunit": "1.3.*",
+        "phpunit/phpunit-selenium": "1.3.*",
+        "phpunit/phpunit-story": "1.0.*",
+        "squizlabs/php_codesniffer": "1.*",
+        "phpmd/phpmd": "1.*",
+        "sebastian/phpcpd": "2.0.*",
+        "pdepend/pdepend": "1.*",
+        "phploc/phploc": "2.*",
+        "phpdocumentor/phpdocumentor": "2.*",
+        "theseer/phpdox": "0.6.*",
+        "theseer/fxsl": "1.0.*@dev",
+        "mayflower/php-codebrowser": "~1.1",
+        "darsadow/behat-parameters-extension": "dev-master",
+        "bossa/phpspec2-expect": "*",
+        "ciaranmcnulty/behat-stepthroughextension": "dev-master"
     },
     "require": {
         "aydin-hassan/magento-core-composer-installer" : "~1.0",
@@ -29,20 +50,24 @@
     ],
     "extra": {
         "magento-root-dir": "public",
-        "magento-force": true
+        "magento-force": true,
+        "auto-append-gitignore": true
     },
     "config": {
         "bin-dir": "bin"
     },
     "autoload": {
         "psr-0": {
+            "MageTest\\PhpSpec\\MagentoExtension": "src",
             "": [
-                "public/app",
                 "public/app/code/local",
                 "public/app/code/community",
                 "public/app/code/core",
-                "public/lib"
-            ]
+                "public/app",
+                "public/lib",
+                "features/bootstrap"
+            ],
+            "Mage": "public/app/code/core"
         }
     }
 }

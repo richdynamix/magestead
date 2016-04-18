@@ -7,6 +7,10 @@ use Magestead\Service\VersionControl;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Class Magento2Project
+ * @package Magestead\Installers
+ */
 class Magento2Project
 {
     /**
@@ -36,22 +40,35 @@ class Magento2Project
         $command = 'composer create-project --repository-url=https://repo.magento.com/ magento/project-community-edition public';
         new ProcessCommand($command, $projectPath, $output);
 
-//        $this->addPredisPackage($projectPath, $output);
+        $this->setComposerBinDir($projectPath);
+        $this->addPhpSpecPackage($projectPath, $output);
+        $this->addBehatPackage($projectPath, $output);
     }
 
     /**
      * @param $projectPath
      * @param OutputInterface $output
      */
-    protected function addPredisPackage($projectPath, OutputInterface $output)
+    protected function addPhpSpecPackage($projectPath, OutputInterface $output)
     {
-        chdir($projectPath.'/public');
-
-        echo getcwd();
-
-        $output->writeln('<comment>Installing Predis package</comment>');
-        $command = 'composer require predis/predis;';
+        $output->writeln('<comment>Installing PHPSpec</comment>');
+        $command = 'cd '.$projectPath.'/public; composer require phpspec/phpspec --dev;';
         new ProcessCommand($command, $projectPath, $output);
+
+        $this->setPhpSpecPermissions($projectPath, $output);
+    }
+
+    /**
+     * @param $projectPath
+     * @param OutputInterface $output
+     */
+    protected function addBehatPackage($projectPath, OutputInterface $output)
+    {
+        $output->writeln('<comment>Installing Behat</comment>');
+        $command = 'cd '.$projectPath.'/public; composer require behat/behat --dev;';
+        new ProcessCommand($command, $projectPath, $output);
+
+        $this->setBehatPermissions($projectPath, $output);
     }
 
     /**
@@ -198,11 +215,48 @@ class Magento2Project
         HostsPluginChecker::verify($options, $output);
     }
 
+    /**
+     * @param array $options
+     * @param $projectPath
+     * @param OutputInterface $output
+     * @return VersionControl
+     */
     protected function processVcs(array $options, $projectPath, OutputInterface $output)
     {
         if (!empty($options['repo_url'])) {
             copy($projectPath . "/puphpet/magestead/magento2/stubs/gitignore.tmp", $projectPath . "/.gitignore");
             return new VersionControl($options['repo_url'], $projectPath, $output);
         }
+    }
+
+    /**
+     * @param $projectPath
+     */
+    protected function setComposerBinDir($projectPath)
+    {
+        $file = "$projectPath/public/composer.json";
+        $composer = json_decode(file_get_contents($file), true);
+        $composer['config']['bin-dir'] = 'bin';
+        file_put_contents($file, json_encode($composer));
+    }
+
+    /**
+     * @param $projectPath
+     * @param OutputInterface $output
+     */
+    protected function setPhpSpecPermissions($projectPath, OutputInterface $output)
+    {
+        $command = 'vagrant ssh -c \'cd /var/www/public; sudo chmod 755 bin/phpspec; bin/phpspec run\'';
+        new ProcessCommand($command, $projectPath, $output);
+    }
+
+    /**
+     * @param $projectPath
+     * @param OutputInterface $output
+     */
+    protected function setBehatPermissions($projectPath, OutputInterface $output)
+    {
+        $command = 'vagrant ssh -c \'cd /var/www/public; sudo chmod 755 bin/behat; bin/behat --init\'';
+        new ProcessCommand($command, $projectPath, $output);
     }
 }

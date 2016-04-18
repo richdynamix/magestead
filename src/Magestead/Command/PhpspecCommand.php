@@ -21,17 +21,16 @@ class PhpspecCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('<info>Running PHPSpec</info>');
         $option = $input->getArgument('option');
 
-
         $command = $this->getCommand(new Config($output), $option);
-        if ($command) {
-            $passedCommand = "vagrant ssh -c '". $command ."'";
-            return new ProcessCommand($passedCommand, $this->_projectPath, $output);
+        if (!$command) {
+            return $output->writeln('<error>Command not available for this application</error>');
         }
 
-        return $output->writeln('<error>Command not available for this application</error>');
+        $output->writeln('<info>Running PHPSpec</info>');
+        $passedCommand = "vagrant ssh -c '". $command ."'";
+        passthru($passedCommand);
     }
 
     protected function getCommand(Config $config, $option)
@@ -40,6 +39,9 @@ class PhpspecCommand extends Command
         switch ($type) {
             case 'magento':
                 return "cd /var/www;bin/phpspec $option";
+                break;
+            case 'magento2':
+                return "cd /var/www/public;bin/phpspec $option";
                 break;
         }
 

@@ -27,11 +27,10 @@ class SetModeCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('<info>Setting index mode</info>');
         $mode = $input->getArgument('mode');
-
         $command = $this->getCommand(new Config($output), $mode);
         if ($command) {
+            $output->writeln('<info>Setting index mode</info>');
             $passedCommand = "vagrant ssh -c '". $command ."'";
             return new ProcessCommand($passedCommand, $this->_projectPath, $output);
         }

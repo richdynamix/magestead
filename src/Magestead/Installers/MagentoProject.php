@@ -11,6 +11,10 @@ use Symfony\Component\Yaml\Dumper;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Parser;
 
+/**
+ * Class MagentoProject
+ * @package Magestead\Installers
+ */
 class MagentoProject
 {
     /**
@@ -84,13 +88,13 @@ class MagentoProject
      */
     protected function setPermissions($projectPath, OutputInterface $output)
     {
-        $command = 'vagrant ssh -c \'cd /var/www/public; sudo find . -type f -exec chmod 400 {} \;\'';
-        $output->writeln('<comment>Setting Files Permissions</comment>');
-        new ProcessCommand($command, $projectPath, $output);
-
-        $command = 'vagrant ssh -c \'cd /var/www/public; sudo find . -type d -exec chmod 500 {} \;\'';
-        $output->writeln('<comment>Setting Folder Permissions</comment>');
-        new ProcessCommand($command, $projectPath, $output);
+//        $command = 'vagrant ssh -c \'cd /var/www/public; sudo find . -type f -exec chmod 400 {} \;\'';
+//        $output->writeln('<comment>Setting Files Permissions</comment>');
+//        new ProcessCommand($command, $projectPath, $output);
+//
+//        $command = 'vagrant ssh -c \'cd /var/www/public; sudo find . -type d -exec chmod 500 {} \;\'';
+//        $output->writeln('<comment>Setting Folder Permissions</comment>');
+//        new ProcessCommand($command, $projectPath, $output);
 
         $command = 'vagrant ssh -c \'cd /var/www/public; sudo find var/ -type f -exec chmod 600 {} \;\'';
         $output->writeln('<comment>Setting "var" Files Permissions</comment>');
@@ -132,6 +136,11 @@ class MagentoProject
         new ProcessCommand($command, $projectPath, $output);
     }
 
+    /**
+     * @param array $options
+     * @param $projectPath
+     * @param OutputInterface $output
+     */
     protected function finaliseSetup(array $options, $projectPath, OutputInterface $output)
     {
         $command = 'vagrant ssh -c \'cd /var/www/public; ../bin/n98-magerun.phar index:reindex:all;\'';
@@ -171,6 +180,12 @@ class MagentoProject
         HostsPluginChecker::verify($options, $output);
     }
 
+    /**
+     * @param array $options
+     * @param $projectPath
+     * @param OutputInterface $output
+     * @return VersionControl
+     */
     protected function processVcs(array $options, $projectPath, OutputInterface $output)
     {
         if (!empty($options['repo_url'])) {
@@ -245,32 +260,60 @@ class MagentoProject
      * @param array $options
      * @param $projectPath
      * @param OutputInterface $output
+     * @return ProcessCommand
      */
     protected function configureTestSuites(array $options, $projectPath, OutputInterface $output)
     {
+        $output->writeln('<info>Configuring PHPSpec & Behat Suites</info>');
         $progress = new ProgressBar($output, 2);
 
         $progress->start();
         copy($projectPath . "/puphpet/magestead/magento/stubs/phpspec.yml", $projectPath . "/phpspec.yml");
         $progress->advance();
+        $progress->advance();
+//        $behat = $this->getBehatConfig($options, $projectPath, $output);
+//        $this->saveBehatConfig($projectPath, $output, $behat, $progress);
+        $progress->finish();
+        echo "\n";
+        new ProcessCommand('bin/phpspec r', $projectPath, $output);
+        return new ProcessCommand('bin/behat --init', $projectPath, $output);
+    }
 
+    /**
+     * @param array $options
+     * @param $projectPath
+     * @param OutputInterface $output
+     * @return bool|mixed
+     */
+    protected function getBehatConfig(array $options, $projectPath, OutputInterface $output)
+    {
         $yaml = new Parser();
         try {
             $behat = $yaml->parse(file_get_contents($projectPath . "/puphpet/magestead/magento/stubs/behat.yml"));
             $behat['default']['extensions']['MageTest\MagentoExtension\Extension']['base_url'] = $options['base_url'];
+            return $behat;
         } catch (ParseException $e) {
             $output->writeln('<error>Unable to parse the YAML config</error>');
         }
 
+        return false;
+    }
+
+    /**
+     * @param $projectPath
+     * @param OutputInterface $output
+     * @param $behat
+     * @param $progress
+     */
+    protected function saveBehatConfig($projectPath, OutputInterface $output, $behat, $progress)
+    {
         $dumper = new Dumper();
         $yaml = $dumper->dump($behat, 6);
         try {
-            file_put_contents($this->_projectPath . '/behat.yml', $yaml);
+            file_put_contents($projectPath . '/behat.yml', $yaml);
             $progress->advance();
         } catch (\Exception $e) {
             $output->writeln('<error>Unable to write to the YAML file</error>');
         }
-
-        $progress->finish();
     }
 }

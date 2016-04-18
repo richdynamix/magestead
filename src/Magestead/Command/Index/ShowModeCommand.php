@@ -27,11 +27,11 @@ class ShowModeCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('<info>Getting index mode</info>');
         $index = $input->getArgument('index');
 
         $command = $this->getCommand(new Config($output), $index);
         if ($command) {
+            $output->writeln('<info>Getting index mode</info>');
             $passedCommand = "vagrant ssh -c '". $command ."'";
             return new ProcessCommand($passedCommand, $this->_projectPath, $output);
         }
