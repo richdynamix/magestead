@@ -1,5 +1,6 @@
 <?php namespace Magestead\Helper;
 
+use Magestead\Exceptions\MissingConfigFileException;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Parser;
@@ -35,11 +36,20 @@ class Config
     {
         $config = new Parser();
         try {
-            return $config->parse(file_get_contents($this->_projectPath . '/magestead.yaml'));
+            return $config->parse($this->readConfigFile());
         } catch (ParseException $e) {
             $output->writeln('<error>Unable to parse the config file</error>');
         }
 
         return false;
+    }
+
+    protected function readConfigFile()
+    {
+        if (!file_exists($this->_projectPath . '/magestead.yaml')) {
+            throw new MissingConfigFileException('No config file was found, are you in the project root?');
+        }
+
+        return file_get_contents($this->_projectPath . '/magestead.yaml');
     }
 }
