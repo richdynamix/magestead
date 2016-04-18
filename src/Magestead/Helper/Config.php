@@ -44,6 +44,10 @@ class Config
         return false;
     }
 
+    /**
+     * @return string
+     * @throws MissingConfigFileException
+     */
     protected function readConfigFile()
     {
         if (!file_exists($this->_projectPath . '/magestead.yaml')) {

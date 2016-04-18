@@ -3,8 +3,17 @@
 use Joli\JoliNotif\Notification as Notify;
 use Joli\JoliNotif\NotifierFactory;
 
+/**
+ * Class Notification
+ * @package Magestead\Service
+ */
 class Notification
 {
+    /**
+     * Send desktop notification
+     *
+     * @param $message
+     */
     public static function send($message)
     {
         $notifier = NotifierFactory::create();

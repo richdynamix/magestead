@@ -7,6 +7,10 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Class ShowModeCommand
+ * @package Magestead\Command\Index
+ */
 class ShowModeCommand extends Command
 {
     protected $_config;

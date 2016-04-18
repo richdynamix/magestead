@@ -6,6 +6,10 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Class PhpspecCommand
+ * @package Magestead\Command
+ */
 class PhpspecCommand extends Command
 {
     protected $_projectPath;
@@ -19,6 +23,11 @@ class PhpspecCommand extends Command
         $this->addArgument('option', InputArgument::OPTIONAL, 'Add options to run');
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return mixed
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $option = $input->getArgument('option');
@@ -33,6 +42,11 @@ class PhpspecCommand extends Command
         passthru($passedCommand);
     }
 
+    /**
+     * @param Config $config
+     * @param $option
+     * @return bool|string
+     */
     protected function getCommand(Config $config, $option)
     {
         $type = $config->type;
@@ -47,5 +61,4 @@ class PhpspecCommand extends Command
 
         return false;
     }
-
 }

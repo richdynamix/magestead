@@ -5,6 +5,10 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Class UpCommand
+ * @package Magestead\Command\VM
+ */
 class UpCommand extends Command
 {
     protected $_projectPath;

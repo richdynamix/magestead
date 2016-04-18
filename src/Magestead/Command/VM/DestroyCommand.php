@@ -5,8 +5,15 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Class DestroyCommand
+ * @package Magestead\Command\VM
+ */
 class DestroyCommand extends Command
 {
+    /**
+     * @var
+     */
     protected $_projectPath;
 
     protected function configure()

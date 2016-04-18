@@ -6,6 +6,10 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Class CleanCommand
+ * @package Magestead\Command\Cache
+ */
 class CleanCommand extends Command
 {
     protected $_config;

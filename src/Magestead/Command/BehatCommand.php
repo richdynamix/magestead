@@ -6,6 +6,10 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Class BehatCommand
+ * @package Magestead\Command
+ */
 class BehatCommand extends Command
 {
     protected $_projectPath;
@@ -19,6 +23,11 @@ class BehatCommand extends Command
         $this->addArgument('option', InputArgument::OPTIONAL, 'Add options to run');
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return mixed
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $option = $input->getArgument('option');
@@ -32,6 +41,11 @@ class BehatCommand extends Command
         passthru($passedCommand);
     }
 
+    /**
+     * @param Config $config
+     * @param $option
+     * @return bool|string
+     */
     protected function getCommand(Config $config, $option)
     {
         $type = $config->type;

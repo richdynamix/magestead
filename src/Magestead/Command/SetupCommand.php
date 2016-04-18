@@ -10,6 +10,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Yaml\Exception\ParseException;
 
+/**
+ * Class SetupCommand
+ * @package Magestead\Command
+ */
 class SetupCommand extends Command
 {
     protected $_basePath;

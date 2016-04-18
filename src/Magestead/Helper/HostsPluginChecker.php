@@ -2,8 +2,16 @@
 
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Class HostsPluginChecker
+ * @package Magestead\Helper
+ */
 class HostsPluginChecker
 {
+    /**
+     * @param array $options
+     * @param OutputInterface $output
+     */
     public static function verify(array $options, OutputInterface $output)
     {
         $hostPlugin = `vagrant plugin list | grep vagrant-hostsupdater`;
