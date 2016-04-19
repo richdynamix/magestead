@@ -321,6 +321,6 @@ class Options
 
     protected function setVagrantBox()
     {
-        $this->_box = self::BOX_PREFIX . $this->getOs() . "+$this->_server+php$this->_phpVer";
+        $this->_box = self::BOX_PREFIX . $this->getOs() . "-$this->_server-php$this->_phpVer";
     }
 }
