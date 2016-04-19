@@ -12,9 +12,11 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
  */
 class Options
 {
+    const BOX_PREFIX = 'richdynamix/magestead-';
     protected $_app;
     protected $_server;
     protected $_phpVer = '56';
+    protected $_os = 'centos65';
     protected $_box;
     protected $_m2Username;
     protected $_m2Password;
@@ -38,7 +40,8 @@ class Options
         $this->getMagento2Settings($helper, $input, $output);
         $this->getVersionControlSettings($helper, $input, $output);
 
-        $this->_box = "centos65+$this->_server+php$this->_phpVer";
+        $this->setVagrantBox();
+
     }
     /**
      * @return array
@@ -49,6 +52,7 @@ class Options
           'app' => $this->getApp(),
           'server' => $this->getServer(),
           'phpver' => $this->getPhpVer(),
+          'os' => $this->getOs(),
           'box' => $this->getBox(),
           'm2user' => $this->getM2Username(),
           'm2pass' => $this->getM2Password(),
@@ -164,6 +168,14 @@ class Options
     public function getBaseUrl()
     {
         return $this->_baseUrl;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOs()
+    {
+        return $this->_os;
     }
 
     /**
@@ -305,5 +317,10 @@ class Options
             );
             $this->_phpVer = $helper->ask($input, $output, $phpVerQuestion);
         }
+    }
+
+    protected function setVagrantBox()
+    {
+        $this->_box = self::BOX_PREFIX . $this->getOs() . "+$this->_server+php$this->_phpVer";
     }
 }
