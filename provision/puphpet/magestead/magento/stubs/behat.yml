@@ -1,0 +1,39 @@
+default:
+  extensions:
+    MageTest\MagentoExtension\Extension:
+      base_url: 'http://magestead.dev/'
+  formatters:
+    pretty: true
+
+chrome:
+  extensions:
+    Behat\MinkExtension:
+      base_url: http://magestead.dev/
+      goutte: ~
+      selenium2:
+        wd_host: http://10.217.167.1:4444/wd/hub
+        browser: chrome
+      show_cmd: echo '%s'
+      show_tmp_dir: /vagrant
+
+firefox:
+  extensions:
+    Behat\MinkExtension:
+      base_url: http://magestead.dev/
+      goutte: ~
+      selenium2:
+        wd_host: http://10.217.167.1:4444/wd/hub
+        browser: firefox
+#   command to open the failing html pages:
+      show_cmd: echo '%s'
+      show_tmp_dir: /vagrant
+
+phantomjs:
+  extensions:
+    Behat\MinkExtension:
+      base_url: 'http://magestead.dev/'
+      selenium2:
+        wd_host: http://localhost:4444/wd/hub
+        browser: phantomjs
+      show_cmd: echo '%s'
+      show_tmp_dir: ./tmp/
