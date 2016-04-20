@@ -16,17 +16,19 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### System Requirements
 
-VirtualBox 5+
-Vagrant 1.8.1+
-PHP 5.4+ (with mcrypt & intl extensions) installed
-Composer installed globally
+- VirtualBox 5+
+- Vagrant 1.8.1+
+- PHP 5.4+ (with mcrypt & intl extensions) installed
+- Composer installed globally
 
 **Note**: *For mac users missing the required extensions you could install the latest PHP version for your Mac OS version using [http://php-osx.liip.ch/](http://php-osx.liip.ch/).*
 
 To test your PHP installation run the following in your terminal - 
 
 `php -ini | grep intl`
+
 You should see something similar -
+
 ``` /usr/local/php5/php.d/50-extension-intl.ini,
 intl
 intl.default_locale => no value => no value
@@ -35,7 +37,9 @@ intl.use_exceptions => 0 => 0 
 ```
 
 `php -ini | grep mcrypt`
+
 You should see something similar -
+
 ```
 mcrypt
 mcrypt support => enabled
