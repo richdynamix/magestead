@@ -20,6 +20,7 @@ These instructions will get you a copy of the project up and running on your loc
 - Vagrant 1.8.1+
 - PHP 5.4+ (with mcrypt & intl extensions) installed
 - Composer installed globally
+- Mac or Linux (sorry no windows support yet)
 
 **Note**: *For mac users missing the required extensions you could install the latest PHP version for your Mac OS version using [http://php-osx.liip.ch/](http://php-osx.liip.ch/).*
 
