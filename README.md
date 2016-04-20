@@ -1,6 +1,6 @@
 # Magestead
 
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/richdynamix/magestead/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/richdynamix/magestead/?branch=master) [![Build Status](https://scrutinizer-ci.com/g/richdynamix/magestead/badges/build.png?b=master)](https://scrutinizer-ci.com/g/richdynamix/magestead/build-status/master) [![GitHub release](https://img.shields.io/github/release/richdynamix/magestead.svg)](https://github.com/richdynamix/magestead)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/richdynamix/magestead/badges/quality-score.png?b=epic%2F2.0.0)](https://scrutinizer-ci.com/g/richdynamix/magestead/?branch=epic%2F2.0.0) [![Build Status](https://scrutinizer-ci.com/g/richdynamix/magestead/badges/build.png?b=master)](https://scrutinizer-ci.com/g/richdynamix/magestead/build-status/master) [![GitHub release](https://img.shields.io/badge/release-2.0--beta-blue.svg)](https://github.com/richdynamix/magestead)
 
 The Magestead CLI provides a convenient installer for your magento applications using the pre-configured Vagrant development environment.
 
