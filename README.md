@@ -63,7 +63,7 @@ Choose a location to install the CLI app on your machine, your home directory wo
 $ cd ~
 $ git clone git@github.com:richdynamix/magestead.git magestead
 $ cd magestead
-$ git checkout -b 2.0.0 origin/2.0.0
+$ git checkout -b origin/2.0.0 origin/epic/2.0.0
 ```
 
 Install all the required dependencies with Composer
