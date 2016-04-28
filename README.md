@@ -53,7 +53,7 @@ mcrypt.modes_dir => no value => no value
 
 Vagrant Plugin - [vagrant-hostsupdater](https://github.com/cogitatio/vagrant-hostsupdater) - *For updating your hosts file automatically with your project URL*
 
-### Installing (2.0-beta only)
+### Installing (2.0 Beta only)
 
 During the beta release the installation is a manual process.
 
@@ -63,7 +63,7 @@ Choose a location to install the CLI app on your machine, your home directory wo
 $ cd ~
 $ git clone git@github.com:richdynamix/magestead.git magestead
 $ cd magestead
-$ git checkout -b origin/2.0.0 origin/epic/2.0.0
+$ git checkout -b 2.0.beta2 origin/release/2.0.beta2
 ```
 
 Install all the required dependencies with Composer
@@ -79,6 +79,13 @@ alias magestead="~/magestead/magestead"
 ```
 
 **Note:** *Please choose the correct location for your shell i.e.* `.bash_profile`, `config.fish`, `.zshrc`
+
+### Upgrade to 2.0 beta2
+
+Change into your magestead installation directory and checkout out the new branch
+
+$ cd ~/magestead
+$ git checkout -b 2.0.beta2 origin/release/2.0.beta2
 
 ## Usage
 
@@ -97,7 +104,19 @@ $ magestead setup
 
 Follow the on screen instructions to install the application and server you require.
 
-Go grab a coffee, it will tak a few minutes to run.
+Go grab a coffee, it cane take several minutes to run, depending on your settings.
+
+## Caveats & Known Issues
+
+While Magestead 2.0 is in Beta, please be aware that there may be unreported bugs. Please create a new issue for these and explain the version you are on.
+
+#### PHP-FPM & PHP7
+
+There is a known issue that prevents the restart of PHP-FPM when using PHP7. This is the case for preconfigured boxes as well as custom boxes. Until the bug has been resolved globally the only way to restart PHP-FPM is to manually kill the process then restart.
+
+#### PHPSpec & Behat
+
+For a Magento 2 setup, there is a known permissions issue that stops PHPSpec & Behat test suites to run from both the host machine and on the guest machine. I am working to resolve this issue and should be fixed in the next release.
 
 ## Built With
 
@@ -129,6 +148,7 @@ TODO - Add licence notes
 
 ## Acknowledgments
 
-Heavily inspired from the following technologies
+Heavily inspired from the following -
 
 * Laravel Homestead
+* ScotchBox 2.0

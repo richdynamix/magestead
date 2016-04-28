@@ -13,14 +13,17 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
 class Options
 {
     const BOX_PREFIX = 'richdynamix/magestead-';
+//    const BOX_PREFIX = '';
     protected $_app;
     protected $_server;
     protected $_phpVer = '56';
     protected $_os = 'centos65';
+//    protected $_os = 'ubuntu14';
     protected $_box;
     protected $_m2Username;
     protected $_m2Password;
     protected $_ipAddress;
+    protected $_memorylimit;
     protected $_cpus;
     protected $_locale;
     protected $_currency;
@@ -237,8 +240,7 @@ class Options
      */
     protected function getMagento2Settings($helper, InputInterface $input, OutputInterface $output)
     {
-        // todo add php 7 enabled box
-        // $this->usePhp7($helper, $input, $output);
+         $this->usePhp7($helper, $input, $output);
 
         if ($this->_app === 'magento 2') {
             return $this->verifyAuth($helper, $input, $output);
@@ -315,13 +317,16 @@ class Options
         if ($this->_app !== 'magento' && $this->_server !== 'apache') {
             $phpVerQuestion = new ChoiceQuestion(
                 "Which version of PHP should be installed?",
-                ['56', '7'],
+                ['56', '70'],
                 0
             );
             $this->_phpVer = $helper->ask($input, $output, $phpVerQuestion);
         }
     }
 
+    /**
+     * Set box name from concat user options
+     */
     protected function setVagrantBox()
     {
         $this->_box = self::BOX_PREFIX . $this->getOs() . "-$this->_server-php$this->_phpVer";
