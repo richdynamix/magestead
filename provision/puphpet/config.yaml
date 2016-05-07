@@ -67,7 +67,7 @@ vagrantfile:
                         - .vagrant/
                         - .git/
                     auto: 'true'
-                owner: www-data
+                owner: www-user
                 group: www-data
         usable_port_range:
             start: 10200
