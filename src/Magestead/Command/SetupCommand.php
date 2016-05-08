@@ -44,7 +44,7 @@ class SetupCommand extends Command
         $output->writeln('<info>Spinning up your custom box</info>');
         new ProcessCommand('vagrant up', $this->_projectPath, $output);
 
-        return Project::create($options->getAllOptions(), $this->_magesteadConfig, $this->_projectPath, $output);
+        return Project::create($options->getAllOptions(), $this->_msConfig, $this->_projectPath, $output);
     }
 
     /**
@@ -96,6 +96,8 @@ class SetupCommand extends Command
         $msConfig['magestead']['apps']['mba_12345']['base_url']         = $options['base_url'];
         $msConfig['magestead']['os']                                    = $options['os'];
         $msConfig['magestead']['server']                                = $options['server'];
+
+        $this->_msConfig = $msConfig;
 
         $this->saveConfigFile($msConfig, $output);
 

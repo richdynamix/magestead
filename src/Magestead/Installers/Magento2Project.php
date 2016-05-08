@@ -236,6 +236,7 @@ class Magento2Project
     {
         $file     = "$projectPath/public/composer.json";
         $composer = json_decode(file_get_contents($file), true);
+
         $composer['config']['bin-dir'] = 'bin';
         file_put_contents($file, json_encode($composer));
     }

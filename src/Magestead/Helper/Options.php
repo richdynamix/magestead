@@ -12,11 +12,11 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
  */
 class Options
 {
-    const BOX_PREFIX       = 'richdynamix/magestead-';
+    const BOX_PREFIX = 'richdynamix/magestead-';
 
-    protected $_app        = 'magento2';
-    protected $_phpVer     = '56';
-    protected $_os         = 'centos65';
+    protected $_app = 'magento2';
+    protected $_phpVer = '56';
+    protected $_os = 'centos65';
     protected $_server;
     protected $_box;
     protected $_m2Username;
@@ -141,9 +141,9 @@ class Options
     protected function setVersionControlSettings($helper, InputInterface $input, OutputInterface $output)
     {
         $versionControl = new ConfirmationQuestion("Would you like to add your project to GIT? (no/yes) ", false);
-        $versioning = $helper->ask($input, $output, $versionControl);
+        $versioning     = $helper->ask($input, $output, $versionControl);
         if ($versioning) {
-            $repoQuestion = new Question("Enter your full GitHub/BitBucket repo URL: ", '');
+            $repoQuestion   = new Question("Enter your full GitHub/BitBucket repo URL: ", '');
             $this->_repoUrl = strtolower($helper->ask($input, $output, $repoQuestion));
         }
     }
@@ -241,6 +241,7 @@ class Options
             ['NGINX', 'Apache'],
             0
         );
+
         $this->_server = strtolower($helper->ask($input, $output, $serverQuestion));
     }
 
@@ -256,6 +257,7 @@ class Options
             ['CentOS 6.5', 'Ubuntu 14'],
             0
         );
+
         $this->_os = str_replace(' ', '', str_replace('.', '', strtolower($helper->ask($input, $output, $osQuestion))));
     }
 }

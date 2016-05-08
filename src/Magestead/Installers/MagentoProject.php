@@ -211,9 +211,10 @@ class MagentoProject
     protected function updateConfigXml($projectPath)
     {
         $localFile = '/public/app/etc/local.xml';
-        $localXml = file_get_contents($projectPath . $localFile);
+        $localXml  = file_get_contents($projectPath . $localFile);
 
         $config = new \SimpleXMLElement($localXml);
+
         $config->global[0]->redis_session[0]->host                  = '127.0.0.1';
         $config->global[0]->redis_session[0]->port                  = '6379';
         $config->global[0]->redis_session[0]->password              = '';
@@ -244,6 +245,7 @@ class MagentoProject
         $moduleFile = '/public/app/etc/modules/Cm_RedisSession.xml';
         $moduleXml  = file_get_contents($projectPath . $moduleFile);
         $config     = new \SimpleXMLElement($moduleXml);
+
         $config->modules[0]->Cm_RedisSession[0]->active = 'true';
         file_put_contents($projectPath . $moduleFile, $config->asXML());
     }
@@ -280,8 +282,10 @@ class MagentoProject
     protected function getBehatConfig(array $options, $projectPath, OutputInterface $output)
     {
         $yaml = new Parser();
+
         try {
             $behat = $yaml->parse(file_get_contents($projectPath . "/puphpet/magestead/magento/stubs/behat.yml"));
+
             $behat['default']['extensions']['MageTest\MagentoExtension\Extension']['base_url'] = $options['base_url'];
             return $behat;
         } catch (ParseException $e) {
@@ -300,7 +304,8 @@ class MagentoProject
     protected function saveBehatConfig($projectPath, OutputInterface $output, $behat, $progress)
     {
         $dumper = new Dumper();
-        $yaml = $dumper->dump($behat, 6);
+        $yaml   = $dumper->dump($behat, 6);
+
         try {
             file_put_contents($projectPath . '/behat.yml', $yaml);
             $progress->advance();
