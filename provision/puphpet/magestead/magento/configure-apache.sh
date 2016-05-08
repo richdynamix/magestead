@@ -3,6 +3,13 @@
 APP_NAME=${1};
 DIR=${2};
 BASE_URL=${3};
+OS=${4};
+
+if [ $OS = "ubuntu14" ]; then
+    LOG_LOCATION="apache2"
+else
+    LOG_LOCATION="httpd"
+fi
 
 vhost="
 # ************************************
@@ -30,8 +37,8 @@ vhost="
 
   ## Logging
   ServerSignature Off
-  ErrorLog  \"/var/log/httpd/$BASE_URL_error.log\"
-  CustomLog \"/var/log/httpd/$BASE_URL_access.log\" combined
+  ErrorLog  \"/var/log/$LOG_LOCATION/$BASE_URL-error.log\"
+  CustomLog \"/var/log/$LOG_LOCATION/$BASE_URL-access.log\" combined
 
   ## SetEnv/SetEnvIf for environment variables
   SetEnv MAGE_IS_DEVELOPER_MODE true
@@ -41,8 +48,18 @@ vhost="
 </VirtualHost>
 "
 
-sudo echo "$vhost" > "/etc/httpd/conf.d/$APP_NAME.conf"
-sudo service httpd restart
-sudo service php-fpm restart
+if [ $OS = "ubuntu14" ]; then
+    sudo echo "$vhost" > "/etc/apache2/sites-available/$APP_NAME.conf"
+    cd /etc/apache/sites-enabled;
+    sudo ln -s "/etc/apache2/sites-available/$APP_NAME.conf"
+    sudo service apache2 restart
+fi
+
+if [ $OS = "centos65" ]; then
+    sudo echo "$vhost" > "/etc/httpd/conf.d/$APP_NAME.conf"
+    sudo service httpd restart
+fi
+
+
 
 

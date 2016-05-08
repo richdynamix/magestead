@@ -12,8 +12,7 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
  */
 class Options
 {
-//    const BOX_PREFIX = 'richdynamix/magestead-';
-    const BOX_PREFIX = '';
+    const BOX_PREFIX = 'richdynamix/magestead-';
     protected $_app = 'magento2';
     protected $_server;
     protected $_phpVer = '56';
@@ -46,9 +45,6 @@ class Options
         $this->setVersionControlSettings($helper, $input, $output);
 
         $this->setVagrantBox();
-
-        print_r($this->getAllOptions());
-        exit;
 
     }
     /**
@@ -255,7 +251,7 @@ class Options
     {
         $osQuestion = new ChoiceQuestion(
             "Which OS would you like to install?",
-            ['CentOS 6.5', 'Ubuntu 14.04'],
+            ['CentOS 6.5', 'Ubuntu 14'],
             0
         );
         $this->_os = str_replace(' ', '', str_replace('.', '', strtolower($helper->ask($input, $output, $osQuestion))));

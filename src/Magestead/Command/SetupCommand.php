@@ -92,6 +92,8 @@ class SetupCommand extends Command
         $this->_magesteadConfig['magestead']['apps']['mba_12345']['locale'] = $options['locale'];
         $this->_magesteadConfig['magestead']['apps']['mba_12345']['default_currency'] = $options['default_currency'];
         $this->_magesteadConfig['magestead']['apps']['mba_12345']['base_url'] = $options['base_url'];
+        $this->_magesteadConfig['magestead']['os'] = $options['os'];
+        $this->_magesteadConfig['magestead']['server'] = $options['server'];
 
         $this->saveConfigFile($this->_magesteadConfig, $output);
 

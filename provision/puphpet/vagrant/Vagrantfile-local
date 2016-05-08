@@ -323,19 +323,12 @@ Vagrant.configure('2') do |config|
         path = 'puphpet/magestead/magento2/bootstrap.sh'
       end
 
-      apache = magestead['apache']['install']
-      nginx = magestead['nginx']['install']
-
-      if data['vm']['box'] == "centos65+apache+php56"
-        apache = 1
-        nginx = 0
-      end
-
       # Magento/Magento 2 Bootstrap
       config.vm.provision :shell, run: 'always' do |s|
         s.path = path
         s.args = [app[0], app[1]['dir'], app[1]['locale'], app[1]['default_currency'], 
-        app[1]['db_name'], app[1]['base_url'], magestead['redis']['install'], apache, nginx]
+        app[1]['db_name'], app[1]['base_url'], magestead['redis']['install'],
+        magestead['magestead']['server'], magestead['magestead']['os']]
       end
 
     end
