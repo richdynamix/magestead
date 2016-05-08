@@ -31,9 +31,9 @@ class StatusCommand extends Command
     {
         $output->writeln('<info>Getting index status</info>');
 
-        $command = $this->getCommand(new Config($output));
-        $passedCommand = "vagrant ssh -c '". $command ."'";
-        return new ProcessCommand($passedCommand, $this->_projectPath, $output);
+        $command  = $this->getCommand(new Config($output));
+        $pCommand = "vagrant ssh -c '". $command ."'";
+        return new ProcessCommand($pCommand, $this->_projectPath, $output);
     }
 
     /**
@@ -44,10 +44,6 @@ class StatusCommand extends Command
     {
         $type = $config->type;
         switch ($type) {
-            case 'magento':
-                // todo add magerun commands
-                return "";
-                break;
             case 'magento2':
                 return "cd /var/www/public;bin/magento indexer:status";
                 break;

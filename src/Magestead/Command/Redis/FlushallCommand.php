@@ -30,8 +30,8 @@ class FlushallCommand extends Command
     {
         $output->writeln('<info>Flushing Redis Storage</info>');
 
-        $command = "redis-cli flushall";
-        $passedCommand = "vagrant ssh -c '". $command ."'";
-        return new ProcessCommand($passedCommand, $this->_projectPath, $output);
+        $command  = "redis-cli flushall";
+        $pCommand = "vagrant ssh -c '". $command ."'";
+        return new ProcessCommand($pCommand, $this->_projectPath, $output);
     }
 }

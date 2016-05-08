@@ -12,11 +12,12 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
  */
 class Options
 {
-    const BOX_PREFIX = 'richdynamix/magestead-';
-    protected $_app = 'magento2';
+    const BOX_PREFIX       = 'richdynamix/magestead-';
+
+    protected $_app        = 'magento2';
+    protected $_phpVer     = '56';
+    protected $_os         = 'centos65';
     protected $_server;
-    protected $_phpVer = '56';
-    protected $_os = 'centos65';
     protected $_box;
     protected $_m2Username;
     protected $_m2Password;
@@ -79,13 +80,13 @@ class Options
     {
         $output->writeln('<comment>Lets configure your project\'s VM</comment>');
 
-        $ipQuestion = new Question("Configure the IP for your VM (192.168.47.47): ", '192.168.47.47');
+        $ipQuestion       = new Question("Configure the IP for your VM (192.168.47.47): ", '192.168.47.47');
         $this->_ipAddress = strtolower($helper->ask($input, $output, $ipQuestion));
 
         $cpuQuestion = new Question("How many CPU's would you like to use? (1): ", '1');
         $this->_cpus = strtolower($helper->ask($input, $output, $cpuQuestion));
 
-        $memoryQuestion = new Question("Define the VM memory limit (2048): ", '2048');
+        $memoryQuestion     = new Question("Define the VM memory limit (2048): ", '2048');
         $this->_memorylimit = strtolower($helper->ask($input, $output, $memoryQuestion));
     }
 
@@ -106,21 +107,22 @@ class Options
 
             $this->_app = strtolower($helper->ask($input, $output, $appQuestion));
         }
+
         $baseUrlQuestion = new Question("Enter your application's base_url (magestead.dev): ", 'magestead.dev');
-        $this->_baseUrl = strtolower($helper->ask($input, $output, $baseUrlQuestion));
+        $this->_baseUrl  = strtolower($helper->ask($input, $output, $baseUrlQuestion));
 
         $currenyQuestion = new Question("Enter your application's default currency (GBP): ", 'GBP');
         $this->_currency = $helper->ask($input, $output, $currenyQuestion);
 
         $localeQuestion = new Question("Enter your application's default locale (en_GB): ", 'en_GB');
-        $this->_locale = $helper->ask($input, $output, $localeQuestion);
+        $this->_locale  = $helper->ask($input, $output, $localeQuestion);
     }
 
     /**
      * @param $helper
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return bool
+     * @return boolean|integer
      */
     protected function setMagento2Settings($helper, InputInterface $input, OutputInterface $output)
     {
@@ -153,10 +155,10 @@ class Options
      */
     protected function askForAuth($helper, InputInterface $input, OutputInterface $output)
     {
-        $username = new Question("Please enter your Magento username (public key): ", '');
+        $username          = new Question("Please enter your Magento username (public key): ", '');
         $this->_m2Username = $helper->ask($input, $output, $username);
 
-        $password = new Question("Please enter your Magento password (private key): ", '');
+        $password          = new Question("Please enter your Magento password (private key): ", '');
         $this->_m2Password = $helper->ask($input, $output, $password);
     }
 
@@ -164,7 +166,7 @@ class Options
      * @param $helper
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return bool
+     * @return boolean|integer
      */
     protected function verifyAuth($helper, InputInterface $input, OutputInterface $output)
     {
@@ -173,7 +175,7 @@ class Options
         $authObj = [];
         if (file_exists($authFile)) {
             $authJson = file_get_contents($authFile);
-            $authObj = (array)json_decode($authJson);
+            $authObj  = (array)json_decode($authJson);
 
             if (isset($authObj['http-basic']) && isset($authObj['http-basic']->{'repo.magento.com'})) {
                 return true;

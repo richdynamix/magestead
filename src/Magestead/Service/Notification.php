@@ -16,8 +16,8 @@ class Notification
      */
     public static function send($message)
     {
-        $notifier = NotifierFactory::create();
-        $basePath = dirname( __FILE__ ) . '/../../../';
+        $notifier     = NotifierFactory::create();
+        $basePath     = dirname( __FILE__ ) . '/../../../';
         $notification =
             (new Notify())
                 ->setTitle('Magestead')

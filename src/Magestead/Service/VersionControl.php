@@ -17,9 +17,9 @@ class VersionControl
      */
     public function __construct($repoUrl, $projectPath, OutputInterface $output)
     {
-        $this->_repoUrl = $repoUrl;
+        $this->_repoUrl     = $repoUrl;
         $this->_projectPath = $projectPath;
-        $this->_output = $output;
+        $this->_output      = $output;
 
         $this->execute($output);
     }

@@ -31,9 +31,9 @@ class EnableCommand extends Command
     {
         $output->writeln('<info>Enabling all cache types</info>');
 
-        $command = $this->getCommand(new Config($output));
-        $passedCommand = "vagrant ssh -c '". $command ."'";
-        return new ProcessCommand($passedCommand, $this->_projectPath, $output);
+        $command  = $this->getCommand(new Config($output));
+        $pCommand = "vagrant ssh -c '". $command ."'";
+        return new ProcessCommand($pCommand, $this->_projectPath, $output);
     }
 
     /**

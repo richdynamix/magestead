@@ -18,11 +18,11 @@ class SetupCommand extends Command
 {
     protected $_basePath;
     protected $_projectPath;
-    protected $_magesteadConfig;
+    protected $_msConfig;
 
     protected function configure()
     {
-        $this->_basePath = dirname( __FILE__ ) . '/../../../';
+        $this->_basePath    = dirname( __FILE__ ) . '/../../../';
         $this->_projectPath = getcwd();
 
         $this->setName("setup");
@@ -36,7 +36,7 @@ class SetupCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $helper = $this->getHelper('question');
+        $helper  = $this->getHelper('question');
         $options = new Options($helper, $input, $output);
 
         $this->setupProject($output, $options);
@@ -82,20 +82,22 @@ class SetupCommand extends Command
      */
     protected function configureProject(array $options, OutputInterface $output)
     {
-        $this->_magesteadConfig = $this->getConfigFile($output);
+        $msConfig = $this->getConfigFile($output);
 
-        $this->_magesteadConfig['vagrantfile']['vm']['box'] = $options['box'];
-        $this->_magesteadConfig['vagrantfile']['vm']['box_url'] = $options['box'];
-        $this->_magesteadConfig['vagrantfile']['vm']['memory'] = $options['memory_limit'];
-        $this->_magesteadConfig['vagrantfile']['vm']['network']['private_network'] = $options['ip_address'];
-        $this->_magesteadConfig['magestead']['apps']['mba_12345']['type'] = ($options['app'] == 'magento 2') ? 'magento2' : 'magento';
-        $this->_magesteadConfig['magestead']['apps']['mba_12345']['locale'] = $options['locale'];
-        $this->_magesteadConfig['magestead']['apps']['mba_12345']['default_currency'] = $options['default_currency'];
-        $this->_magesteadConfig['magestead']['apps']['mba_12345']['base_url'] = $options['base_url'];
-        $this->_magesteadConfig['magestead']['os'] = $options['os'];
-        $this->_magesteadConfig['magestead']['server'] = $options['server'];
+        $app = ($options['app'] == 'magento 2') ? 'magento2' : 'magento';
 
-        $this->saveConfigFile($this->_magesteadConfig, $output);
+        $msConfig['vagrantfile']['vm']['box']                           = $options['box'];
+        $msConfig['vagrantfile']['vm']['box_url']                       = $options['box'];
+        $msConfig['vagrantfile']['vm']['memory']                        = $options['memory_limit'];
+        $msConfig['vagrantfile']['vm']['network']['private_network']    = $options['ip_address'];
+        $msConfig['magestead']['apps']['mba_12345']['type']             = $app;
+        $msConfig['magestead']['apps']['mba_12345']['locale']           = $options['locale'];
+        $msConfig['magestead']['apps']['mba_12345']['default_currency'] = $options['default_currency'];
+        $msConfig['magestead']['apps']['mba_12345']['base_url']         = $options['base_url'];
+        $msConfig['magestead']['os']                                    = $options['os'];
+        $msConfig['magestead']['server']                                = $options['server'];
+
+        $this->saveConfigFile($msConfig, $output);
 
     }
 
@@ -121,7 +123,7 @@ class SetupCommand extends Command
     protected function saveConfigFile(array $config, OutputInterface $output)
     {
         $dumper = new Dumper();
-        $yaml = $dumper->dump($config, 6);
+        $yaml   = $dumper->dump($config, 6);
 
         try {
             file_put_contents($this->_projectPath . '/magestead.yaml', $yaml);

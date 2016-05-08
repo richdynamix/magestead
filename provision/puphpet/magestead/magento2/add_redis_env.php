@@ -1,7 +1,7 @@
 <?php
 
 $file = "$argv[1]/magento2/app/etc/env.php";
-$env = include $file;
+$env  = include $file;
 
 $env['cache'] =  
 	array (
