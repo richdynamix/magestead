@@ -85,9 +85,11 @@ class SetupCommand extends Command
         $msConfig = $this->getConfigFile($output);
 
         $app = ($options['app'] == 'magento2') ? 'magento2' : 'magento';
+        $hostname = 'magestead-' . $options['base_url'];
 
         $msConfig['vagrantfile']['vm']['box']                           = $options['box'];
         $msConfig['vagrantfile']['vm']['box_url']                       = $options['box'];
+        $msConfig['vagrantfile']['vm']['hostname']                      = $hostname;
         $msConfig['vagrantfile']['vm']['memory']                        = $options['memory_limit'];
         $msConfig['vagrantfile']['vm']['network']['private_network']    = $options['ip_address'];
         $msConfig['magestead']['apps']['mba_12345']['type']             = $app;
