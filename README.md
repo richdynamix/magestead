@@ -63,7 +63,7 @@ Choose a location to install the CLI app on your machine, your home directory wo
 $ cd ~
 $ git clone git@github.com:richdynamix/magestead.git magestead
 $ cd magestead
-$ git checkout -b 2.0.beta2 origin/release/2.0.beta2
+$ git checkout -b 2.0.beta3 origin/release/2.0.beta3
 ```
 
 Install all the required dependencies with Composer
@@ -80,12 +80,12 @@ alias magestead="~/magestead/magestead"
 
 **Note:** *Please choose the correct location for your shell i.e.* `.bash_profile`, `config.fish`, `.zshrc`
 
-### Upgrade to 2.0 beta2
+### Upgrade to 2.0 beta3
 
 Change into your magestead installation directory and checkout out the new branch
 
 $ cd ~/magestead
-$ git checkout -b 2.0.beta2 origin/release/2.0.beta2
+$ git checkout -b 2.0.beta3 origin/release/2.0.beta3
 
 ## Usage
 
