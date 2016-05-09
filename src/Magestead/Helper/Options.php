@@ -101,7 +101,7 @@ class Options
         if ($this->_phpVer !== '70') {
             $appQuestion = new ChoiceQuestion(
                 "Which application do you want to install?",
-                ['Magento', 'Magento 2'],
+                ['Magento', 'Magento2'],
                 0
             );
 

@@ -19,7 +19,7 @@ class Project
             case "magento":
                 return new MagentoProject($options, $config, $projectPath, $output);
             break;
-            case "magento 2":
+            case "magento2":
                 return new Magento2Project($options, $config, $projectPath, $output);
             break;
         }

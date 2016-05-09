@@ -36,7 +36,7 @@ if ! grep -x -q "${APP_NAME}" "/.puphpet-stuff/${APP_NAME}-ran"; then
 
   if [ $WEBSERVER = "apache" ]; then
     echo "--- Configuring APACHE VHOST for Magento 2 ---"
-    /bin/bash /vagrant/puphpet/magestead/magento2/configure-apache.sh $APP_NAME $DIR $BASE_URL $WEBSERVER
+    /bin/bash /vagrant/puphpet/magestead/magento2/configure-apache.sh $APP_NAME $DIR $BASE_URL $OS
   fi
 
   if [ $WEBSERVER = "nginx" ]; then

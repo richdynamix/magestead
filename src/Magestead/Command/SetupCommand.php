@@ -84,7 +84,7 @@ class SetupCommand extends Command
     {
         $msConfig = $this->getConfigFile($output);
 
-        $app = ($options['app'] == 'magento 2') ? 'magento2' : 'magento';
+        $app = ($options['app'] == 'magento2') ? 'magento2' : 'magento';
 
         $msConfig['vagrantfile']['vm']['box']                           = $options['box'];
         $msConfig['vagrantfile']['vm']['box_url']                       = $options['box'];
