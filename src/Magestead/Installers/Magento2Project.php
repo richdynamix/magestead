@@ -81,9 +81,9 @@ class Magento2Project
         $this->setPermissions($projectPath, $output);
 
         $output->writeln('<info>Installing Magento 2 Software</info>');
-        $locale = $options['magestead']['apps']['mba_12345']['locale'];
-        $db_name = $options['magestead']['apps']['mba_12345']['db_name'];
-        $base_url = $options['magestead']['apps']['mba_12345']['base_url'];
+        $locale           = $options['magestead']['apps']['mba_12345']['locale'];
+        $db_name          = $options['magestead']['apps']['mba_12345']['db_name'];
+        $base_url         = $options['magestead']['apps']['mba_12345']['base_url'];
         $default_currency = $options['magestead']['apps']['mba_12345']['default_currency'];
 
         $install = 'vagrant ssh -c \'cd /var/www/public; bin/magento setup:install --base-url=http://'.$base_url.'/ \
@@ -134,7 +134,7 @@ class Magento2Project
     {
         $output->writeln('<comment>Configuring Redis Cache</comment>');
         $file = "$projectPath/public/app/etc/env.php";
-        $env = include $file;
+        $env  = include $file;
 
         $env['cache'] = [
             'frontend' => [
@@ -219,7 +219,7 @@ class Magento2Project
      * @param array $options
      * @param $projectPath
      * @param OutputInterface $output
-     * @return VersionControl
+     * @return VersionControl|null
      */
     protected function processVcs(array $options, $projectPath, OutputInterface $output)
     {
@@ -234,8 +234,9 @@ class Magento2Project
      */
     protected function setComposerBinDir($projectPath)
     {
-        $file = "$projectPath/public/composer.json";
+        $file     = "$projectPath/public/composer.json";
         $composer = json_decode(file_get_contents($file), true);
+
         $composer['config']['bin-dir'] = 'bin';
         file_put_contents($file, json_encode($composer));
     }

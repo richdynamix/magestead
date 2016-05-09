@@ -34,9 +34,9 @@ class ReindexCommand extends Command
         $output->writeln('<info>Reindexing data</info>');
         $index = $input->getArgument('index');
 
-        $command = $this->getCommand(new Config($output), $index);
-        $passedCommand = "vagrant ssh -c '". $command ."'";
-        return new ProcessCommand($passedCommand, $this->_projectPath, $output);
+        $command  = $this->getCommand(new Config($output), $index);
+        $pCommand = "vagrant ssh -c '". $command ."'";
+        return new ProcessCommand($pCommand, $this->_projectPath, $output);
     }
 
     /**

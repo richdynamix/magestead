@@ -27,7 +27,7 @@ class ShowModeCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return ProcessCommand
+     * @return ProcessCommand|null
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

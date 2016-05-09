@@ -3,6 +3,7 @@ vagrantfile:
     vm:
         box: centos65+apache+php56
         box_url: centos65+apache+php56
+        hostname: magestead2
         memory: '2048'
         cpus: '1'
         chosen_provider: virtualbox

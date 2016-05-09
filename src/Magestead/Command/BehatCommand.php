@@ -30,7 +30,7 @@ class BehatCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $option = $input->getArgument('option');
+        $option  = $input->getArgument('option');
         $command = $this->getCommand(new Config($output), $option);
         if (!$command) {
             return $output->writeln('<error>Command not available for this application</error>');

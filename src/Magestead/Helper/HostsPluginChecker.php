@@ -18,7 +18,10 @@ class HostsPluginChecker
         if (is_null($hostPlugin)) {
             self::editHostsInstructions($options, $output);
 
-            $output->writeln('<comment>Installing the vagrant-hostsupdater plugin will remove the need for manual edits of your hosts file.</comment>');
+            $output->writeln(
+                '<comment>Installing the vagrant-hostsupdater plugin will remove the need for
+manual edits of your hosts file.</comment>'
+            );
         }
     }
 

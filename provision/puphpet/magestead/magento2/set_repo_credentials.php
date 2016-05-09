@@ -2,7 +2,7 @@
 
 $file = "/home/vagrant/.composer/auth.json";
 
-$publicKey = "$argv[1]";
+$publicKey  = "$argv[1]";
 $privateKey = "$argv[2]";
 
 $contents = [

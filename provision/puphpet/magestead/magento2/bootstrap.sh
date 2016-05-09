@@ -11,8 +11,8 @@ CURRENCY=${4};
 DB_NAME=${5};
 BASE_URL=${6};
 REDIS_INSTALL=${7};
-APACHE=${8};
-NGINX=${9};
+WEBSERVER=${8};
+OS=${9};
 
 if [ -d "/.puphpet-stuff/${APP_NAME}-ran" ]; then
     rm -rf "/.puphpet-stuff/${APP_NAME}-ran"
@@ -29,20 +29,22 @@ if ! grep -x -q "${APP_NAME}" "/.puphpet-stuff/${APP_NAME}-ran"; then
 
 	echo "--- Installing Database for Magento 2 ---"
   /bin/bash /vagrant/puphpet/magestead/install-db.sh $DB_NAME
-    
+
+# IF PUPPET = TRUE
 #	echo "--- Installing Magento 2 Software ---"
 #  /bin/bash /vagrant/puphpet/magestead/magento2/install.sh $DIR $LOCALE $CURRENCY $DB_NAME $BASE_URL
 
-  if [ $APACHE = "1" ]; then
+  if [ $WEBSERVER = "apache" ]; then
     echo "--- Configuring APACHE VHOST for Magento 2 ---"
-    /bin/bash /vagrant/puphpet/magestead/magento2/configure-apache.sh $APP_NAME $DIR $BASE_URL
+    /bin/bash /vagrant/puphpet/magestead/magento2/configure-apache.sh $APP_NAME $DIR $BASE_URL $OS
   fi
 
-  if [ $NGINX = "1" ]; then
+  if [ $WEBSERVER = "nginx" ]; then
     echo "--- Configuring NGINX VHOST for Magento 2 ---"
     /bin/bash /vagrant/puphpet/magestead/magento2/configure-nginx.sh $APP_NAME $DIR $BASE_URL
   fi
 
+# IF PUPPET = TRUE
 #  echo "--- Finalising Setup ---"
 #  /bin/bash /vagrant/puphpet/magestead/magento2/finalise.sh $DIR
 #

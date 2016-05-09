@@ -11,8 +11,8 @@ CURRENCY=${4};
 DB_NAME=${5};
 BASE_URL=${6};
 REDIS_INSTALL=${7};
-APACHE=${8};
-NGINX=${9};
+WEBSERVER=${8};
+OS=${9};
 
 if [ -d "/.puphpet-stuff/${APP_NAME}-ran" ]; then
     rm -rf "/.puphpet-stuff/${APP_NAME}-ran"
@@ -29,16 +29,17 @@ if ! grep -x -q "${APP_NAME}" "/.puphpet-stuff/${APP_NAME}-ran"; then
 	echo "--- Installing Database for Magento ---"
   /bin/bash /vagrant/puphpet/magestead/install-db.sh $DB_NAME
     
-  if [ $APACHE = "1" ]; then
+  if [ $WEBSERVER = "apache" ]; then
     echo "--- Configuring APACHE VHOST for Magento ---"
-    /bin/bash /vagrant/puphpet/magestead/magento/configure-apache.sh $APP_NAME $DIR $BASE_URL
+    /bin/bash /vagrant/puphpet/magestead/magento/configure-apache.sh $APP_NAME $DIR $BASE_URL $OS
   fi
 
-  if [ $NGINX = "1" ]; then
+  if [ $WEBSERVER = "nginx" ]; then
     echo "--- Configuring NGINX VHOST for Magento ---"
     /bin/bash /vagrant/puphpet/magestead/magento/configure-nginx.sh $APP_NAME $DIR $BASE_URL
   fi
 
+# IF PUPPET = TRUE
 #  echo "--- Installing Magento With Composer ---"
 #  /bin/bash /vagrant/puphpet/magestead/magento/install.sh $DIR $LOCALE $CURRENCY $DB_NAME $BASE_URL
 #

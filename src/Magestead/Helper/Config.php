@@ -16,7 +16,7 @@ class Config
     public function __construct(OutputInterface $output)
     {
         $this->_projectPath = getcwd();
-        $this->_config = $this->getConfigFile($output);
+        $this->_config      = $this->getConfigFile($output);
     }
 
     /**

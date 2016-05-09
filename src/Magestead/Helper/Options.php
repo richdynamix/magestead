@@ -13,12 +13,11 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
 class Options
 {
     const BOX_PREFIX = 'richdynamix/magestead-';
-//    const BOX_PREFIX = '';
-    protected $_app;
-    protected $_server;
+
+    protected $_app = 'magento2';
     protected $_phpVer = '56';
     protected $_os = 'centos65';
-//    protected $_os = 'ubuntu14';
+    protected $_server;
     protected $_box;
     protected $_m2Username;
     protected $_m2Password;
@@ -38,10 +37,13 @@ class Options
      */
     public function __construct($helper, InputInterface $input, OutputInterface $output)
     {
-        $this->getVagrantSettings($helper, $input, $output);
-        $this->getApplicationSettings($helper, $input, $output);
-        $this->getMagento2Settings($helper, $input, $output);
-        $this->getVersionControlSettings($helper, $input, $output);
+        $this->setVagrantSettings($helper, $input, $output);
+
+        $this->setServerConfig($helper, $input, $output);
+
+        $this->setApplicationSettings($helper, $input, $output);
+        $this->setMagento2Settings($helper, $input, $output);
+        $this->setVersionControlSettings($helper, $input, $output);
 
         $this->setVagrantBox();
 
@@ -52,133 +54,21 @@ class Options
     public function getAllOptions()
     {
         return [
-          'app' => $this->getApp(),
-          'server' => $this->getServer(),
-          'phpver' => $this->getPhpVer(),
-          'os' => $this->getOs(),
-          'box' => $this->getBox(),
-          'm2user' => $this->getM2Username(),
-          'm2pass' => $this->getM2Password(),
-          'repo_url' => $this->getRepoUrl(),
-          'ip_address' => $this->getIpAddress(),
-          'cpus' => $this->getCpus(),
-          'memory_limit' => $this->getMemorylimit(),
-          'locale' => $this->getLocale(),
-          'default_currency' => $this->getCurrency(),
-          'base_url' => $this->getBaseUrl(),
+          'app' => $this->_app,
+          'server' => $this->_server,
+          'phpver' => $this->_phpVer,
+          'os' => $this->_os,
+          'box' => $this->_box,
+          'm2user' => $this->_m2Username,
+          'm2pass' => $this->_m2Password,
+          'repo_url' => $this->_repoUrl,
+          'ip_address' => $this->_ipAddress,
+          'cpus' => $this->_cpus,
+          'memory_limit' => $this->_memorylimit,
+          'locale' => $this->_locale,
+          'default_currency' => $this->_currency,
+          'base_url' => $this->_baseUrl,
         ];
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getApp()
-    {
-        return $this->_app;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getServer()
-    {
-        return $this->_server;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPhpVer()
-    {
-        return $this->_phpVer;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getBox()
-    {
-        return $this->_box;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getM2Username()
-    {
-        return $this->_m2Username;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getM2Password()
-    {
-        return $this->_m2Password;
-    }
-
-    /**
-     * @return string
-     */
-    public function getMemorylimit()
-    {
-        return $this->_memorylimit;
-    }
-
-    /**
-     * @return string
-     */
-    public function getIpAddress()
-    {
-        return $this->_ipAddress;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCpus()
-    {
-        return $this->_cpus;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRepoUrl()
-    {
-        return $this->_repoUrl;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getLocale()
-    {
-        return $this->_locale;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCurrency()
-    {
-        return $this->_currency;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getBaseUrl()
-    {
-        return $this->_baseUrl;
-    }
-
-    /**
-     * @return string
-     */
-    public function getOs()
-    {
-        return $this->_os;
     }
 
     /**
@@ -186,17 +76,17 @@ class Options
      * @param InputInterface $input
      * @param OutputInterface $output
      */
-    protected function getVagrantSettings($helper, InputInterface $input, OutputInterface $output)
+    protected function setVagrantSettings($helper, InputInterface $input, OutputInterface $output)
     {
         $output->writeln('<comment>Lets configure your project\'s VM</comment>');
 
-        $ipQuestion = new Question("Configure the IP for your VM (192.168.47.47): ", '192.168.47.47');
+        $ipQuestion       = new Question("Configure the IP for your VM (192.168.47.47): ", '192.168.47.47');
         $this->_ipAddress = strtolower($helper->ask($input, $output, $ipQuestion));
 
         $cpuQuestion = new Question("How many CPU's would you like to use? (1): ", '1');
         $this->_cpus = strtolower($helper->ask($input, $output, $cpuQuestion));
 
-        $memoryQuestion = new Question("Define the VM memory limit (2048): ", '2048');
+        $memoryQuestion     = new Question("Define the VM memory limit (2048): ", '2048');
         $this->_memorylimit = strtolower($helper->ask($input, $output, $memoryQuestion));
     }
 
@@ -205,44 +95,38 @@ class Options
      * @param InputInterface $input
      * @param OutputInterface $output
      */
-    protected function getApplicationSettings($helper, InputInterface $input, OutputInterface $output)
+    protected function setApplicationSettings($helper, InputInterface $input, OutputInterface $output)
     {
         $output->writeln('<comment>Lets configure your project\'s application</comment>');
-        $appQuestion = new ChoiceQuestion(
-            "Which application do you want to install?",
-            ['Magento', 'Magento 2'],
-            0
-        );
-        $this->_app = strtolower($helper->ask($input, $output, $appQuestion));
+        if ($this->_phpVer !== '70') {
+            $appQuestion = new ChoiceQuestion(
+                "Which application do you want to install?",
+                ['Magento', 'Magento2'],
+                0
+            );
+
+            $this->_app = strtolower($helper->ask($input, $output, $appQuestion));
+        }
 
         $baseUrlQuestion = new Question("Enter your application's base_url (magestead.dev): ", 'magestead.dev');
-        $this->_baseUrl = strtolower($helper->ask($input, $output, $baseUrlQuestion));
+        $this->_baseUrl  = strtolower($helper->ask($input, $output, $baseUrlQuestion));
 
         $currenyQuestion = new Question("Enter your application's default currency (GBP): ", 'GBP');
         $this->_currency = $helper->ask($input, $output, $currenyQuestion);
 
         $localeQuestion = new Question("Enter your application's default locale (en_GB): ", 'en_GB');
-        $this->_locale = $helper->ask($input, $output, $localeQuestion);
-
-        $serverQuestion = new ChoiceQuestion(
-            "Which webserver would you like?",
-            ['NGINX', 'Apache'],
-            0
-        );
-        $this->_server = strtolower($helper->ask($input, $output, $serverQuestion));
+        $this->_locale  = $helper->ask($input, $output, $localeQuestion);
     }
 
     /**
      * @param $helper
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return bool
+     * @return boolean|integer
      */
-    protected function getMagento2Settings($helper, InputInterface $input, OutputInterface $output)
+    protected function setMagento2Settings($helper, InputInterface $input, OutputInterface $output)
     {
-         $this->usePhp7($helper, $input, $output);
-
-        if ($this->_app === 'magento 2') {
+        if ($this->_app === 'magento2') {
             return $this->verifyAuth($helper, $input, $output);
         }
 
@@ -254,12 +138,12 @@ class Options
      * @param InputInterface $input
      * @param OutputInterface $output
      */
-    protected function getVersionControlSettings($helper, InputInterface $input, OutputInterface $output)
+    protected function setVersionControlSettings($helper, InputInterface $input, OutputInterface $output)
     {
-        $versionControl = new ConfirmationQuestion("Would you like to add your project to GIT? (yes/no) ", true);
-        $versioning = $helper->ask($input, $output, $versionControl);
+        $versionControl = new ConfirmationQuestion("Would you like to add your project to GIT? (no/yes) ", false);
+        $versioning     = $helper->ask($input, $output, $versionControl);
         if ($versioning) {
-            $repoQuestion = new Question("Enter your full GitHub/BitBucket repo URL: ", '');
+            $repoQuestion   = new Question("Enter your full GitHub/BitBucket repo URL: ", '');
             $this->_repoUrl = strtolower($helper->ask($input, $output, $repoQuestion));
         }
     }
@@ -271,10 +155,10 @@ class Options
      */
     protected function askForAuth($helper, InputInterface $input, OutputInterface $output)
     {
-        $username = new Question("Please enter your Magento username (public key): ", '');
+        $username          = new Question("Please enter your Magento username (public key): ", '');
         $this->_m2Username = $helper->ask($input, $output, $username);
 
-        $password = new Question("Please enter your Magento password (private key): ", '');
+        $password          = new Question("Please enter your Magento password (private key): ", '');
         $this->_m2Password = $helper->ask($input, $output, $password);
     }
 
@@ -282,7 +166,7 @@ class Options
      * @param $helper
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return bool
+     * @return boolean|integer
      */
     protected function verifyAuth($helper, InputInterface $input, OutputInterface $output)
     {
@@ -291,7 +175,7 @@ class Options
         $authObj = [];
         if (file_exists($authFile)) {
             $authJson = file_get_contents($authFile);
-            $authObj = (array)json_decode($authJson);
+            $authObj  = (array)json_decode($authJson);
 
             if (isset($authObj['http-basic']) && isset($authObj['http-basic']->{'repo.magento.com'})) {
                 return true;
@@ -312,16 +196,16 @@ class Options
      * @param InputInterface $input
      * @param OutputInterface $output
      */
-    protected function usePhp7($helper, InputInterface $input, OutputInterface $output)
+    protected function setPhp($helper, InputInterface $input, OutputInterface $output)
     {
-        if ($this->_app !== 'magento' && $this->_server !== 'apache') {
-            $phpVerQuestion = new ChoiceQuestion(
-                "Which version of PHP should be installed?",
-                ['56', '70'],
-                0
-            );
-            $this->_phpVer = $helper->ask($input, $output, $phpVerQuestion);
-        }
+        $output->writeln('<info>Keep in mind PHP7 is only available for Magento 2</info>');
+        $phpVerQuestion = new ChoiceQuestion(
+            "Which version of PHP should be installed?",
+            ['56', '70'],
+            0
+        );
+
+        $this->_phpVer = $helper->ask($input, $output, $phpVerQuestion);
     }
 
     /**
@@ -329,6 +213,51 @@ class Options
      */
     protected function setVagrantBox()
     {
-        $this->_box = self::BOX_PREFIX . $this->getOs() . "-$this->_server-php$this->_phpVer";
+        $this->_box = self::BOX_PREFIX . $this->_os . "-$this->_server-php$this->_phpVer";
+    }
+
+    /**
+     * @param $helper
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     */
+    protected function setServerConfig($helper, InputInterface $input, OutputInterface $output)
+    {
+        $output->writeln('<comment>Lets configure your server</comment>');
+        $this->setOperatingSystem($helper, $input, $output);
+        $this->setWebServer($helper, $input, $output);
+        $this->setPhp($helper, $input, $output);
+    }
+
+    /**
+     * @param $helper
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     */
+    protected function setWebServer($helper, InputInterface $input, OutputInterface $output)
+    {
+        $serverQuestion = new ChoiceQuestion(
+            "Which webserver would you like?",
+            ['NGINX', 'Apache'],
+            0
+        );
+
+        $this->_server = strtolower($helper->ask($input, $output, $serverQuestion));
+    }
+
+    /**
+     * @param $helper
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     */
+    protected function setOperatingSystem($helper, InputInterface $input, OutputInterface $output)
+    {
+        $osQuestion = new ChoiceQuestion(
+            "Which OS would you like to install?",
+            ['CentOS 6.5', 'Ubuntu 14'],
+            0
+        );
+
+        $this->_os = str_replace(' ', '', str_replace('.', '', strtolower($helper->ask($input, $output, $osQuestion))));
     }
 }

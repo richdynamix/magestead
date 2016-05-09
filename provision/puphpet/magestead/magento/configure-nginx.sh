@@ -115,4 +115,3 @@ sudo echo "$block" > "/etc/nginx/sites-available/$APP_NAME.conf"
 cd /etc/nginx/sites-enabled;
 sudo ln -s "/etc/nginx/sites-available/$APP_NAME.conf"
 sudo service nginx restart
-sudo service php-fpm restart
