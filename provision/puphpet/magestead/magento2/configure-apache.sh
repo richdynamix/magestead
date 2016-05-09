@@ -44,7 +44,7 @@ vhost="
 
 if [ $OS = "ubuntu14" ]; then
     sudo echo "$vhost" > "/etc/apache2/sites-available/$APP_NAME.conf"
-    cd /etc/apache/sites-enabled;
+    cd /etc/apache2/sites-enabled;
     sudo ln -s "/etc/apache2/sites-available/$APP_NAME.conf"
     sudo service apache2 restart
 fi
