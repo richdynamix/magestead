@@ -20,7 +20,7 @@ define('APP_PATH',  __DIR__);
 $app = new Application('Magestead CLI', '2.0.0');
 $app->addCommands(array(
     // Project Setup Command
-    new Magestead\Command\SetupCommand(),
+    new Magestead\Command\NewCommand(),
 
     // VM Related Commands
     new Magestead\Command\VM\UpCommand(),

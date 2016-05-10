@@ -34,14 +34,15 @@ class Options
      * @param $helper
      * @param InputInterface $input
      * @param OutputInterface $output
+     * @param $project
      */
-    public function __construct($helper, InputInterface $input, OutputInterface $output)
+    public function __construct($helper, InputInterface $input, OutputInterface $output, $project)
     {
         $this->setVagrantSettings($helper, $input, $output);
 
         $this->setServerConfig($helper, $input, $output);
 
-        $this->setApplicationSettings($helper, $input, $output);
+        $this->setApplicationSettings($helper, $input, $output, $project);
         $this->setMagento2Settings($helper, $input, $output);
         $this->setVersionControlSettings($helper, $input, $output);
 
@@ -94,8 +95,9 @@ class Options
      * @param $helper
      * @param InputInterface $input
      * @param OutputInterface $output
+     * @param $project
      */
-    protected function setApplicationSettings($helper, InputInterface $input, OutputInterface $output)
+    protected function setApplicationSettings($helper, InputInterface $input, OutputInterface $output, $project)
     {
         $output->writeln('<comment>Lets configure your project\'s application</comment>');
         if ($this->_phpVer !== '70') {
@@ -108,7 +110,7 @@ class Options
             $this->_app = strtolower($helper->ask($input, $output, $appQuestion));
         }
 
-        $baseUrlQuestion = new Question("Enter your application's base_url (magestead.dev): ", 'magestead.dev');
+        $baseUrlQuestion = new Question("Enter your application's base_url ($project.dev): ", $project.'.dev');
         $this->_baseUrl  = strtolower($helper->ask($input, $output, $baseUrlQuestion));
 
         $currenyQuestion = new Question("Enter your application's default currency (GBP): ", 'GBP');
