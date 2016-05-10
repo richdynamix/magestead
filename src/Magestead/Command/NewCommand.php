@@ -1,20 +1,22 @@
 <?php namespace Magestead\Command;
 
+use Magestead\Exceptions\ExistingProjectException;
 use Magestead\Helper\Options;
 use Magestead\Installers\Project;
-use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Yaml\Parser;
 use Symfony\Component\Yaml\Dumper;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\ProgressBar;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Yaml\Exception\ParseException;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class SetupCommand
+ * Class NewCommand
  * @package Magestead\Command
  */
-class SetupCommand extends Command
+class NewCommand extends Command
 {
     protected $_basePath;
     protected $_projectPath;
@@ -25,19 +27,24 @@ class SetupCommand extends Command
         $this->_basePath    = dirname( __FILE__ ) . '/../../../';
         $this->_projectPath = getcwd();
 
-        $this->setName("setup");
-        $this->setDescription("Initialise Magestead project into current working directory");
+        $this->setName("new");
+        $this->setDescription("Initialise new Magestead project into current working directory");
+        $this->addArgument('project', InputArgument::REQUIRED, 'Name your project directory');
     }
+
 
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
      * @return \Magestead\Installers\Magento2Project|\Magestead\Installers\MagentoProject
+     * @throws ExistingProjectException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $project = $this->setProject($input);
+
         $helper  = $this->getHelper('question');
-        $options = new Options($helper, $input, $output);
+        $options = new Options($helper, $input, $output, $project);
 
         $this->setupProject($output, $options);
 
@@ -146,5 +153,24 @@ class SetupCommand extends Command
         $provisionFolder = $this->_basePath . "provision";
         $this->copyConfigFiles($provisionFolder, $this->_projectPath, $output);
         $this->configureProject($options->getAllOptions(), $output);
+    }
+
+    /**
+     * @param InputInterface $input
+     * @return mixed
+     * @throws ExistingProjectException
+     */
+    protected function setProject(InputInterface $input)
+    {
+        $project = $input->getArgument('project');
+        $this->_projectPath = $this->_projectPath . '/' . $project;
+
+
+        if (is_dir($this->_projectPath)) {
+            throw new ExistingProjectException('Target project directory already exists');
+        }
+
+        mkdir($this->_projectPath, 0777, true);
+        return $project;
     }
 }
