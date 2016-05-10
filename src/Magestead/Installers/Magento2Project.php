@@ -121,7 +121,7 @@ class Magento2Project
         new ProcessCommand($command, $projectPath, $output);
         $output->writeln('<comment>File Permissions Set</comment>');
 
-        $command = 'vagrant ssh -c \'cd /var/www/public; sudo chmod +x bin/magento\'';
+        $command = 'vagrant ssh -c \'cd /var/www/public; sudo chmod +x bin/magento; sudo chmod 755 bin/phpspec; sudo chmod 755 bin/behat;\'';
         new ProcessCommand($command, $projectPath, $output);
         $output->writeln('<comment>bin/magento Permissions Set</comment>');
     }
