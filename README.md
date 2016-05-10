@@ -85,21 +85,14 @@ alias magestead="~/magestead/magestead"
 Change into your magestead installation directory and checkout out the new branch
 
 $ cd ~/magestead
-$ git checkout -b 2.0.beta3 origin/release/2.0.beta3
+$ git checkout -b 2.0.rc1 origin/release/2.0.rc1
 
 ## Usage
-
-Create a new project folder
-
-```
-$ mkdir ~/Sites/bluewidgets
-$ cd ~/Sites/bluewidgets
-```
 
 Run the Magestead setup
 
 ```
-$ magestead setup
+$ magestead new project-name
 ```
 
 Follow the on screen instructions to install the application and server you require.
@@ -113,10 +106,6 @@ While Magestead 2.0 is in Beta, please be aware that there may be unreported bug
 #### PHP-FPM & PHP7
 
 There is a known issue that prevents the restart of PHP-FPM when using PHP7. This is the case for preconfigured boxes as well as custom boxes. Until the bug has been resolved globally the only way to restart PHP-FPM is to manually kill the process then restart.
-
-#### PHPSpec & Behat
-
-For a Magento 2 setup, there is a known permissions issue that stops PHPSpec & Behat test suites to run from both the host machine and on the guest machine. I am working to resolve this issue and should be fixed in the next release.
 
 ## Built With
 
