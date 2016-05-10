@@ -313,7 +313,7 @@ Vagrant.configure('2') do |config|
 
   end
 
-    # Application Bootstrapping
+  # Application Bootstrapping
   if magestead['magestead'].has_key?("apps")
     magestead['magestead']["apps"].each do |app|
 
@@ -326,9 +326,9 @@ Vagrant.configure('2') do |config|
       # Magento/Magento 2 Bootstrap
       config.vm.provision :shell, run: 'always' do |s|
         s.path = path
-        s.args = [app[0], app[1]['dir'], app[1]['locale'], app[1]['default_currency'], 
+        s.args = [app[0], app[1]['dir'], app[1]['locale'], app[1]['default_currency'],
         app[1]['db_name'], app[1]['base_url'], magestead['redis']['install'],
-        magestead['magestead']['server'], magestead['magestead']['os']]
+        magestead['magestead']['server'], magestead['magestead']['os'], data['advanced']]
       end
 
     end

@@ -1,5 +1,6 @@
 vagrantfile:
     puphpet: false
+    advanced: 'false'
     vm:
         box: centos65+apache+php56
         box_url: centos65+apache+php56

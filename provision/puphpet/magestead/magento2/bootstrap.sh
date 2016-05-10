@@ -13,6 +13,7 @@ BASE_URL=${6};
 REDIS_INSTALL=${7};
 WEBSERVER=${8};
 OS=${9};
+ADVANCED=${10};
 
 if [ -d "/.puphpet-stuff/${APP_NAME}-ran" ]; then
     rm -rf "/.puphpet-stuff/${APP_NAME}-ran"
@@ -24,15 +25,16 @@ if [ ! -f "/.puphpet-stuff/${APP_NAME}-ran" ]; then
 fi
 
 if ! grep -x -q "${APP_NAME}" "/.puphpet-stuff/${APP_NAME}-ran"; then
-  
+
   sudo /bin/bash -c "echo \"${APP_NAME}\" >> \"/.puphpet-stuff/${APP_NAME}-ran\""
 
 	echo "--- Installing Database for Magento 2 ---"
   /bin/bash /vagrant/puphpet/magestead/install-db.sh $DB_NAME
 
-# IF PUPPET = TRUE
-#	echo "--- Installing Magento 2 Software ---"
-#  /bin/bash /vagrant/puphpet/magestead/magento2/install.sh $DIR $LOCALE $CURRENCY $DB_NAME $BASE_URL
+  if [ $ADVANCED = "true" ]; then
+    echo "--- Installing Magento 2 Software ---"
+    /bin/bash /vagrant/puphpet/magestead/magento2/install.sh $DIR $LOCALE $CURRENCY $DB_NAME $BASE_URL
+  fi
 
   if [ $WEBSERVER = "apache" ]; then
     echo "--- Configuring APACHE VHOST for Magento 2 ---"
@@ -44,14 +46,16 @@ if ! grep -x -q "${APP_NAME}" "/.puphpet-stuff/${APP_NAME}-ran"; then
     /bin/bash /vagrant/puphpet/magestead/magento2/configure-nginx.sh $APP_NAME $DIR $BASE_URL
   fi
 
-# IF PUPPET = TRUE
-#  echo "--- Finalising Setup ---"
-#  /bin/bash /vagrant/puphpet/magestead/magento2/finalise.sh $DIR
-#
-#  if [ $REDIS_INSTALL = "1" ]; then
-#    echo "--- Configuring Magento Sessions with Redis ---"
-#    php /vagrant/puphpet/magestead/magento2/add_redis_env.php $DIR
-#  fi
+  if [ $ADVANCED = "true" ]; then
+    echo "--- Finalising Setup ---"
+    /bin/bash /vagrant/puphpet/magestead/magento2/finalise.sh $DIR
+
+    if [ $REDIS_INSTALL = "1" ]; then
+      echo "--- Configuring Magento Sessions with Redis ---"
+      php /vagrant/puphpet/magestead/magento2/add_redis_env.php $DIR
+    fi
+  fi
+
 
 else
     echo "Skipping magento 2 bootstrap for ${DIR} as contents have not changed"
