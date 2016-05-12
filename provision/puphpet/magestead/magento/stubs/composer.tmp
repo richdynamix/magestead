@@ -51,7 +51,8 @@
     "extra": {
         "magento-root-dir": "public",
         "magento-force": true,
-        "auto-append-gitignore": true
+        "auto-append-gitignore": true,
+        "with-bootstrap-patch": false
     },
     "config": {
         "bin-dir": "bin"
