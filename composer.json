@@ -1,0 +1,22 @@
+{
+    "name": "richdynamix/magestead",
+    "description": "Magestead CLI - A command line installer for Magestead Vagrant environment",
+    "require": {
+        "symfony/console" : "^2.6",
+        "symfony/yaml"    : "^2.6",
+        "symfony/process" : "^2.6",
+        "phpunit/phpunit" : "^4.6",
+        "jolicode/jolinotif": "^1.0"
+    },
+    "autoload": {
+      "psr-4": {
+        "": "src/"
+      }
+    },
+    "authors": [
+        {
+            "name": "Steven Richardson",
+            "email": "steven@richdynamix.com"
+        }
+    ]
+}

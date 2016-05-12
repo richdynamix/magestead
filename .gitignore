@@ -1,7 +1,4 @@
 .idea
 .vagrant
+/composer.lock
 vendor/
-composer.lock
-magento/
-laravel/
-symfony/

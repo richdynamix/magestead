@@ -1,0 +1,463 @@
+vagrantfile:
+    target: local
+    puphpet: true
+    vm:
+        box: puphpet/centos65-x64
+        box_url: puphpet/centos65-x64
+        hostname: magestead2
+        memory: '2048'
+        cpus: '1'
+        chosen_provider: virtualbox
+        box_version: ''
+        network:
+            private_network: 192.168.47.47
+            forwarded_port:
+                vflnp_9hhzguwqz1nt:
+                    host: '8000'
+                    guest: '80'
+                vflnp_6cwjncrvfc6d:
+                    host: '44300'
+                    guest: '443'
+                vflnp_jf8qculupo3n:
+                    host: '33600'
+                    guest: '3360'
+                vflnp_lappxwjwmnof:
+                    host: '54320'
+                    guest: '5432'
+                vflnp_lkneo1ybv1t9:
+                    host: '8025'
+                    guest: '8025'
+        post_up_message: ''
+        provider:
+            virtualbox:
+                modifyvm:
+                    natdnshostresolver1: false
+                showgui: '0'
+            vmware:
+                numvcpus: 1
+            parallels:
+                use_linked_clone: '0'
+                check_guest_tools: '0'
+                update_guest_tools: '0'
+        provision:
+            puppet:
+                manifests_path: puphpet/puppet/manifests
+                module_path: puphpet/puppet/modules
+                options:
+                    - '--verbose'
+                    - '--hiera_config /vagrant/puphpet/puppet/hiera.yaml'
+        synced_folder:
+            vflsf_uocnhnxzm524:
+                source: ./
+                target: /var/www
+                sync_type: default
+                smb:
+                    smb_host: ''
+                    smb_username: ''
+                    smb_password: ''
+                    mount_options:
+                        dir_mode: '0775'
+                        file_mode: '0664'
+                rsync:
+                    args:
+                        - '--verbose'
+                        - '--archive'
+                        - '-z'
+                    exclude:
+                        - .vagrant/
+                        - .git/
+                    auto: 'true'
+                owner: www-user
+                group: www-data
+        usable_port_range:
+            start: 10200
+            stop: 10500
+    ssh:
+        host: null
+        port: null
+        private_key_path: null
+        username: vagrant
+        guest_port: null
+        keep_alive: true
+        forward_agent: false
+        forward_x11: false
+        shell: 'bash -l'
+        insert_key: false
+    vagrant:
+        host: detect
+    proxy:
+        http: ''
+        https: ''
+        ftp: ''
+        no_proxy: ''
+        enabled: ''
+server:
+    install: '1'
+    packages:
+        - nano
+        - vim-common
+        - htop
+users_groups:
+    install: '0'
+    groups:
+        - nginx
+    users:
+        - nginx
+locale:
+    install: '1'
+    settings:
+        default_locale: en_GB.UTF-8
+        locales:
+            - en_GB.UTF-8
+            - en_US.UTF-8
+        timezone: Europe/London
+firewall:
+    install: '1'
+    rules: {  }
+cron:
+    install: '1'
+    jobs: {  }
+nginx:
+    install: '1'
+    settings:
+        default_vhost: 1
+        proxy_buffer_size: 128k
+        proxy_buffers: '4 256k'
+        proxy_connect_timeout: 600s
+        proxy_send_timeout: 600s
+        proxy_read_timeout: 600s
+        names_hash_bucket_size: 128
+    upstreams: {  }
+    vhosts:
+        nxv_hf89b705xwkg:
+            server_name: magestead2.dev
+            server_aliases:
+                - www.magestead2.dev
+            www_root: /var/www
+            listen_port: '80'
+            index_files:
+                - index.html
+                - index.htm
+                - index.php
+            client_max_body_size: 64m
+            ssl: '0'
+            ssl_cert: ''
+            ssl_key: ''
+            ssl_port: '443'
+            ssl_protocols: ''
+            ssl_ciphers: ''
+            rewrite_to_https: '1'
+            spdy: '1'
+            locations:
+                nxvl_t0dk2ezxdsgr:
+                    location: /
+                    autoindex: 'off'
+                    internal: 'false'
+                    try_files:
+                        - $uri
+                        - $uri/
+                        - /index.php$is_args$args
+                    fastcgi: ''
+                    fastcgi_index: ''
+                    fastcgi_split_path: ''
+                    proxy: ''
+                    proxy_redirect: ''
+                nxvl_02bjurbx8w0x:
+                    location: '~ \.php$'
+                    autoindex: 'off'
+                    internal: 'false'
+                    try_files:
+                        - $uri
+                        - $uri/
+                        - /index.php$is_args$args
+                    fastcgi: '127.0.0.1:9090'
+                    fastcgi_index: index.php
+                    fastcgi_split_path: '^(.+\.php)(/.*)$'
+                    fast_cgi_params_extra:
+                        - 'SCRIPT_FILENAME $request_filename'
+                        - 'APP_ENV dev'
+                    set:
+                        - '$path_info $fastcgi_path_info'
+                    proxy: ''
+                    proxy_redirect: ''
+    proxies: {  }
+apache:
+    install: '0'
+    settings:
+        user: www-data
+        group: www-data
+        default_vhost: true
+        manage_user: false
+        manage_group: false
+        sendfile: 0
+    modules:
+        - proxy_fcgi
+        - rewrite
+    vhosts:
+        av_29czxbhdh2gg:
+            servername: magestead2.dev
+            serveraliases:
+                - www.magestead2.dev
+            docroot: /var/www/magestead
+            port: '80'
+            setenv:
+                - 'APP_ENV dev'
+            custom_fragment: ''
+            ssl: '0'
+            ssl_cert: ''
+            ssl_key: ''
+            ssl_chain: ''
+            ssl_certs_dir: ''
+            ssl_protocol: ''
+            ssl_cipher: ''
+            directories:
+                avd_g5ajze44oixk:
+                    path: /var/www/magestead
+                    options:
+                        - Indexes
+                        - FollowSymlinks
+                        - MultiViews
+                    allow_override:
+                        - All
+                    require:
+                        - 'all granted'
+                    custom_fragment: ''
+                    files_match:
+                        avdfm_jbs20rxkqn2d:
+                            path: \.php$
+                            sethandler: 'proxy:fcgi://127.0.0.1:9090'
+                            custom_fragment: ''
+                            provider: filesmatch
+                    provider: directory
+php:
+    install: '1'
+    settings:
+        version: '70'
+    modules:
+        php:
+            - cli
+            - intl
+            - common
+            - fpm
+            - gd
+            - imap
+            - mbstring
+            - mcrypt
+            - mhash
+            - mysql
+            - mysqlnd
+            - xmlrpc
+            - xsl
+            - bcmath
+            - cgi
+            - dbg
+            - xml
+            - zip
+            - json
+            - libxml
+            - soap
+        pear: {  }
+        pecl: {  }
+    ini:
+        display_errors: 'On'
+        error_reporting: '-1'
+        session.save_path: /var/lib/php/session
+        date.timezone: Europe/London
+        memory_limit: 1024M
+        upload_max_filesize: 10M
+        post_max_size: 10M
+    fpm_ini:
+        error_log: /var/log/php-fpm.log
+    fpm_pools:
+        phpfp_thqd2mn0axfz:
+            ini:
+                prefix: www
+                listen: '127.0.0.1:9090'
+                security.limit_extensions: .php
+                user: www-data
+                group: www-data
+    composer: '1'
+    composer_home: ''
+xdebug:
+    install: '1'
+    settings:
+        xdebug.default_enable: '1'
+        xdebug.remote_autostart: '0'
+        xdebug.remote_connect_back: '1'
+        xdebug.remote_enable: '1'
+        xdebug.remote_handler: dbgp
+        xdebug.remote_port: '9009'
+blackfire:
+    install: '0'
+    settings:
+        server_id: ''
+        server_token: ''
+        agent:
+            http_proxy: ''
+            https_proxy: ''
+            log_file: stderr
+            log_level: '1'
+        php:
+            agent_timeout: '0.25'
+            log_file: ''
+            log_level: '1'
+xhprof:
+    install: '0'
+wpcli:
+    install: '0'
+    version: v0.21.1
+drush:
+    install: '0'
+    version: 6.3.0
+ruby:
+    install: '1'
+    versions:
+        rv_742ra3j61x5k:
+            default: '1'
+            bundler: '1'
+            version: 2.1.2
+            gems:
+                - sass
+                - compass
+python:
+    install: '1'
+    packages: {  }
+    versions: {  }
+nodejs:
+    install: '1'
+    settings:
+        version: '0.12'
+    npm_packages:
+        - gulp
+        - grunt
+        - yo
+        - jslint
+        - csslint
+        - coffee-script
+        - grunt-cli
+        - eslint
+        - bower
+hhvm:
+    install: '0'
+    nightly: 0
+    composer: '1'
+    composer_home: ''
+    settings: {  }
+    server_ini:
+        hhvm.server.host: 127.0.0.1
+        hhvm.server.port: '9010'
+        hhvm.log.use_log_file: '1'
+        hhvm.log.file: /var/log/hhvm/error.log
+    php_ini:
+        display_errors: 'On'
+        error_reporting: '-1'
+        date.timezone: UTC
+mariadb:
+    install: '1'
+    settings:
+        version: '10.1'
+        root_password: 'vagrant'
+        override_options: {  }
+    adminer: 0
+    users:
+        mariadbnu_g74t0hbskehj:
+            name: magestead
+            password: vagrant
+    databases:
+        mariadbnd_lce5ph635qrz:
+            name: magestead
+            sql: ''
+    grants:
+        mariadbng_zs4ofjua3r4o:
+            user: magestead
+            table: '*.*'
+            privileges:
+                - ALL
+mysql:
+    install: '0'
+    settings:
+        version: '5.5'
+        root_password: '123'
+        override_options: {  }
+    adminer: 0
+    users:
+        mysqlnu_co3yngp9ls3j:
+            name: dbuser
+            password: '123'
+    databases:
+        mysqlnd_n45g713mog98:
+            name: dbname
+            sql: ''
+    grants:
+        mysqlng_8hqi61z5z8t6:
+            user: dbuser
+            table: '*.*'
+            privileges:
+                - ALL
+postgresql:
+    install: '0'
+    settings:
+        global:
+            encoding: UTF8
+            version: '9.4'
+        server:
+            postgres_password: '123'
+    databases: {  }
+    users: {  }
+    grants: {  }
+    adminer: 0
+mongodb:
+    install: '0'
+    settings:
+        bind_ip: 127.0.0.1
+        port: '27017'
+    globals:
+        version: 2.6.0
+    databases: {  }
+redis:
+    install: '1'
+    settings:
+        port: '6379'
+sqlite:
+    install: '0'
+    adminer: 0
+    databases: {  }
+mailhog:
+    install: '1'
+    settings:
+        smtp_ip: 0.0.0.0
+        smtp_port: 1025
+        http_ip: 0.0.0.0
+        http_port: '8025'
+        path: /usr/local/bin/mailhog
+beanstalkd:
+    install: '0'
+    settings:
+        listenaddress: 0.0.0.0
+        listenport: '11300'
+        maxjobsize: '65535'
+        maxconnections: '1024'
+        binlogdir: /var/lib/beanstalkd/binlog
+        binlogfsync: null
+        binlogsize: '10485760'
+    beanstalk_console: '1'
+rabbitmq:
+    install: '0'
+    settings:
+        port: '5672'
+    users: {  }
+    vhosts: {  }
+    plugins: {  }
+elastic_search:
+    install: '0'
+    settings:
+        version: 2.1.0
+        java_install: true
+    instances:
+        esi_be0xvycxsegj:
+            name: es-01
+solr:
+    install: '0'
+    settings:
+        version: 4.10.2
+        port: '8984'
