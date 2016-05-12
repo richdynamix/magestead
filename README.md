@@ -45,8 +45,8 @@ mcrypt.modes_dir => no value => no value
 
 #### Optional Requirements
 
-[vagrant-hostsupdater](https://github.com/cogitatio/vagrant-hostsupdater) - *A Vagrant plugin for updating your hosts file automatically with your project URL*
-[vagrant-bindfs](https://github.com/gael-ian/vagrant-bindfs) - * - A Vagrant plugin to automate bindfs mount in the VM*
+- [vagrant-hostsupdater](https://github.com/cogitatio/vagrant-hostsupdater) - *A Vagrant plugin for updating your hosts file automatically with your project URL*
+- [vagrant-bindfs](https://github.com/gael-ian/vagrant-bindfs) - * - A Vagrant plugin to automate bindfs mount in the VM*
 
 **Note: While these Vagrant plugins are only an optional requirement, they are highly recomended.**
 
