@@ -1,18 +1,12 @@
-# Magestead
+# [Magestead](http://www.magestead.com "Magestead")
 
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/richdynamix/magestead/badges/quality-score.png?b=epic%2F2.0.0)](https://scrutinizer-ci.com/g/richdynamix/magestead/?branch=epic%2F2.0.0) [![Build Status](https://scrutinizer-ci.com/g/richdynamix/magestead/badges/build.png?b=master)](https://scrutinizer-ci.com/g/richdynamix/magestead/build-status/master) [![GitHub release](https://img.shields.io/badge/release-2.0--beta-blue.svg)](https://github.com/richdynamix/magestead)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/richdynamix/magestead/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/richdynamix/magestead/?branch=master) [![Build Status](https://scrutinizer-ci.com/g/richdynamix/magestead/badges/build.png?b=master)](https://scrutinizer-ci.com/g/richdynamix/magestead/build-status/master) [![GitHub release](https://img.shields.io/github/release/richdynamix/magestead.svg)](https://github.com/richdynamix/magestead)
 
-The Magestead CLI provides a convenient installer for your magento applications using the pre-configured Vagrant development environment.
-
-The CLI utility will also act as a proxy to the CLI tools installed on the Vagrant machine.
+Magestead 2.0 is the perfect development toolbox to manage and control your Magento development workflow. A command line utility that will not only get you a custom pre-configured vagrant development environment with the tools you want, but also install the latest version of Magento or Magento 2
 
 <p align="center">
-  <img src="http://www.magestead.com/img/magestead-cli-screen.png" alt="Magestead Screenshot"/>
+  <img src="http://www.magestead.com/img/magestead-screen.png" alt="Magestead Screenshot"/>
 </p>
-
-## Getting Started
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
 ### System Requirements
 
@@ -51,63 +45,28 @@ mcrypt.modes_dir => no value => no value
 
 #### Optional Requirements
 
-Vagrant Plugin - [vagrant-hostsupdater](https://github.com/cogitatio/vagrant-hostsupdater) - *For updating your hosts file automatically with your project URL*
+[vagrant-hostsupdater](https://github.com/cogitatio/vagrant-hostsupdater) - *A Vagrant plugin for updating your hosts file automatically with your project URL*
+[vagrant-bindfs](https://github.com/gael-ian/vagrant-bindfs) - * - A Vagrant plugin to automate bindfs mount in the VM*
 
-### Installing (2.0 Beta only)
+**Note: While these Vagrant plugins are only an optional requirement, they are highly recomended.**
 
-During the beta release the installation is a manual process.
+### Installing
 
-Choose a location to install the CLI app on your machine, your home directory would be fine for this situation. 
+Magestead uses Composer to manage it's dependencies. It is important that you have this installed prior to trying to install Magestead.
 
-```
-$ cd ~
-$ git clone git@github.com:richdynamix/magestead.git magestead
-$ cd magestead
-$ git checkout -b 2.0.rc1 origin/release/2.0.rc1
-```
-
-Install all the required dependencies with Composer
+Download and install Magestead globally using Composer: 
 
 ```
-composer install
+$ composer global require "richdynamix/magestead"
 ```
 
-Create an alias to your local installation.
+Make sure to place the `~/.composer/vendor/bin` directory in your PATH so the `magestead` executable can be located by your system.
 
-```
-alias magestead="~/magestead/magestead"
-```
+Once installed, the `magestead new` command will start a fresh new development environment in the directory you specify. For instance, `magestead new my-project` will create a directory named `my-project` and start the setup process for your new development environment.
 
-**Note:** *Please choose the correct location for your shell i.e.* `.bash_profile`, `config.fish`, `.zshrc`
+## Documentation
 
-### Upgrade to 2.0 RC 1
-
-Change into your magestead installation directory and checkout out the new branch
-
-```
-$ cd ~/magestead
-$ git checkout -b 2.0.rc1 origin/release/2.0.rc1
-```
-
-## Usage
-
-Run the Magestead setup
-
-```
-$ magestead new project-name
-```
-
-Follow the on screen instructions to install the application and server you require.
-
-Go grab a coffee, it cane take several minutes to run, depending on your settings.
-
-## Caveats & Known Issues
-
-While Magestead 2.0 is in Beta, please be aware that there may be unreported bugs. Please create a new issue for these and explain the version you are on.
-
-#### PHP-FPM & PHP7
-
-There is a known issue that prevents the restart of PHP-FPM when using PHP7. This is the case for preconfigured boxes as well as custom boxes. Until the bug has been resolved globally the only way to restart PHP-FPM is to manually kill the process then restart.
+View the docs [here](http://www.magestead.com/#docs)
 
 ## Built With
 
@@ -132,10 +91,6 @@ See also the list of [contributors](https://github.com/richdynamix/magestead/con
 ## History
 
 See the previous [releases](https://github.com/richdynamix/magestead/releases) for project history
-
-## License
-
-TODO - Add licence notes
 
 ## Acknowledgments
 
