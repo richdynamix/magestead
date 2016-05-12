@@ -1,6 +1,7 @@
 {
     "name": "richdynamix/magestead",
     "description": "Magestead CLI - A command line installer for Magestead Vagrant environment",
+    "license": "MIT",
     "require": {
         "symfony/console" : "^2.6",
         "symfony/yaml"    : "^2.6",
@@ -18,5 +19,8 @@
             "name": "Steven Richardson",
             "email": "steven@richdynamix.com"
         }
+    ],
+    "bin": [
+        "magestead"
     ]
 }
