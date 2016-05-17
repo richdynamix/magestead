@@ -33,6 +33,10 @@ $app->addCommands(array(
     new Magestead\Command\VM\ResumeCommand(),
     new Magestead\Command\VM\RunCommand(),
 
+    // Log Commands
+    new Magestead\Command\Log\ViewCommand(),
+    new Magestead\Command\Log\StreamCommand(),
+
     // Cache Commands
     new Magestead\Command\Cache\CleanCommand(),
     new Magestead\Command\Cache\DisableCommand(),
