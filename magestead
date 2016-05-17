@@ -18,7 +18,7 @@ use Symfony\Component\Console\Application;
 
 define('APP_PATH',  __DIR__);
 
-$app = new Application('Magestead CLI', '2.0.4');
+$app = new Application('Magestead CLI', '2.1.0');
 $app->addCommands(array(
     // Project Setup Command
     new Magestead\Command\NewCommand(),

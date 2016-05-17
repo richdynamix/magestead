@@ -1,6 +1,6 @@
 {
     "name": "richdynamix/magestead",
-    "description": "Magestead CLI - A command line installer for Magestead Vagrant environment",
+    "description": "Magestead - A command line installer for Magento Vagrant environments",
     "license": "MIT",
     "require": {
         "symfony/console" : "^2.6",
