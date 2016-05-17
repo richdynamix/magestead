@@ -23,6 +23,9 @@ block="server {
         access_log off;
     }
 
+    access_log /var/log/nginx/$BASE_URL-access.log;
+    error_log /var/log/nginx/$BASE_URL-error.log error;
+
     ## These locations would be hidden by .htaccess normally
     location ^~ /app/                { deny all; }
     location ^~ /includes/           { deny all; }

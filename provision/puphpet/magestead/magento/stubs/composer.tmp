@@ -30,7 +30,8 @@
     "require": {
         "aydin-hassan/magento-core-composer-installer" : "~1.0",
         "magento/magento" : "1.9.2.2",
-        "magento-hackathon/magento-composer-installer": "3.0.*"
+        "magento-hackathon/magento-composer-installer": "3.0.*",
+        "inchoo/php7": "1.0.*"
     },
     "authors": [
         {
