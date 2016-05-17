@@ -1,12 +1,13 @@
 <?php namespace Magestead\Command;
 
-use Magestead\Exceptions\ExistingProjectException;
 use Magestead\Helper\Options;
+use Magestead\Service\UsageApi;
 use Magestead\Installers\Project;
 use Symfony\Component\Yaml\Parser;
 use Symfony\Component\Yaml\Dumper;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
+use Magestead\Exceptions\ExistingProjectException;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Yaml\Exception\ParseException;
@@ -153,6 +154,8 @@ class NewCommand extends Command
         $provisionFolder = $this->_basePath . "provision";
         $this->copyConfigFiles($provisionFolder, $this->_projectPath, $output);
         $this->configureProject($options->getAllOptions(), $output);
+
+        (new UsageApi($options->getAllOptions()))->send();
     }
 
     /**
