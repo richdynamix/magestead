@@ -100,15 +100,13 @@ class Options
     protected function setApplicationSettings($helper, InputInterface $input, OutputInterface $output, $project)
     {
         $output->writeln('<comment>Lets configure your project\'s application</comment>');
-        if ($this->_phpVer !== '70') {
-            $appQuestion = new ChoiceQuestion(
-                "Which application do you want to install?",
-                ['Magento', 'Magento2'],
-                0
-            );
+        $appQuestion = new ChoiceQuestion(
+            "Which application do you want to install?",
+            ['Magento', 'Magento2'],
+            0
+        );
 
-            $this->_app = strtolower($helper->ask($input, $output, $appQuestion));
-        }
+        $this->_app = strtolower($helper->ask($input, $output, $appQuestion));
 
         $baseUrlQuestion = new Question("Enter your application's base_url ($project.dev): ", $project.'.dev');
         $this->_baseUrl  = strtolower($helper->ask($input, $output, $baseUrlQuestion));

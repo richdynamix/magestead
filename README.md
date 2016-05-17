@@ -62,6 +62,13 @@ $ composer global require "richdynamix/magestead"
 
 Make sure to place the `~/.composer/vendor/bin` directory in your PATH so the `magestead` executable can be located by your system.
 
+### Updating
+
+```
+$ composer global update "richdynamix/magestead"
+```
+
+
 ## Usage
 
 Once installed, the `magestead new` command will start a fresh new development environment in the directory you specify. For instance, `magestead new my-project` will create a directory named `my-project` and start the setup process for your new development environment.

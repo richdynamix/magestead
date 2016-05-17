@@ -16,6 +16,9 @@ block="server {
     autoindex off;
     charset off;
 
+    access_log /var/log/nginx/$BASE_URL-access.log;
+    error_log /var/log/nginx/$BASE_URL-error.log error;
+
     location / {
         try_files \$uri \$uri/ /index.php?\$args;
     }
