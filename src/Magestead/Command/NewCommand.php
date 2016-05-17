@@ -33,7 +33,6 @@ class NewCommand extends Command
         $this->addArgument('project', InputArgument::REQUIRED, 'Name your project directory');
     }
 
-
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
