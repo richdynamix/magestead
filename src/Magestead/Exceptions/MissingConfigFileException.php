@@ -1,7 +1,10 @@
-<?php namespace Magestead\Exceptions;
+<?php
+
+namespace Magestead\Exceptions;
 
 /**
- * Class MissingConfigFileException
- * @package Magestead\Exceptions
+ * Class MissingConfigFileException.
  */
-class MissingConfigFileException extends \Exception {}
+class MissingConfigFileException extends \Exception
+{
+}

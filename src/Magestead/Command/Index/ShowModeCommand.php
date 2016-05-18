@@ -1,4 +1,6 @@
-<?php namespace Magestead\Command\Index;
+<?php
+
+namespace Magestead\Command\Index;
 
 use Magestead\Command\ProcessCommand;
 use Magestead\Helper\Config;
@@ -8,8 +10,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class ShowModeCommand
- * @package Magestead\Command\Index
+ * Class ShowModeCommand.
  */
 class ShowModeCommand extends Command
 {
@@ -19,14 +20,15 @@ class ShowModeCommand extends Command
     protected function configure()
     {
         $this->_projectPath = getcwd();
-        $this->setName("index:mode:show");
-        $this->setDescription("Show index mode");
+        $this->setName('index:mode:show');
+        $this->setDescription('Show index mode');
         $this->addArgument('index', InputArgument::OPTIONAL, '[indexer]');
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
+     *
      * @return ProcessCommand|null
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -36,7 +38,8 @@ class ShowModeCommand extends Command
         $command = $this->getCommand(new Config($output), $index);
         if ($command) {
             $output->writeln('<info>Getting index mode</info>');
-            $passedCommand = "vagrant ssh -c '". $command ."'";
+            $passedCommand = "vagrant ssh -c '".$command."'";
+
             return new ProcessCommand($passedCommand, $this->_projectPath, $output);
         }
 
@@ -46,6 +49,7 @@ class ShowModeCommand extends Command
     /**
      * @param Config $config
      * @param $index
+     *
      * @return bool|string
      */
     protected function getCommand(Config $config, $index)

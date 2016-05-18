@@ -1,4 +1,6 @@
-<?php namespace Magestead\Command\VM;
+<?php
+
+namespace Magestead\Command\VM;
 
 use Magestead\Command\ProcessCommand;
 use Symfony\Component\Console\Command\Command;
@@ -6,8 +8,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class UpCommand
- * @package Magestead\Command\VM
+ * Class UpCommand.
  */
 class UpCommand extends Command
 {
@@ -17,18 +18,20 @@ class UpCommand extends Command
     {
         $this->_projectPath = getcwd();
 
-        $this->setName("vm:up");
-        $this->setDescription("Spin up your development machine");
+        $this->setName('vm:up');
+        $this->setDescription('Spin up your development machine');
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
+     *
      * @return ProcessCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('<info>Spinning up your development machine</info>');
+
         return new ProcessCommand('vagrant up', $this->_projectPath, $output);
     }
 }

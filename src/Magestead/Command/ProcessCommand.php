@@ -1,17 +1,18 @@
 <?php
+
 namespace Magestead\Command;
 
-use Symfony\Component\Process\Process;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Process\Process;
 
 /**
- * Class ProcessCommand
- * @package Magestead\Command
+ * Class ProcessCommand.
  */
 class ProcessCommand
 {
     /**
      * ProcessCommand constructor.
+     *
      * @param $command
      * @param $projectPath
      * @param OutputInterface $output
