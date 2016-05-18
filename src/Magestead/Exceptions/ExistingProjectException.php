@@ -1,7 +1,10 @@
-<?php namespace Magestead\Exceptions;
+<?php
+
+namespace Magestead\Exceptions;
 
 /**
- * Class ExistingProjectException
- * @package Magestead\Exceptions
+ * Class ExistingProjectException.
  */
-class ExistingProjectException extends \Exception {}
+class ExistingProjectException extends \Exception
+{
+}

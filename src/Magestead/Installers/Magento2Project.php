@@ -1,4 +1,6 @@
-<?php namespace Magestead\Installers;
+<?php
+
+namespace Magestead\Installers;
 
 use Magestead\Command\ProcessCommand;
 use Magestead\Helper\HostsPluginChecker;
@@ -8,13 +10,13 @@ use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class Magento2Project
- * @package Magestead\Installers
+ * Class Magento2Project.
  */
 class Magento2Project
 {
     /**
      * Magento2Project constructor.
+     *
      * @param array $options
      * @param array $config
      * @param $projectPath
@@ -81,9 +83,9 @@ class Magento2Project
         $this->setPermissions($projectPath, $output);
 
         $output->writeln('<info>Installing Magento 2 Software</info>');
-        $locale           = $options['magestead']['apps']['mba_12345']['locale'];
-        $db_name          = $options['magestead']['apps']['mba_12345']['db_name'];
-        $base_url         = $options['magestead']['apps']['mba_12345']['base_url'];
+        $locale = $options['magestead']['apps']['mba_12345']['locale'];
+        $db_name = $options['magestead']['apps']['mba_12345']['db_name'];
+        $base_url = $options['magestead']['apps']['mba_12345']['base_url'];
         $default_currency = $options['magestead']['apps']['mba_12345']['default_currency'];
 
         $install = 'vagrant ssh -c \'cd /var/www/public; bin/magento setup:install --base-url=http://'.$base_url.'/ \
@@ -134,48 +136,48 @@ class Magento2Project
     {
         $output->writeln('<comment>Configuring Redis Cache</comment>');
         $file = "$projectPath/public/app/etc/env.php";
-        $env  = include $file;
+        $env = include $file;
 
         $env['cache'] = [
             'frontend' => [
                 'default' => [
-                    'backend' => 'Cm_Cache_Backend_Redis',
+                    'backend'         => 'Cm_Cache_Backend_Redis',
                     'backend_options' => [
-                        'server' => '127.0.0.1',
-                        'port' => '6379',
-                        'persistent' => '',
-                        'database' => '0',
-                        'force_standalone' => '0',
-                        'connect_retries' => '1',
-                        'read_timeout' => '10',
+                        'server'                    => '127.0.0.1',
+                        'port'                      => '6379',
+                        'persistent'                => '',
+                        'database'                  => '0',
+                        'force_standalone'          => '0',
+                        'connect_retries'           => '1',
+                        'read_timeout'              => '10',
                         'automatic_cleaning_factor' => '0',
-                        'compress_data' => '1',
-                        'compress_tags' => '1',
-                        'compress_threshold' => '20480',
-                        'compression_lib' => 'gzip',
-                    ]
+                        'compress_data'             => '1',
+                        'compress_tags'             => '1',
+                        'compress_threshold'        => '20480',
+                        'compression_lib'           => 'gzip',
+                    ],
                 ],
                 'page_cache' => [
-                    'backend' => 'Cm_Cache_Backend_Redis',
+                    'backend'         => 'Cm_Cache_Backend_Redis',
                     'backend_options' => [
-                        'server' => '127.0.0.1',
-                        'port' => '6379',
-                        'persistent' => '',
-                        'database' => '1',
-                        'force_standalone' => '0',
-                        'connect_retries' => '1',
-                        'read_timeout' => '10',
+                        'server'                    => '127.0.0.1',
+                        'port'                      => '6379',
+                        'persistent'                => '',
+                        'database'                  => '1',
+                        'force_standalone'          => '0',
+                        'connect_retries'           => '1',
+                        'read_timeout'              => '10',
                         'automatic_cleaning_factor' => '0',
-                        'compress_data' => '0',
-                        'compress_tags' => '1',
-                        'compress_threshold' => '20480',
-                        'compression_lib' => 'gzip',
+                        'compress_data'             => '0',
+                        'compress_tags'             => '1',
+                        'compress_threshold'        => '20480',
+                        'compression_lib'           => 'gzip',
                     ],
                 ],
             ],
         ];
 
-        file_put_contents($file, "<?php \n \n return ".var_export($env,true).";");
+        file_put_contents($file, "<?php \n \n return ".var_export($env, true).';');
     }
 
     /**
@@ -198,7 +200,7 @@ class Magento2Project
     }
 
     /**
-     * @param array $options
+     * @param array           $options
      * @param OutputInterface $output
      */
     protected function showCredentials(array $options, OutputInterface $output)
@@ -219,12 +221,14 @@ class Magento2Project
      * @param array $options
      * @param $projectPath
      * @param OutputInterface $output
+     *
      * @return VersionControl|null
      */
     protected function processVcs(array $options, $projectPath, OutputInterface $output)
     {
         if (!empty($options['repo_url'])) {
-            copy($projectPath . "/puphpet/magestead/magento2/stubs/gitignore.tmp", $projectPath . "/.gitignore");
+            copy($projectPath.'/puphpet/magestead/magento2/stubs/gitignore.tmp', $projectPath.'/.gitignore');
+
             return new VersionControl($options['repo_url'], $projectPath, $output);
         }
     }
@@ -234,7 +238,7 @@ class Magento2Project
      */
     protected function setComposerBinDir($projectPath)
     {
-        $file     = "$projectPath/public/composer.json";
+        $file = "$projectPath/public/composer.json";
         $composer = json_decode(file_get_contents($file), true);
 
         $composer['config']['bin-dir'] = 'bin';
