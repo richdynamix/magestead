@@ -1,9 +1,11 @@
-<?php namespace Magestead\Installers;
+<?php
 
+namespace Magestead\Installers;
+
+use Magestead\Command\ProcessCommand;
 use Magestead\Helper\HostsPluginChecker;
 use Magestead\Service\Notification;
 use Magestead\Service\VersionControl;
-use Magestead\Command\ProcessCommand;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -12,13 +14,13 @@ use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Parser;
 
 /**
- * Class MagentoProject
- * @package Magestead\Installers
+ * Class MagentoProject.
  */
 class MagentoProject
 {
     /**
      * MagentoProject constructor.
+     *
      * @param array $options
      * @param array $config
      * @param $projectPath
@@ -48,27 +50,27 @@ class MagentoProject
      */
     protected function installMagento(array $options, $projectPath, OutputInterface $output)
     {
-        $locale           = $options['magestead']['apps']['mba_12345']['locale'];
-        $db_name          = $options['magestead']['apps']['mba_12345']['db_name'];
-        $base_url         = $options['magestead']['apps']['mba_12345']['base_url'];
+        $locale = $options['magestead']['apps']['mba_12345']['locale'];
+        $db_name = $options['magestead']['apps']['mba_12345']['db_name'];
+        $base_url = $options['magestead']['apps']['mba_12345']['base_url'];
         $default_currency = $options['magestead']['apps']['mba_12345']['default_currency'];
 
         $install = 'vagrant ssh -c \'cd /var/www/public; php -f install.php -- \
 --license_agreement_accepted "yes" \
---locale "' . $locale . '" \
+--locale "'.$locale.'" \
 --timezone "Europe/London" \
---default_currency "' . $default_currency . '" \
+--default_currency "'.$default_currency.'" \
 --db_host "localhost" \
---db_name "' . $db_name . '" \
+--db_name "'.$db_name.'" \
 --db_user "magestead" \
 --db_pass "vagrant" \
 --session_save "db" \
---url "http://' . $base_url . '/" \
+--url "http://'.$base_url.'/" \
 --use_rewrites "yes" \
 --skip_url_validation "yes" \
 --use_secure "no" \
 --use_secure_admin "no" \
---secure_base_url "http://' . $base_url . '/" \
+--secure_base_url "http://'.$base_url.'/" \
 --admin_firstname "RichDynamix" \
 --admin_lastname "Magestead" \
 --admin_email "admin@admin.com" \
@@ -155,7 +157,7 @@ class MagentoProject
     }
 
     /**
-     * @param array $options
+     * @param array           $options
      * @param OutputInterface $output
      */
     protected function showCredentials(array $options, OutputInterface $output)
@@ -176,12 +178,14 @@ class MagentoProject
      * @param array $options
      * @param $projectPath
      * @param OutputInterface $output
+     *
      * @return VersionControl|null
      */
     protected function processVcs(array $options, $projectPath, OutputInterface $output)
     {
         if (!empty($options['repo_url'])) {
-            copy($projectPath . "/puphpet/magestead/magento/stubs/gitignore.tmp", $projectPath . "/.gitignore");
+            copy($projectPath.'/puphpet/magestead/magento/stubs/gitignore.tmp', $projectPath.'/.gitignore');
+
             return new VersionControl($options['repo_url'], $projectPath, $output);
         }
     }
@@ -192,7 +196,7 @@ class MagentoProject
      */
     protected function composerInstall($projectPath, OutputInterface $output)
     {
-        copy($projectPath . "/puphpet/magestead/magento/stubs/composer.tmp", $projectPath . "/composer.json");
+        copy($projectPath.'/puphpet/magestead/magento/stubs/composer.tmp', $projectPath.'/composer.json');
         new ProcessCommand('composer install', $projectPath, $output);
     }
 
@@ -211,30 +215,30 @@ class MagentoProject
     protected function updateConfigXml($projectPath)
     {
         $localFile = '/public/app/etc/local.xml';
-        $localXml  = file_get_contents($projectPath . $localFile);
+        $localXml = file_get_contents($projectPath.$localFile);
 
         $config = new \SimpleXMLElement($localXml);
 
-        $config->global[0]->redis_session[0]->host                  = '127.0.0.1';
-        $config->global[0]->redis_session[0]->port                  = '6379';
-        $config->global[0]->redis_session[0]->password              = '';
-        $config->global[0]->redis_session[0]->timeout               = '2.5';
-        $config->global[0]->redis_session[0]->persistent            = '';
-        $config->global[0]->redis_session[0]->db                    = '';
+        $config->global[0]->redis_session[0]->host = '127.0.0.1';
+        $config->global[0]->redis_session[0]->port = '6379';
+        $config->global[0]->redis_session[0]->password = '';
+        $config->global[0]->redis_session[0]->timeout = '2.5';
+        $config->global[0]->redis_session[0]->persistent = '';
+        $config->global[0]->redis_session[0]->db = '';
         $config->global[0]->redis_session[0]->compression_threshold = '2048';
-        $config->global[0]->redis_session[0]->compression_lib       = 'gzip';
-        $config->global[0]->redis_session[0]->log_level             = '1';
-        $config->global[0]->redis_session[0]->max_concurrency       = '6';
-        $config->global[0]->redis_session[0]->break_after_frontend  = '5';
+        $config->global[0]->redis_session[0]->compression_lib = 'gzip';
+        $config->global[0]->redis_session[0]->log_level = '1';
+        $config->global[0]->redis_session[0]->max_concurrency = '6';
+        $config->global[0]->redis_session[0]->break_after_frontend = '5';
         $config->global[0]->redis_session[0]->break_after_adminhtml = '30';
-        $config->global[0]->redis_session[0]->first_lifetime        = '600';
-        $config->global[0]->redis_session[0]->bot_first_lifetime    = '60';
-        $config->global[0]->redis_session[0]->bot_lifetime          = '7200';
-        $config->global[0]->redis_session[0]->disable_locking       = '0';
-        $config->global[0]->redis_session[0]->min_lifetime          = '60';
-        $config->global[0]->redis_session[0]->max_lifetime          = '2592000';
+        $config->global[0]->redis_session[0]->first_lifetime = '600';
+        $config->global[0]->redis_session[0]->bot_first_lifetime = '60';
+        $config->global[0]->redis_session[0]->bot_lifetime = '7200';
+        $config->global[0]->redis_session[0]->disable_locking = '0';
+        $config->global[0]->redis_session[0]->min_lifetime = '60';
+        $config->global[0]->redis_session[0]->max_lifetime = '2592000';
 
-        file_put_contents($projectPath . $localFile, $config->asXML());
+        file_put_contents($projectPath.$localFile, $config->asXML());
     }
 
     /**
@@ -243,17 +247,18 @@ class MagentoProject
     protected function activateModule($projectPath)
     {
         $moduleFile = '/public/app/etc/modules/Cm_RedisSession.xml';
-        $moduleXml  = file_get_contents($projectPath . $moduleFile);
-        $config     = new \SimpleXMLElement($moduleXml);
+        $moduleXml = file_get_contents($projectPath.$moduleFile);
+        $config = new \SimpleXMLElement($moduleXml);
 
         $config->modules[0]->Cm_RedisSession[0]->active = 'true';
-        file_put_contents($projectPath . $moduleFile, $config->asXML());
+        file_put_contents($projectPath.$moduleFile, $config->asXML());
     }
 
     /**
      * @param array $options
      * @param $projectPath
      * @param OutputInterface $output
+     *
      * @return ProcessCommand
      */
     protected function configureTestSuites(array $options, $projectPath, OutputInterface $output)
@@ -262,7 +267,7 @@ class MagentoProject
         $progress = new ProgressBar($output, 2);
 
         $progress->start();
-        copy($projectPath . "/puphpet/magestead/magento/stubs/phpspec.yml", $projectPath . "/phpspec.yml");
+        copy($projectPath.'/puphpet/magestead/magento/stubs/phpspec.yml', $projectPath.'/phpspec.yml');
         $progress->advance();
         $progress->advance();
 //        $behat = $this->getBehatConfig($options, $projectPath, $output);
@@ -270,6 +275,7 @@ class MagentoProject
         $progress->finish();
         echo "\n";
         new ProcessCommand('bin/phpspec r', $projectPath, $output);
+
         return new ProcessCommand('bin/behat --init', $projectPath, $output);
     }
 
@@ -277,6 +283,7 @@ class MagentoProject
      * @param array $options
      * @param $projectPath
      * @param OutputInterface $output
+     *
      * @return bool|mixed
      */
     protected function getBehatConfig(array $options, $projectPath, OutputInterface $output)
@@ -284,9 +291,10 @@ class MagentoProject
         $yaml = new Parser();
 
         try {
-            $behat = $yaml->parse(file_get_contents($projectPath . "/puphpet/magestead/magento/stubs/behat.yml"));
+            $behat = $yaml->parse(file_get_contents($projectPath.'/puphpet/magestead/magento/stubs/behat.yml'));
 
             $behat['default']['extensions']['MageTest\MagentoExtension\Extension']['base_url'] = $options['base_url'];
+
             return $behat;
         } catch (ParseException $e) {
             $output->writeln('<error>Unable to parse the YAML config</error>');
@@ -304,10 +312,10 @@ class MagentoProject
     protected function saveBehatConfig($projectPath, OutputInterface $output, $behat, $progress)
     {
         $dumper = new Dumper();
-        $yaml   = $dumper->dump($behat, 6);
+        $yaml = $dumper->dump($behat, 6);
 
         try {
-            file_put_contents($projectPath . '/behat.yml', $yaml);
+            file_put_contents($projectPath.'/behat.yml', $yaml);
             $progress->advance();
         } catch (\Exception $e) {
             $output->writeln('<error>Unable to write to the YAML file</error>');

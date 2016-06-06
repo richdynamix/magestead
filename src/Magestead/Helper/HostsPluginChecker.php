@@ -1,15 +1,16 @@
-<?php namespace Magestead\Helper;
+<?php
+
+namespace Magestead\Helper;
 
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class HostsPluginChecker
- * @package Magestead\Helper
+ * Class HostsPluginChecker.
  */
 class HostsPluginChecker
 {
     /**
-     * @param array $options
+     * @param array           $options
      * @param OutputInterface $output
      */
     public static function verify(array $options, OutputInterface $output)
@@ -26,14 +27,14 @@ manual edits of your hosts file.</comment>'
     }
 
     /**
-     * @param array $options
+     * @param array           $options
      * @param OutputInterface $output
      */
     protected static function editHostsInstructions(array $options, OutputInterface $output)
     {
         $output->writeln('<comment>NOTE: You will need to add the following to your hosts file!</comment>');
-        $comment = $options['vagrantfile']['vm']['network']['private_network'] .
-            ' ' . $options['magestead']['apps']['mba_12345']['base_url'];
-        $output->writeln('<info>' . $comment . '</info>');
+        $comment = $options['vagrantfile']['vm']['network']['private_network'].
+            ' '.$options['magestead']['apps']['mba_12345']['base_url'];
+        $output->writeln('<info>'.$comment.'</info>');
     }
 }

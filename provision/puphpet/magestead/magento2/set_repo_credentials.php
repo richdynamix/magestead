@@ -1,17 +1,17 @@
 <?php
 
-$file = "/home/vagrant/.composer/auth.json";
+$file = '/home/vagrant/.composer/auth.json';
 
-$publicKey  = "$argv[1]";
+$publicKey = "$argv[1]";
 $privateKey = "$argv[2]";
 
 $contents = [
-	"http-basic" => [
-		"repo.magento.com" => [
-			"username" => $publicKey,
-			"password" => $privateKey,
-		]
-	]
+    'http-basic' => [
+        'repo.magento.com' => [
+            'username' => $publicKey,
+            'password' => $privateKey,
+        ],
+    ],
 ];
 
 

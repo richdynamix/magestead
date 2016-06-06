@@ -1,8 +1,9 @@
-<?php namespace Magestead\Installers;
+<?php
+
+namespace Magestead\Installers;
 
 /**
- * Class Project
- * @package Magestead\Installers
+ * Class Project.
  */
 class Project
 {
@@ -11,15 +12,16 @@ class Project
      * @param array $config
      * @param $projectPath
      * @param $output
+     *
      * @return Magento2Project|MagentoProject
      */
     public static function create(array $options, array $config, $projectPath, $output)
     {
         switch ($options['app']) {
-            case "magento":
+            case 'magento':
                 return new MagentoProject($options, $config, $projectPath, $output);
             break;
-            case "magento2":
+            case 'magento2':
                 return new Magento2Project($options, $config, $projectPath, $output);
             break;
         }
