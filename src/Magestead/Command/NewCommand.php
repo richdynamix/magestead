@@ -1,21 +1,22 @@
-<?php namespace Magestead\Command;
+<?php
 
+namespace Magestead\Command;
+
+use Magestead\Exceptions\ExistingProjectException;
 use Magestead\Helper\Options;
-use Magestead\Service\UsageApi;
 use Magestead\Installers\Project;
-use Symfony\Component\Yaml\Parser;
-use Symfony\Component\Yaml\Dumper;
+use Magestead\Service\UsageApi;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
-use Magestead\Exceptions\ExistingProjectException;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Yaml\Dumper;
+use Symfony\Component\Yaml\Exception\ParseException;
+use Symfony\Component\Yaml\Parser;
 
 /**
- * Class NewCommand
- * @package Magestead\Command
+ * Class NewCommand.
  */
 class NewCommand extends Command
 {
@@ -25,25 +26,27 @@ class NewCommand extends Command
 
     protected function configure()
     {
-        $this->_basePath    = dirname( __FILE__ ) . '/../../../';
+        $this->_basePath = dirname(__FILE__).'/../../../';
         $this->_projectPath = getcwd();
 
-        $this->setName("new");
-        $this->setDescription("Initialise new Magestead project into current working directory");
+        $this->setName('new');
+        $this->setDescription('Initialise new Magestead project into current working directory');
         $this->addArgument('project', InputArgument::REQUIRED, 'Name your project directory');
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
-     * @return \Magestead\Installers\Magento2Project|\Magestead\Installers\MagentoProject
+     *
      * @throws ExistingProjectException
+     *
+     * @return \Magestead\Installers\Magento2Project|\Magestead\Installers\MagentoProject
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $project = $this->setProject($input);
 
-        $helper  = $this->getHelper('question');
+        $helper = $this->getHelper('question');
         $options = new Options($helper, $input, $output, $project);
 
         $this->setupProject($output, $options);
@@ -70,9 +73,9 @@ class NewCommand extends Command
                     \RecursiveIteratorIterator::SELF_FIRST) as $item
             ) {
                 if ($item->isDir()) {
-                    mkdir($target . DIRECTORY_SEPARATOR . $iterator->getSubPathName());
+                    mkdir($target.DIRECTORY_SEPARATOR.$iterator->getSubPathName());
                 } else {
-                    copy($item, $target . DIRECTORY_SEPARATOR . $iterator->getSubPathName());
+                    copy($item, $target.DIRECTORY_SEPARATOR.$iterator->getSubPathName());
                 }
                 $progress->advance();
             }
@@ -84,7 +87,7 @@ class NewCommand extends Command
     }
 
     /**
-     * @param array $options
+     * @param array           $options
      * @param OutputInterface $output
      */
     protected function configureProject(array $options, OutputInterface $output)
@@ -92,52 +95,52 @@ class NewCommand extends Command
         $msConfig = $this->getConfigFile($output);
 
         $app = ($options['app'] == 'magento2') ? 'magento2' : 'magento';
-        $hostname = 'magestead-' . $options['base_url'];
+        $hostname = 'magestead-'.$options['base_url'];
 
-        $msConfig['vagrantfile']['vm']['box']                           = $options['box'];
-        $msConfig['vagrantfile']['vm']['box_url']                       = $options['box'];
-        $msConfig['vagrantfile']['vm']['hostname']                      = $hostname;
-        $msConfig['vagrantfile']['vm']['memory']                        = $options['memory_limit'];
-        $msConfig['vagrantfile']['vm']['network']['private_network']    = $options['ip_address'];
-        $msConfig['magestead']['apps']['mba_12345']['type']             = $app;
-        $msConfig['magestead']['apps']['mba_12345']['locale']           = $options['locale'];
+        $msConfig['vagrantfile']['vm']['box'] = $options['box'];
+        $msConfig['vagrantfile']['vm']['box_url'] = $options['box'];
+        $msConfig['vagrantfile']['vm']['hostname'] = $hostname;
+        $msConfig['vagrantfile']['vm']['memory'] = $options['memory_limit'];
+        $msConfig['vagrantfile']['vm']['network']['private_network'] = $options['ip_address'];
+        $msConfig['magestead']['apps']['mba_12345']['type'] = $app;
+        $msConfig['magestead']['apps']['mba_12345']['locale'] = $options['locale'];
         $msConfig['magestead']['apps']['mba_12345']['default_currency'] = $options['default_currency'];
-        $msConfig['magestead']['apps']['mba_12345']['base_url']         = $options['base_url'];
-        $msConfig['magestead']['os']                                    = $options['os'];
-        $msConfig['magestead']['server']                                = $options['server'];
+        $msConfig['magestead']['apps']['mba_12345']['base_url'] = $options['base_url'];
+        $msConfig['magestead']['os'] = $options['os'];
+        $msConfig['magestead']['server'] = $options['server'];
 
         $this->_msConfig = $msConfig;
 
         $this->saveConfigFile($msConfig, $output);
-
     }
 
     /**
      * @param OutputInterface $output
+     *
      * @return mixed
      */
     protected function getConfigFile(OutputInterface $output)
     {
         $yaml = new Parser();
         try {
-            return $yaml->parse(file_get_contents($this->_projectPath . '/magestead.yaml'));
+            return $yaml->parse(file_get_contents($this->_projectPath.'/magestead.yaml'));
         } catch (ParseException $e) {
             $output->writeln('<error>Unable to parse the YAML string</error>');
-            printf("Unable to parse the YAML string: %s", $e->getMessage());
+            printf('Unable to parse the YAML string: %s', $e->getMessage());
         }
     }
 
     /**
-     * @param array $config
+     * @param array           $config
      * @param OutputInterface $output
      */
     protected function saveConfigFile(array $config, OutputInterface $output)
     {
         $dumper = new Dumper();
-        $yaml   = $dumper->dump($config, 6);
+        $yaml = $dumper->dump($config, 6);
 
         try {
-            file_put_contents($this->_projectPath . '/magestead.yaml', $yaml);
+            file_put_contents($this->_projectPath.'/magestead.yaml', $yaml);
         } catch (\Exception $e) {
             $output->writeln('<error>Unable to write to the YAML file</error>');
         }
@@ -150,7 +153,7 @@ class NewCommand extends Command
     protected function setupProject(OutputInterface $output, $options)
     {
         $output->writeln('<info>Setting up project structure</info>');
-        $provisionFolder = $this->_basePath . "provision";
+        $provisionFolder = $this->_basePath.'provision';
         $this->copyConfigFiles($provisionFolder, $this->_projectPath, $output);
         $this->configureProject($options->getAllOptions(), $output);
 
@@ -159,13 +162,15 @@ class NewCommand extends Command
 
     /**
      * @param InputInterface $input
-     * @return mixed
+     *
      * @throws ExistingProjectException
+     *
+     * @return mixed
      */
     protected function setProject(InputInterface $input)
     {
         $project = $input->getArgument('project');
-        $this->_projectPath = $this->_projectPath . '/' . $project;
+        $this->_projectPath = $this->_projectPath.'/'.$project;
 
 
         if (is_dir($this->_projectPath)) {
@@ -173,6 +178,7 @@ class NewCommand extends Command
         }
 
         mkdir($this->_projectPath, 0777, true);
+
         return $project;
     }
 }

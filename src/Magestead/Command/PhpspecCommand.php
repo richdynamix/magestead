@@ -1,14 +1,15 @@
-<?php namespace Magestead\Command;
+<?php
+
+namespace Magestead\Command;
 
 use Magestead\Helper\Config;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class PhpspecCommand
- * @package Magestead\Command
+ * Class PhpspecCommand.
  */
 class PhpspecCommand extends Command
 {
@@ -18,14 +19,15 @@ class PhpspecCommand extends Command
     {
         $this->_projectPath = getcwd();
 
-        $this->setName("phpspec");
-        $this->setDescription("Run PHPSpec against your project");
+        $this->setName('phpspec');
+        $this->setDescription('Run PHPSpec against your project');
         $this->addArgument('option', InputArgument::OPTIONAL, 'Add options to run');
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
+     *
      * @return mixed
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -38,13 +40,14 @@ class PhpspecCommand extends Command
         }
 
         $output->writeln('<info>Running PHPSpec</info>');
-        $passedCommand = "vagrant ssh -c '". $command ."'";
+        $passedCommand = "vagrant ssh -c '".$command."'";
         passthru($passedCommand);
     }
 
     /**
      * @param Config $config
      * @param $option
+     *
      * @return bool|string
      */
     protected function getCommand(Config $config, $option)

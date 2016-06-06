@@ -1,4 +1,6 @@
-<?php namespace Magestead\Service;
+<?php
+
+namespace Magestead\Service;
 
 use Magestead\Command\ProcessCommand;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -11,15 +13,16 @@ class VersionControl
 
     /**
      * VersionControl constructor.
+     *
      * @param $repoUrl
      * @param $projectPath
      * @param OutputInterface $output
      */
     public function __construct($repoUrl, $projectPath, OutputInterface $output)
     {
-        $this->_repoUrl     = $repoUrl;
+        $this->_repoUrl = $repoUrl;
         $this->_projectPath = $projectPath;
-        $this->_output      = $output;
+        $this->_output = $output;
 
         $this->execute($output);
     }
@@ -43,20 +46,20 @@ class VersionControl
     }
 
     /**
-     * Initialise the GIT repo
+     * Initialise the GIT repo.
      *
      * @return $this
      */
     public function init()
     {
-        $command = 'git init; git remote add origin ' . $this->_repoUrl;
+        $command = 'git init; git remote add origin '.$this->_repoUrl;
         new ProcessCommand($command, $this->_projectPath, $this->_output);
 
         return $this;
     }
 
     /**
-     * Add all file to the GIT index
+     * Add all file to the GIT index.
      *
      * @return $this
      */
@@ -69,7 +72,7 @@ class VersionControl
     }
 
     /**
-     * Commit the files to the repo
+     * Commit the files to the repo.
      *
      * @return $this
      */
@@ -82,13 +85,13 @@ class VersionControl
     }
 
     /**
-     * Push all the files to remote repo
+     * Push all the files to remote repo.
      *
      * @return $this
      */
     public function pushFiles()
     {
-        $command = "git push -u origin master";
+        $command = 'git push -u origin master';
         new ProcessCommand($command, $this->_projectPath, $this->_output);
 
         return $this;
