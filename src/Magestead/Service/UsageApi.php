@@ -37,7 +37,6 @@ class UsageApi
         $this->_params['default_currency'] = urlencode($data['default_currency']);
     }
 
-
     public function send()
     {
         $fields_string = $this->getFieldsString();

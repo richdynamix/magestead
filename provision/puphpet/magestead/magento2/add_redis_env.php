@@ -5,10 +5,10 @@ $env = include $file;
 
 $env['cache'] =
      [
-        'frontend' =>  [
-            'default' =>  [
+        'frontend' => [
+            'default' => [
                 'backend'     => 'Cm_Cache_Backend_Redis',
-            'backend_options' =>  [
+            'backend_options' => [
                     'server'                    => '127.0.0.1',
                     'port'                      => '6379',
                     'persistent'                => '',
@@ -23,9 +23,9 @@ $env['cache'] =
                     'compression_lib'           => 'gzip',
         ],
             ],
-            'page_cache' =>  [
+            'page_cache' => [
           'backend'         => 'Cm_Cache_Backend_Redis',
-          'backend_options' =>  [
+          'backend_options' => [
                     'server'                    => '127.0.0.1',
                     'port'                      => '6379',
                     'persistent'                => '',
