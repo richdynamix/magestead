@@ -3,9 +3,9 @@
     "description": "Magestead - A command line installer for Magento Vagrant environments",
     "license": "MIT",
     "require": {
-        "symfony/console" : "^2.6",
-        "symfony/yaml"    : "^2.6",
-        "symfony/process" : "^2.6",
+        "symfony/console" : "^3.1",
+        "symfony/yaml"    : "^3.1",
+        "symfony/process" : "^3.1",
         "phpunit/phpunit" : "^4.6",
         "jolicode/jolinotif": "^1.0"
     },
