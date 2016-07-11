@@ -53,7 +53,7 @@
         "magento-root-dir": "public",
         "magento-force": true,
         "auto-append-gitignore": true,
-        "with-bootstrap-patch": false
+        "with-bootstrap-patch": true
     },
     "config": {
         "bin-dir": "bin"
@@ -70,6 +70,9 @@
                 "features/bootstrap"
             ],
             "Mage": "public/app/code/core"
+        },
+        "psr-4": {
+            "PhpParser\\": "vendor/nikic/php-parser/lib/PhpParser/"
         }
     }
 }
