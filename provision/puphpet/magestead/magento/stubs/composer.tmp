@@ -29,7 +29,7 @@
     },
     "require": {
         "aydin-hassan/magento-core-composer-installer" : "~1.0",
-        "magento/magento" : "1.9.2.2",
+        "firegento/magento" : "1.9.2.4",
         "magento-hackathon/magento-composer-installer": "3.0.*",
         "inchoo/php7": "1.0.*"
     },
@@ -53,7 +53,7 @@
         "magento-root-dir": "public",
         "magento-force": true,
         "auto-append-gitignore": true,
-        "with-bootstrap-patch": false
+        "with-bootstrap-patch": true
     },
     "config": {
         "bin-dir": "bin"
@@ -70,6 +70,9 @@
                 "features/bootstrap"
             ],
             "Mage": "public/app/code/core"
+        },
+        "psr-4": {
+            "PhpParser\\": "vendor/nikic/php-parser/lib/PhpParser/"
         }
     }
 }
