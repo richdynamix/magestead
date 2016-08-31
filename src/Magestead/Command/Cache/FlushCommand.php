@@ -20,6 +20,7 @@ class FlushCommand extends Command
         $this->_projectPath = getcwd();
         $this->setName("cache:flush");
         $this->setDescription("Flushes cache storage used by cache types");
+        $this->addArgument('type', InputArgument::OPTIONAL, '[cache code/type]');
     }
 
     /**
@@ -31,7 +32,8 @@ class FlushCommand extends Command
     {
         $output->writeln('<info>Flushing cache storage</info>');
 
-        $command  = $this->getCommand(new Config($output));
+        $cacheType = $input->getArgument('type');
+        $command  = $this->getCommand(new Config($output), $cacheType);
         $pCommand = "vagrant ssh -c '". $command ."'";
         return new ProcessCommand($pCommand, $this->_projectPath, $output);
     }
@@ -40,15 +42,15 @@ class FlushCommand extends Command
      * @param Config $config
      * @return bool|string
      */
-    protected function getCommand(Config $config)
+    protected function getCommand(Config $config, $cacheType)
     {
         $type = $config->type;
         switch ($type) {
             case 'magento':
-                return "cd /var/www/public;../bin/n98-magerun.phar cache:flush";
+                return "cd /var/www/public;../bin/n98-magerun.phar cache:flush $cacheType";
                 break;
             case 'magento2':
-                return "cd /var/www/public;bin/magento cache:flush";
+                return "cd /var/www/public;bin/magento cache:flush $cacheType";
                 break;
         }
 
