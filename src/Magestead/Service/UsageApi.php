@@ -9,7 +9,7 @@ class UsageApi
     /**
      * @var string
      */
-    protected $_apiUrl = "http://api.magestead.com/v1/usage";
+    protected $_apiUrl = "https://api.magestead.com/v1/usage";
 //    protected $_apiUrl = "http://magestead-api.app/v1/usage";
 
     /**
