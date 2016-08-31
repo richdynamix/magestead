@@ -37,9 +37,6 @@ class VersionControl
 
         $output->writeln('<comment>Committing files to repo</comment>');
         $this->commitFiles();
-
-        $output->writeln('<comment>Pushing to remote</comment>');
-        $this->pushFiles();
     }
 
     /**
