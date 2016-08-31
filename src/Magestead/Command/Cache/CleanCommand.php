@@ -20,6 +20,7 @@ class CleanCommand extends Command
         $this->_projectPath = getcwd();
         $this->setName("cache:clean");
         $this->setDescription("Cleans cache types");
+        $this->addArgument('type', InputArgument::OPTIONAL, '[cache code/type]');
     }
 
     /**
@@ -31,7 +32,8 @@ class CleanCommand extends Command
     {
         $output->writeln('<info>Cleaning all cache types</info>');
 
-        $command  = $this->getCommand(new Config($output));
+        $cacheType = $input->getArgument('type');
+        $command  = $this->getCommand(new Config($output), $cacheType);
         $pCommand = "vagrant ssh -c '". $command ."'";
         return new ProcessCommand($pCommand, $this->_projectPath, $output);
     }
@@ -40,15 +42,15 @@ class CleanCommand extends Command
      * @param Config $config
      * @return bool|string
      */
-    protected function getCommand(Config $config)
+    protected function getCommand(Config $config, $cacheType)
     {
         $type = $config->type;
         switch ($type) {
             case 'magento':
-                return "cd /var/www/public;../bin/n98-magerun.phar cache:clean";
+                return "cd /var/www/public;../bin/n98-magerun.phar cache:clean $cacheType";
                 break;
             case 'magento2':
-                return "cd /var/www/public;bin/magento cache:clean";
+                return "cd /var/www/public;bin/magento cache:clean $cacheType";
                 break;
         }
 
