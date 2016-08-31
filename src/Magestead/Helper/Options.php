@@ -198,7 +198,6 @@ class Options
      */
     protected function setPhp($helper, InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('<info>Keep in mind PHP7 is only available for Magento 2</info>');
         $phpVerQuestion = new ChoiceQuestion(
             "Which version of PHP should be installed?",
             ['56', '70'],
