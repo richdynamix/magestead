@@ -79,6 +79,7 @@ class Magento2Project
     protected function installMagento(array $options, $projectPath, OutputInterface $output)
     {
         $this->setPermissions($projectPath, $output);
+        $this->installSampleData($options, $projectPath, $output);
 
         $output->writeln('<info>Installing Magento 2 Software</info>');
         $locale           = $options['magestead']['apps']['mba_12345']['locale'];
@@ -104,6 +105,15 @@ class Magento2Project
 --session-save=db \'';
 
         new ProcessCommand($install, $projectPath, $output);
+    }
+
+    protected function installSampleData($options, $projectPath, OutputInterface $output)
+    {
+        if (true === $options['installSampleData']) {
+            $output->writeln('<info>Installing Magento 2 Sample Data</info>');
+            $command = 'vagrant ssh -c \'cd /var/www; php bin/magento sampledata:deploy';
+            new ProcessCommand($command, $projectPath, $output);    
+        }
     }
 
     /**

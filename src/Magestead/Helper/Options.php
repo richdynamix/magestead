@@ -28,6 +28,7 @@ class Options
     protected $_currency;
     protected $_baseUrl;
     protected $_repoUrl = '';
+    protected $installSampleData = false;
 
     /**
      * Options constructor.
@@ -69,6 +70,7 @@ class Options
           'locale' => $this->_locale,
           'default_currency' => $this->_currency,
           'base_url' => $this->_baseUrl,
+          'installSampleData' => $this->installSampleData,
         ];
     }
 
@@ -127,6 +129,7 @@ class Options
     protected function setMagento2Settings($helper, InputInterface $input, OutputInterface $output)
     {
         if ($this->_app === 'magento2') {
+            $this->installSampleData($helper, $input, $output);
             return $this->verifyAuth($helper, $input, $output);
         }
 
@@ -146,6 +149,12 @@ class Options
             $repoQuestion   = new Question("Enter your full GitHub/BitBucket repo URL: ", '');
             $this->_repoUrl = strtolower($helper->ask($input, $output, $repoQuestion));
         }
+    }
+
+    protected function installSampleData($helper, InputInterface $input, OutputInterface $output)
+    {
+        $sampleInstall = new ConfirmationQuestion("Would you like to install sample data? (no/yes) ", false);
+        $this->installSampleData = $helper->ask($input, $output, $sampleInstall);
     }
 
     /**
