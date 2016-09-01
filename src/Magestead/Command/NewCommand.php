@@ -152,9 +152,9 @@ class NewCommand extends Command
         $output->writeln('<info>Setting up project structure</info>');
         $provisionFolder = $this->_basePath . "provision";
         $this->copyConfigFiles($provisionFolder, $this->_projectPath, $output);
-        $this->configureProject($options->getAllOptions(), $output);
+        $this->configureProject($options, $output);
 
-        (new UsageApi($options->getAllOptions()))->send();
+        (new UsageApi($options))->send();
     }
 
     /**

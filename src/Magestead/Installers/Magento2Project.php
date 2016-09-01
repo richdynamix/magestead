@@ -24,6 +24,7 @@ class Magento2Project
     {
         $this->composerInstall($projectPath, $output);
         $this->installMagento($config, $projectPath, $output);
+        $this->installSampleData($options, $projectPath, $output);
         $this->finaliseSetup($options, $projectPath, $output);
         $this->showCredentials($config, $output);
 
@@ -79,7 +80,6 @@ class Magento2Project
     protected function installMagento(array $options, $projectPath, OutputInterface $output)
     {
         $this->setPermissions($projectPath, $output);
-        $this->installSampleData($options, $projectPath, $output);
 
         $output->writeln('<info>Installing Magento 2 Software</info>');
         $locale           = $options['magestead']['apps']['mba_12345']['locale'];
