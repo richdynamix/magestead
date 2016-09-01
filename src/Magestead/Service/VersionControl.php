@@ -5,9 +5,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class VersionControl
 {
+    protected $_output;
     protected $_repoUrl;
     protected $_projectPath;
-    protected $_output;
 
     /**
      * VersionControl constructor.
@@ -17,9 +17,9 @@ class VersionControl
      */
     public function __construct($repoUrl, $projectPath, OutputInterface $output)
     {
-        $this->_repoUrl     = $repoUrl;
+        $this->_output = $output;
+        $this->_repoUrl = $repoUrl;
         $this->_projectPath = $projectPath;
-        $this->_output      = $output;
 
         $this->execute($output);
     }
