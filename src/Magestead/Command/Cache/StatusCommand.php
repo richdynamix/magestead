@@ -47,10 +47,8 @@ class StatusCommand extends Command
         switch ($type) {
             case 'magento':
                 return "cd /var/www/public;../bin/n98-magerun.phar cache:list";
-                break;
             case 'magento2':
                 return "cd /var/www/public;bin/magento cache:status";
-                break;
         }
 
         return false;

@@ -49,10 +49,8 @@ class EnableCommand extends Command
         switch ($type) {
             case 'magento':
                 return "cd /var/www/public;../bin/n98-magerun.phar cache:enable $cacheType";
-                break;
             case 'magento2':
                 return "cd /var/www/public;bin/magento cache:enable $cacheType";
-                break;
         }
 
         return false;

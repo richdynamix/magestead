@@ -46,10 +46,8 @@ class InfoCommand extends Command
         switch ($type) {
             case 'magento':
                 return "cd /var/www/public;../bin/n98-magerun.phar index:list";
-                break;
             case 'magento2':
                 return "cd /var/www/public;bin/magento indexer:info";
-                break;
         }
 
         return false;

@@ -10,8 +10,8 @@
 set_time_limit(0);
 
 // include the composer autoloader
-require_once __DIR__ . '/../../../vendor/autoload.php';
-//require_once __DIR__ . '/vendor/autoload.php';
+// require_once __DIR__ . '/../../../vendor/autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
 // import the Symfony Console Application
 use Symfony\Component\Console\Application;
@@ -22,6 +22,7 @@ $app = new Application('Magestead CLI', '2.1.0');
 $app->addCommands(array(
     // Project Setup Command
     new Magestead\Command\NewCommand(),
+    new Magestead\Command\UpdateCommand(),
 
     // VM Related Commands
     new Magestead\Command\VM\UpCommand(),

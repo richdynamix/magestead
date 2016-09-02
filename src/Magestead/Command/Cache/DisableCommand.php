@@ -49,10 +49,8 @@ class DisableCommand extends Command
         switch ($type) {
             case 'magento':
                 return "cd /var/www/public;../bin/n98-magerun.phar cache:disable $cacheType";
-                break;
             case 'magento2':
                 return "cd /var/www/public;bin/magento cache:disable $cacheType";
-                break;
         }
 
         return false;

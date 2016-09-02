@@ -49,10 +49,8 @@ class CleanCommand extends Command
         switch ($type) {
             case 'magento':
                 return "cd /var/www/public;../bin/n98-magerun.phar cache:clean $cacheType";
-                break;
             case 'magento2':
                 return "cd /var/www/public;bin/magento cache:clean $cacheType";
-                break;
         }
 
         return false;
