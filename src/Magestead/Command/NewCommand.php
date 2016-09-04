@@ -44,14 +44,14 @@ class NewCommand extends Command
         $project = $this->setProject($input);
 
         $helper  = $this->getHelper('question');
-        $options = new Options($helper, $input, $output, $project);
+        $options = (new Options($helper, $input, $output, $project))->getAllOptions();
 
         $this->setupProject($output, $options);
 
         $output->writeln('<info>Spinning up your custom box</info>');
         new ProcessCommand('vagrant up', $this->_projectPath, $output);
 
-        return Project::create($options->getAllOptions(), $this->_msConfig, $this->_projectPath, $output);
+        return Project::create($options, $this->_msConfig, $this->_projectPath, $output);
     }
 
     /**
@@ -152,9 +152,9 @@ class NewCommand extends Command
         $output->writeln('<info>Setting up project structure</info>');
         $provisionFolder = $this->_basePath . "provision";
         $this->copyConfigFiles($provisionFolder, $this->_projectPath, $output);
-        $this->configureProject($options->getAllOptions(), $output);
+        $this->configureProject($options, $output);
 
-        (new UsageApi($options->getAllOptions()))->send();
+        (new UsageApi($options))->send();
     }
 
     /**

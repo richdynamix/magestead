@@ -51,10 +51,8 @@ class ReindexCommand extends Command
             case 'magento':
                 $index = (!is_null($index)) ? ' '.$index : ':all';
                 return "cd /var/www/public;../bin/n98-magerun.phar index:reindex$index";
-                break;
             case 'magento2':
                 return "cd /var/www/public;bin/magento indexer:reindex $index";
-                break;
         }
 
         return false;

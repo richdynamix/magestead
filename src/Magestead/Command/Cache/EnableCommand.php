@@ -3,6 +3,7 @@
 use Magestead\Command\ProcessCommand;
 use Magestead\Helper\Config;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -20,6 +21,7 @@ class EnableCommand extends Command
         $this->_projectPath = getcwd();
         $this->setName("cache:enable");
         $this->setDescription("Enable cache types");
+        $this->addArgument('type', InputArgument::OPTIONAL, '[cache code/type]');
     }
 
     /**
@@ -31,7 +33,8 @@ class EnableCommand extends Command
     {
         $output->writeln('<info>Enabling all cache types</info>');
 
-        $command  = $this->getCommand(new Config($output));
+        $cacheType = $input->getArgument('type');
+        $command  = $this->getCommand(new Config($output), $cacheType);
         $pCommand = "vagrant ssh -c '". $command ."'";
         return new ProcessCommand($pCommand, $this->_projectPath, $output);
     }
@@ -40,16 +43,14 @@ class EnableCommand extends Command
      * @param Config $config
      * @return bool|string
      */
-    protected function getCommand(Config $config)
+    protected function getCommand(Config $config, $cacheType)
     {
         $type = $config->type;
         switch ($type) {
             case 'magento':
-                return "cd /var/www/public;../bin/n98-magerun.phar cache:enable";
-                break;
+                return "cd /var/www/public;../bin/n98-magerun.phar cache:enable $cacheType";
             case 'magento2':
-                return "cd /var/www/public;bin/magento cache:enable";
-                break;
+                return "cd /var/www/public;bin/magento cache:enable $cacheType";
         }
 
         return false;

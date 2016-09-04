@@ -3,6 +3,7 @@
 use Magestead\Command\ProcessCommand;
 use Magestead\Helper\Config;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -46,10 +47,8 @@ class StatusCommand extends Command
         switch ($type) {
             case 'magento':
                 return "cd /var/www/public;../bin/n98-magerun.phar cache:list";
-                break;
             case 'magento2':
                 return "cd /var/www/public;bin/magento cache:status";
-                break;
         }
 
         return false;

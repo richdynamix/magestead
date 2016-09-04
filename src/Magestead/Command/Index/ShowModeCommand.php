@@ -54,7 +54,6 @@ class ShowModeCommand extends Command
         switch ($type) {
             case 'magento2':
                 return "cd /var/www/public;bin/magento indexer:show-mode $index";
-                break;
         }
 
         return false;

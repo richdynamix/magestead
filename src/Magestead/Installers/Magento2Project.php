@@ -23,7 +23,7 @@ class Magento2Project
     public function __construct(array $options, array $config, $projectPath, OutputInterface $output)
     {
         $this->composerInstall($projectPath, $output);
-        $this->installMagento($config, $projectPath, $output);
+        $this->installMagento($config, $options, $projectPath, $output);
         $this->finaliseSetup($options, $projectPath, $output);
         $this->showCredentials($config, $output);
 
@@ -40,9 +40,20 @@ class Magento2Project
         $command = 'composer create-project --repository-url=https://repo.magento.com/ magento/project-community-edition public';
         new ProcessCommand($command, $projectPath, $output);
 
+        $this->copyAuthFile($projectPath);
         $this->setComposerBinDir($projectPath);
         $this->addPhpSpecPackage($projectPath, $output);
         $this->addBehatPackage($projectPath, $output);
+    }
+
+    /**
+     * @param $destination
+     * @return bool
+     */
+    protected function copyAuthFile($destination)
+    {
+        $authFile = $_SERVER['HOME'] . "/.composer/auth.json";
+        return copy($authFile, $destination . '/public/auth.json');
     }
 
     /**
@@ -72,19 +83,22 @@ class Magento2Project
     }
 
     /**
+     * @param array $config
      * @param array $options
      * @param $projectPath
      * @param OutputInterface $output
      */
-    protected function installMagento(array $options, $projectPath, OutputInterface $output)
+    protected function installMagento(array $config, array $options, $projectPath, OutputInterface $output)
     {
         $this->setPermissions($projectPath, $output);
 
+        $this->installSampleData($options, $projectPath, $output);
+
         $output->writeln('<info>Installing Magento 2 Software</info>');
-        $locale           = $options['magestead']['apps']['mba_12345']['locale'];
-        $db_name          = $options['magestead']['apps']['mba_12345']['db_name'];
-        $base_url         = $options['magestead']['apps']['mba_12345']['base_url'];
-        $default_currency = $options['magestead']['apps']['mba_12345']['default_currency'];
+        $locale           = $config['magestead']['apps']['mba_12345']['locale'];
+        $db_name          = $config['magestead']['apps']['mba_12345']['db_name'];
+        $base_url         = $config['magestead']['apps']['mba_12345']['base_url'];
+        $default_currency = $config['magestead']['apps']['mba_12345']['default_currency'];
 
         $install = 'vagrant ssh -c \'cd /var/www/public; bin/magento setup:install --base-url=http://'.$base_url.'/ \
 --db-host=localhost \
@@ -104,6 +118,20 @@ class Magento2Project
 --session-save=db \'';
 
         new ProcessCommand($install, $projectPath, $output);
+    }
+
+    /**
+     * @param $options
+     * @param $projectPath
+     * @param OutputInterface $output
+     */
+    protected function installSampleData($options, $projectPath, OutputInterface $output)
+    {
+        if (true === $options['installSampleData']) {
+            $output->writeln('<info>Installing Magento 2 Sample Data</info>');
+            $deployCommand = 'vagrant ssh -c \'cd /var/www/public; bin/magento sampledata:deploy \'';
+            new ProcessCommand($deployCommand, $projectPath, $output);
+        }
     }
 
     /**
