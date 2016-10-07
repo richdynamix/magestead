@@ -179,7 +179,8 @@ class Options
      */
     protected function verifyAuth($helper, InputInterface $input, OutputInterface $output)
     {
-        $authFile = $_SERVER['HOME'] . "/.composer/auth.json";
+        $composerHome = (new Config($output))->getComposerHomeDir();
+        $authFile = $composerHome . "/auth.json";
 
         $authObj = [];
         if (file_exists($authFile)) {
