@@ -184,7 +184,7 @@ class Options
         $authObj = [];
         if (file_exists($authFile)) {
             $authJson = file_get_contents($authFile);
-            $authObj  = (array)json_decode($authJson);
+            $authObj  = (array)json_decode($authJson, true);
 
             if (isset($authObj['http-basic']) && isset($authObj['http-basic']->{'repo.magento.com'})) {
                 return true;
