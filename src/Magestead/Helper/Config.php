@@ -1,5 +1,6 @@
 <?php namespace Magestead\Helper;
 
+use Magestead\Exceptions\MissingComposerHomeException;
 use Magestead\Exceptions\MissingConfigFileException;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Yaml\Exception\ParseException;
@@ -7,7 +8,14 @@ use Symfony\Component\Yaml\Parser;
 
 class Config
 {
+    protected $_config;
+
     protected $_projectPath;
+
+    /**
+     * @var OutputInterface
+     */
+    private $output;
 
     /**
      * Config constructor.
@@ -16,7 +24,7 @@ class Config
     public function __construct(OutputInterface $output)
     {
         $this->_projectPath = getcwd();
-        $this->_config      = $this->getConfigFile($output);
+        $this->output = $output;
     }
 
     /**
@@ -25,6 +33,7 @@ class Config
      */
     function __get($name)
     {
+        $this->_config = $this->getConfigFile($this->output);
         return $this->_config['magestead']['apps']['mba_12345'][$name];
     }
 
@@ -55,5 +64,22 @@ class Config
         }
 
         return file_get_contents($this->_projectPath . '/magestead.yaml');
+    }
+
+    /**
+     * Find the composer home directory on non Mac environments (experimental)
+     *
+     * @return string
+     * @throws MissingComposerHomeException
+     */
+    public function getComposerHomeDir()
+    {
+        $composerConfig = shell_exec('composer config --list --global | grep home');
+
+        if (is_null($composerConfig)) {
+            throw new MissingComposerHomeException('Composer home directory is not found. Do you have it installed?');
+        }
+
+        return trim(str_replace('[home] ', '', $composerConfig));
     }
 }

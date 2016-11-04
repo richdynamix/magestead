@@ -179,12 +179,13 @@ class Options
      */
     protected function verifyAuth($helper, InputInterface $input, OutputInterface $output)
     {
-        $authFile = $_SERVER['HOME'] . "/.composer/auth.json";
+        $composerHome = (new Config($output))->getComposerHomeDir();
+        $authFile = $composerHome . "/auth.json";
 
         $authObj = [];
         if (file_exists($authFile)) {
             $authJson = file_get_contents($authFile);
-            $authObj  = (array)json_decode($authJson);
+            $authObj  = (array)json_decode($authJson, true);
 
             if (isset($authObj['http-basic']) && isset($authObj['http-basic']->{'repo.magento.com'})) {
                 return true;
