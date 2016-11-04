@@ -1,6 +1,7 @@
 <?php namespace Magestead\Installers;
 
 use Magestead\Command\ProcessCommand;
+use Magestead\Helper\Config;
 use Magestead\Helper\HostsPluginChecker;
 use Magestead\Service\Notification;
 use Magestead\Service\VersionControl;
@@ -14,6 +15,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 class Magento2Project
 {
     /**
+     * @var OutputInterface
+     */
+    private $output;
+
+    /**
      * Magento2Project constructor.
      * @param array $options
      * @param array $config
@@ -22,6 +28,7 @@ class Magento2Project
      */
     public function __construct(array $options, array $config, $projectPath, OutputInterface $output)
     {
+        $this->output = $output;
         $this->composerInstall($projectPath, $output);
         $this->installMagento($config, $options, $projectPath, $output);
         $this->finaliseSetup($options, $projectPath, $output);
@@ -52,7 +59,9 @@ class Magento2Project
      */
     protected function copyAuthFile($destination)
     {
-        $authFile = $_SERVER['HOME'] . "/.composer/auth.json";
+        $composerHome = (new Config($this->output))->getComposerHomeDir();
+        $authFile = $composerHome . "/auth.json";
+
         return copy($authFile, $destination . '/public/auth.json');
     }
 
