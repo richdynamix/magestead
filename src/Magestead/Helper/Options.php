@@ -1,5 +1,6 @@
 <?php namespace Magestead\Helper;
 
+use Magestead\Exceptions\AuthSavePermissionsException;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -183,7 +184,7 @@ class Options
         $authFile = $composerHome . "/auth.json";
 
         $authObj = [];
-        if (file_exists($authFile)) {
+        if (file_exists($authFile) && is_readable($authFile)) {
             $authJson = file_get_contents($authFile);
             $authObj  = (array)json_decode($authJson, true);
 
@@ -198,6 +199,13 @@ class Options
         $authObj['http-basic']['repo.magento.com']['password'] = $this->_m2Password;
 
         $authJson = json_encode($authObj);
+
+        // check writable first
+        if (!is_writable($authFile)) {
+            $e = new AuthSavePermissionsException();
+            throw $e->setAuthObject($authObj);
+        }
+
         return file_put_contents($authFile, $authJson);
     }
 
