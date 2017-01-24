@@ -74,12 +74,20 @@ class Config
      */
     public function getComposerHomeDir()
     {
-        $composerConfig = shell_exec('composer config --list --global | grep home');
+        $composerConfig = shell_exec('composer config --list --global | grep "\[home\]"');
+        $composerConfig = array_filter(explode(PHP_EOL, $composerConfig));
 
-        if (is_null($composerConfig)) {
+        foreach ($composerConfig as $line) {
+            $parts = array_filter(explode(" ", $line));
+            $composerConfig[$parts[0]] = $parts[1];
+        }
+
+        $composerHomePath = realpath(trim($composerConfig['[home]']));
+
+        if (false === $composerHomePath) {
             throw new MissingComposerHomeException('Composer home directory is not found. Do you have it installed?');
         }
 
-        return trim(str_replace('[home] ', '', $composerConfig));
+        return $composerHomePath;
     }
 }
