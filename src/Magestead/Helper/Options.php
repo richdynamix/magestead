@@ -198,7 +198,7 @@ class Options
         $authObj['http-basic']['repo.magento.com']['username'] = $this->_m2Username;
         $authObj['http-basic']['repo.magento.com']['password'] = $this->_m2Password;
 
-        $authJson = json_encode($authObj);
+        $authJson = json_encode($authObj, JSON_PRETTY_PRINT);
 
         // check writable first
         if (!is_writable($authFile)) {
