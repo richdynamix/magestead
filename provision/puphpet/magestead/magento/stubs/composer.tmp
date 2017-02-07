@@ -2,15 +2,7 @@
     "name": "richdynamix/magestead",
     "description": "Magento build for ...",
     "require-dev": {
-        "magetest/magento-phpspec-extension": "3.0.0",
-        "sensiolabs/behat-page-object-extension": "2.0.*@dev",
-        "magetest/magento-behat-extension": "dev-feature/Behat3",
-        "magetest/manager": "*",
-        "behat/mink": "1.6.*",
-        "behat/mink-goutte-driver": "1.1.*",
-        "behat/mink-selenium2-driver": "*",
-        "behat/mink-extension": "*",
-        "phpunit/phpunit": "3.7.*",
+        "phpunit/phpunit": "~5.0",
         "phpunit/dbunit": "1.3.*",
         "phpunit/phpunit-selenium": "1.3.*",
         "phpunit/phpunit-story": "1.0.*",
@@ -22,10 +14,7 @@
         "phpdocumentor/phpdocumentor": "2.*",
         "theseer/phpdox": "0.6.*",
         "theseer/fxsl": "1.0.*@dev",
-        "mayflower/php-codebrowser": "~1.1",
-        "darsadow/behat-parameters-extension": "dev-master",
-        "bossa/phpspec2-expect": "*",
-        "ciaranmcnulty/behat-stepthroughextension": "dev-master"
+        "mayflower/php-codebrowser": "~1.1"
     },
     "require": {
         "aydin-hassan/magento-core-composer-installer" : "~1.0",
