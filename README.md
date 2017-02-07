@@ -12,7 +12,7 @@ Magestead 2.0 is the perfect development toolbox to manage and control your Mage
 
 - VirtualBox 5+
 - Vagrant 1.8.1+
-- PHP 5.4+ (with mcrypt & intl extensions) installed
+- PHP 5.4+ (with mcrypt, intl & xsl extensions) installed
 - Composer installed globally
 - Mac or Linux (sorry no windows support yet)
 
