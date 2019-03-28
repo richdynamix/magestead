@@ -1,12 +1,10 @@
 # [Magestead](http://www.magestead.com "Magestead")
 
+# No longer maintained
+
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/richdynamix/magestead/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/richdynamix/magestead/?branch=master) [![Build Status](https://scrutinizer-ci.com/g/richdynamix/magestead/badges/build.png?b=master)](https://scrutinizer-ci.com/g/richdynamix/magestead/build-status/master) [![GitHub release](https://img.shields.io/github/release/richdynamix/magestead.svg)](https://github.com/richdynamix/magestead)
 
 Magestead 2.0 is the perfect development toolbox to manage and control your Magento development workflow. A command line utility that will not only get you a custom pre-configured vagrant development environment with the tools you want, but also install the latest version of Magento or Magento 2
-
-<p align="center">
-  <img src="http://www.magestead.com/img/magestead-screen.png" alt="Magestead Screenshot"/>
-</p>
 
 ### System Requirements
 
